@@ -3,11 +3,11 @@
 ## Installation
 **Mac:**
 
-If you didn't install homebrew, do this following code:
+If you do not have installed homebrew, please do this following code in your terminal:
 ```bash
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
-If you installed homebrew, do those two commands in your terminal:
+If you have installed homebrew, do those two commands in your terminal:
 ```bash
 brew install flex # to install flex
 brew install bison # to install bison
@@ -21,19 +21,21 @@ Please find [this page](https://samskalicky.wordpress.com/2014/01/25/tutorial-se
 Please find [this page](https://ccm.net/faq/30635-how-to-install-flex-and-bison-under-ubuntu) for the tutorial.
 
 ## Flex Scanner (*.l files)
-**Header(essential materials for flex):**
+**Skeleton(structure for a flex file):**
 ``` c++
 %{
-#include <iostream>      /* include header */
-#include <stdlib.h>
-#include "calc1.tab.h"  /* We want the tokens defined in calc1.y. */
+C/C++ declarations
 %}
 
-%option noyywrap /* This will allow lexer stop lexing when reach first end-of-file */
-```
-You can keep these codes in your scanner.
+Flex declarations
 
-**Creating the Regex(regular expression):**
+%%
+Token rules (Regular expression i.e. Regex)
+%%
+Additional C code
+```
+
+**Creating a Regex(regular expression):**
 
 This is the syntax how to design regular expression:
 ```c++
@@ -44,19 +46,22 @@ This is the syntax how to design regular expression:
 %%
 ```
 ## Bison Parser (*.y files)
-**Header(essential materials for flex):**
+**Skeleton(structure for a bison file):**
 ``` c++
 %{
-#include <iostream>
-
-int yylex(); // A function that is to be generated and provided by flex,
-             // which returns a next token when called repeatedly.
-int yyerror(const char *p) { std::cerr << "error: " << p << std::endl; };
+C declarations
 %}
-```
-You can keep these codes in your parser.
 
-**Creating the grammar:**
+Bison declarations
+
+%%
+Grammar rules (BNF form)
+%%
+
+Additional C code
+```
+
+**Creating a grammar:**
 
 This is the syntax that generates the grammars and tokens:
 
