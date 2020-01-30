@@ -56,7 +56,7 @@ Please find [this page](https://ccm.net/faq/30635-how-to-install-flex-and-bison-
 
 ### Parser
 - Def. A parser is a component that takes the tokens produced by the lexer as input and builds a parse tree based on the input.
-- There are two kinds of parser: LL and LR (Bison use this type of parser). The main difference between these two is analysis strategy (parsing procedure).
+- There are two kinds of parser: LL and LR (Bison use this type of parser). The main difference between these two is the analysis strategy (parsing procedure).
 - Consider this simple grammar for calculator:
 ```
 E → E + T | T
@@ -65,6 +65,11 @@ F → ( E ) | id
 Note: E is the root symbol in this grammar.
 ```
 **Q:** How to build a parse tree for parsing such a string contains `id * id`? Remember, both two strategies will scan a string from left-to-right.
+
+- Thus, by a combination of lexer and parser, the whole process for those two analysis is:
+<p align="center">
+<img src="img/process.png" height="50%" width="50%">
+</p>
 
 ## Precedence and Associativity
 TODO:
