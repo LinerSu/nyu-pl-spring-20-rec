@@ -1,14 +1,6 @@
 # Flex and Bison Tutorial
 
 ## Installation
-
-### Bison
-- Please go to [this page](https://ftp.gnu.org/gnu/bison/) and download the bison package with version 3.0.4.
-- Uncompress the downloaded file and open the terminal with a path inside that folder
-- run `./configure`, `make` and `make install`
-
-
-## Installation (Backup Plan)
 **Mac:**
 
 If you do not have installed homebrew, please do this following code in your terminal:
@@ -86,7 +78,7 @@ Flex declarations
 %%
 Token rules (Regular expression i.e. Regex)
 %%
-Additional C code
+Additional C/C++ code
 ```
 
 **Creating a Regex(regular expression):**
@@ -108,7 +100,7 @@ For example, suppose you want to create tokens for positive integers and plus si
 **Skeleton (structure for a bison file):**
 ``` c++
 %{
-C declarations
+C/C++ declarations
 %}
 
 Bison declarations
@@ -117,7 +109,7 @@ Bison declarations
 Grammar rules (BNF form)
 %%
 
-Additional C code
+Additional C/C++ code
 ```
 
 **Creating a grammar:**
@@ -142,15 +134,18 @@ prog :  NUM PLUS NUM /* This is the same as CFG: prog -> NUM + NUM*/
      ;
 %%
 ```
-Don't forget to put the main function in your parser at the end of the file.
+- Don't forget to put the main function in your parser at the end of the bison file.
+
+## Calculator Example
+- Please download those examples through the NYU Classes.
 
 ## How to run the program
 
-Make sure you have make.sh, <file_name>.l and <file_name>.y in your folder. Run the following code on the terminal:
+Make sure you have `make.sh`, `<file_name>.l` and `<file_name>.y` in your folder. Run the following code on the terminal:
 ```bash
 ./make.sh <file_name>
 ./a.out
-1 + 3
+1 + 3 * 4
 # click control + D to exit
 ```
 
@@ -198,3 +193,10 @@ X -> aXb | ε
 1. If you plan to learn more about flex and bison, please see [this manual](http://web.iitd.ac.in/~sumeet/flex__bison.pdf).
 2. Here is the [website](https://web.stanford.edu/class/archive/cs/cs103/cs103.1156/tools/cfg/) for testing the correctness of CFG.
 3. Here is one [website](https://regex101.com/) for testing the correctness of regular expression.
+
+## Installation
+
+### Bison
+- Please go to [this page](https://ftp.gnu.org/gnu/bison/) and download the bison package with version 3.0.4.
+- Uncompress the downloaded file and open the terminal with a path inside that folder
+- run `./configure`, `make` and `make install`
