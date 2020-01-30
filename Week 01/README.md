@@ -28,13 +28,14 @@ Please find [this page](https://ccm.net/faq/30635-how-to-install-flex-and-bison-
 
 ### Lexer
 - Def. A lexer is a component to take a sequence of characters (program code) and generates several tokens to represent those inputs.
+  - Lexer: Text → Tokens
 
 - Overview
 <p align="center">
 <img src="img/lex.png" height="50%" width="50%">
 </p>
 
-- Remember, the following regular expressions are not the basic expressions, but they can be converted back to the basic as follows:
+- Remember, the following regular expressions are the extended expressions, but they can be converted back to the basic as follows:
 <p align="left">
 <img src="img/extregex.png" height="50%" width="50%">
 </p>
@@ -48,6 +49,7 @@ Please find [this page](https://ccm.net/faq/30635-how-to-install-flex-and-bison-
 
 ### Parser
 - Def. A parser is a component that takes the tokens produced by the lexer as input and builds a parse tree based on the input.
+  - Parser: Tokens → Parse Tree
 - There are two kinds of parser: LL and LR (Bison use this type of parser). The main difference between these two is the analysis strategy (parsing procedure).
 - Consider this simple grammar for calculator:
 ```
@@ -64,7 +66,7 @@ Note: E is the root symbol in this grammar.
 </p>
 
 ## Precedence and Associativity
-TODO:
+- Please check Lecture 01, slide 22 ~ 23.
 
 ## Flex Scanner (*.l files)
 **Skeleton (structure for a flex file):**
@@ -83,19 +85,22 @@ Additional C/C++ code
 
 **Creating a Regex(regular expression):**
 
-This is the syntax how to design regular expression:
+- This is the syntax how to design regular expression:
 ```c++
 %%
 <regular expression>        { <actions> }
 %%
 ```
-For example, suppose you want to create tokens for positive integers and plus sign?
+- For example, suppose we want to create regexes for positive integers and plus sign:
 ```c++
 %%
 [1-9]*[0-9]       { return INT; }
 "+"               { return PLUS; }
 %%
 ```
+
+- Here is [a table](https://www.cs.virginia.edu/~cr4bd/flex-manual/Patterns.html) of regular expressions that flex could support.
+
 ## Bison Parser (*.y files)
 **Skeleton (structure for a bison file):**
 ``` c++
@@ -114,7 +119,7 @@ Additional C/C++ code
 
 **Creating a grammar:**
 
-This is the syntax that generates the grammars and tokens:
+- This is the syntax that generates the grammars and tokens:
 
 ``` c++
 /****** Start Symbol ****/
@@ -148,6 +153,9 @@ Make sure you have `make.sh`, `<file_name>.l` and `<file_name>.y` in your folder
 1 + 3 * 4
 # click control + D to exit
 ```
+
+## Hands on: Boolean calculator
+**Q:** How could we build a calculator for Boolean operations?
 
 ## Sample thoughts to design Regex and Grammar
 **Question 1:**
