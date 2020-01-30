@@ -23,34 +23,42 @@ Please find [this page](https://samskalicky.wordpress.com/2014/01/25/tutorial-se
 Please find [this page](https://ccm.net/faq/30635-how-to-install-flex-and-bison-under-ubuntu) for the tutorial.
 
 ## Lexical analysis
-- 
-- To specify tokens, we use regular expressions (Regex) to represent some patterns.
+- Def. A analysis process of converting a sequence of characters into a sequence of tokens.
+- To specify tokens, we usually use regular expressions (Regex) to represent some patterns.
 
 ### Lexer
-- Def. --- A lexer is 
+- Def. A lexer is a component to take a sequence of characters (program code) and generates several tokens to represent those inputs.
 
 - Overview
 <p align="center">
 <img src="img/lex.png" height="50%" width="50%">
 </p>
 
-## Syntax analysis:
-**Q:** How to specify language syntax?
-  - Context free grammar (CFG), consists of set of rules (productions)
+- Remember, the following regular expressions are not basic expressions, but they can convert back to basic as follows:
+<p align="left">
+<img src="img/extregex.png" height="50%" width="50%">
+</p>
+
+## Syntax analysis
+- Def. A analysis process of analyzing the input sequence of tokens and  
+**Q:** How to specify a language syntax?
+  - Context free grammar (CFG) which consists of the set of rules (productions)
   - Uses special notation to represent (BNF – [Backus Naur Form](https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form)) 
 
 ### Parser
-- Def. --- A parser is a component that takes input string or text and builds a parse tree based on the input. 
+- Def. A parser is a component that takes the tokens produced by the lexer as input and builds a parse tree based on the input.
 - There are two kinds of parser: LL and LR (Bison use this type of parser). The main difference between these two is analysis strategy (parsing procedure).
-- Consider this grammar as an example:
+- Consider this simple grammar for calculator:
 ```
 E → E + T | T
 T → T ∗ F | F
 F → ( E ) | id
 Note: E is the root symbol in this grammar.
 ```
-**Q:** How to build a parse tree for parsing such a string contains `id * id`?
-Both two strategies will scan a string from left-to-right.
+**Q:** How to build a parse tree for parsing such a string contains `id * id`? Remember, both two strategies will scan a string from left-to-right.
+
+## Precedence and Associativity
+TODO:
 
 ## Flex Scanner (*.l files)
 **Skeleton (structure for a flex file):**
