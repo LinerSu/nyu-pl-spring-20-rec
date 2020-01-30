@@ -7,7 +7,7 @@ If you do not have installed homebrew, please do this following code in your ter
 ```bash
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
-If you have installed homebrew, do those two commands in your terminal:
+If you have installed homebrew, do these two commands in your terminal:
 ```bash
 brew install flex # to install flex
 brew install bison # to install bison
@@ -23,20 +23,18 @@ Please find [this page](https://ccm.net/faq/30635-how-to-install-flex-and-bison-
 
 ## Lexical analysis
 - Def. It is a process of converting a sequence of characters into a sequence of tokens.
-- To specify tokens, we usually use regular expressions (Regex) to represent some patterns.
+- To define tokens, we usually use regular expressions (Regex) to represent some patterns.
+- Remember, the following regular expressions are the extended expressions, but they can be converted back to the basic:
+<p align="left">
+<img src="img/extregex.png" height="30%" width="30%">
+</p>
 
 ### Lexer
 - Def. A lexer is a component to take a sequence of characters (program code) and generates several tokens to represent those inputs.
   - Lexer: Text → Tokens
-
 - Overview
 <p align="center">
 <img src="img/lex.png" height="50%" width="50%">
-</p>
-
-- Remember, the following regular expressions are the extended expressions, but they can be converted back to the basic as follows:
-<p align="left">
-<img src="img/extregex.png" height="30%" width="30%">
 </p>
 
 ## Syntax analysis
