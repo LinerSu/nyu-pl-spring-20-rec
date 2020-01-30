@@ -12,6 +12,8 @@ If you have installed homebrew, do those two commands in your terminal:
 brew install flex # to install flex
 brew install bison # to install bison
 ```
+https://ftp.gnu.org/gnu/bison/
+
 **Windows:**
 
 Please find [this page](https://samskalicky.wordpress.com/2014/01/25/tutorial-setting-up-flex-bison-on-windows/) for the tutorial.
@@ -20,8 +22,31 @@ Please find [this page](https://samskalicky.wordpress.com/2014/01/25/tutorial-se
 
 Please find [this page](https://ccm.net/faq/30635-how-to-install-flex-and-bison-under-ubuntu) for the tutorial.
 
+## Lexical analysis
+
+- To specify tokens, we use regular expressions (Regex) to represent some patterns.
+
+## Syntax analysis:
+**Q:** How to specify language syntax?
+  - Context free grammar (CFG), consists of set of rules(productions)
+  - Uses special notation (BNF – Backus Naur Form) 
+
+
+### Parser
+- Def. --- A parser is a component that takes input string or text and builds a parse tree based on the input. 
+- There are two kinds of parser: LL and LR (Bison use this type of parser). The main difference between these two is analysis strategy (parsing procedure).
+- Consider this grammar as an example:
+```
+E → E + T | T
+T → T ∗ F | F
+F → ( E ) | id
+Note: E is the root symbol in this grammar.
+```
+**Q:** How to build a parse tree for parsing such a string contains `id * id`?
+Both two strategies will scan a string from left-to-right.
+
 ## Flex Scanner (*.l files)
-**Skeleton(structure for a flex file):**
+**Skeleton (structure for a flex file):**
 ``` c++
 %{
 C/C++ declarations
@@ -40,13 +65,18 @@ Additional C code
 This is the syntax how to design regular expression:
 ```c++
 %%
-<regular expression>        {return <token>;}
-  /*example*/
-"+"                         {return PLUS;}
+<regular expression>        { <actions> }
+%%
+```
+For example, suppose you want to create tokens for positive integers and plus sign?
+```c++
+%%
+[1-9]*[0-9]       { return INT; }
+"+"               { return PLUS; }
 %%
 ```
 ## Bison Parser (*.y files)
-**Skeleton(structure for a bison file):**
+**Skeleton (structure for a bison file):**
 ``` c++
 %{
 C declarations
@@ -120,10 +150,10 @@ C*aC*eC*iC*oC*uC*
 
 Design a context-free grammar that accept this language:
 
-<img src="http://latex.codecogs.com/svg.latex?\{  a^i b^j c^k | i,j,k \geq 0 \, and \, i+j=k \}" border="0"/>
+<img src="http://latex.codecogs.com/svg.latex?\{  a^i b^j c^k \, | \, i,j,k \geq 0 \,\, and \,\, i=j+k \}" border="0"/>
 
 ###### Answer:
-The idea is that the number of occurences of c must equal to the sum of the occurences for a and b. That is, when we design this grammar, we have to make sure the grammar contains a | b with c at the same time. Here is one possible solution:
+The idea is that the number of occurences of c must equal to the sum of the occurences for a and b. That is, if a string contains `a`, it must also contains either `b` or `c`. Here is one possible solution:
 ```
 S -> aSc | X
 X -> aXb | ε
