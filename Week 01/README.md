@@ -1,6 +1,14 @@
 # Flex and Bison Tutorial
 
 ## Installation
+
+### Bison
+- Please go to [this page](https://ftp.gnu.org/gnu/bison/) and download the bison package with version 3.0.4.
+- Uncompress the downloaded file and open the terminal with a path inside that folder
+- run `./configure`, `make` and `make install`
+
+
+## Installation (Backup Plan)
 **Mac:**
 
 If you do not have installed homebrew, please do this following code in your terminal:
@@ -23,7 +31,7 @@ Please find [this page](https://samskalicky.wordpress.com/2014/01/25/tutorial-se
 Please find [this page](https://ccm.net/faq/30635-how-to-install-flex-and-bison-under-ubuntu) for the tutorial.
 
 ## Lexical analysis
-- Def. A analysis process of converting a sequence of characters into a sequence of tokens.
+- Def. It is a process of converting a sequence of characters into a sequence of tokens.
 - To specify tokens, we usually use regular expressions (Regex) to represent some patterns.
 
 ### Lexer
@@ -34,13 +42,14 @@ Please find [this page](https://ccm.net/faq/30635-how-to-install-flex-and-bison-
 <img src="img/lex.png" height="50%" width="50%">
 </p>
 
-- Remember, the following regular expressions are not basic expressions, but they can convert back to basic as follows:
+- Remember, the following regular expressions are not the basic expressions, but they can be converted back to the basic as follows:
 <p align="left">
 <img src="img/extregex.png" height="50%" width="50%">
 </p>
 
 ## Syntax analysis
-- Def. A analysis process of analyzing the input sequence of tokens and  
+- Def. It is a process of analyzing the input sequence of tokens and giving a structural representation of the input (usually represent by a abstract syntax tree or a parse tree)
+
 **Q:** How to specify a language syntax?
   - Context free grammar (CFG) which consists of the set of rules (productions)
   - Uses special notation to represent (BNF – [Backus Naur Form](https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form)) 
