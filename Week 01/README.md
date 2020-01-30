@@ -12,7 +12,6 @@ If you have installed homebrew, do those two commands in your terminal:
 brew install flex # to install flex
 brew install bison # to install bison
 ```
-https://ftp.gnu.org/gnu/bison/
 
 **Windows:**
 
@@ -37,7 +36,7 @@ Please find [this page](https://ccm.net/faq/30635-how-to-install-flex-and-bison-
 
 - Remember, the following regular expressions are the extended expressions, but they can be converted back to the basic as follows:
 <p align="left">
-<img src="img/extregex.png" height="50%" width="50%">
+<img src="img/extregex.png" height="30%" width="30%">
 </p>
 
 ## Syntax analysis
