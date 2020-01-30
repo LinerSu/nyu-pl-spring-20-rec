@@ -140,6 +140,7 @@ prog :  NUM PLUS NUM /* This is the same as CFG: prog -> NUM + NUM*/
 %%
 ```
 - Don't forget to put the main function in your parser at the end of the bison file.
+- A [tutorial](https://www.gnu.org/software/bison/manual/html_node/Rules.html) to design grammar rules.
 
 ## Calculator Example
 - Please download those examples through the NYU Classes.
