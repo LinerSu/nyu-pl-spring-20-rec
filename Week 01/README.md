@@ -23,14 +23,21 @@ Please find [this page](https://samskalicky.wordpress.com/2014/01/25/tutorial-se
 Please find [this page](https://ccm.net/faq/30635-how-to-install-flex-and-bison-under-ubuntu) for the tutorial.
 
 ## Lexical analysis
-
+- 
 - To specify tokens, we use regular expressions (Regex) to represent some patterns.
+
+### Lexer
+- Def. --- A lexer is 
+
+- Overview
+<p align="center">
+<img src="img/lex.png" height="50%" width="50%">
+</p>
 
 ## Syntax analysis:
 **Q:** How to specify language syntax?
-  - Context free grammar (CFG), consists of set of rules(productions)
-  - Uses special notation (BNF – Backus Naur Form) 
-
+  - Context free grammar (CFG), consists of set of rules (productions)
+  - Uses special notation to represent (BNF – [Backus Naur Form](https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form)) 
 
 ### Parser
 - Def. --- A parser is a component that takes input string or text and builds a parse tree based on the input. 
@@ -118,17 +125,19 @@ Don't forget to put the main function in your parser at the end of the file.
 ## How to run the program
 
 Make sure you have make.sh, <file_name>.l and <file_name>.y in your folder. Run the following code on the terminal:
-```
+```bash
 ./make.sh <file_name>
 ./a.out
 1 + 3
 # click control + D to exit
 ```
 
-## Sample Questions 
+## Sample thoughts to design Regex and Grammar
 **Question 1:**
 
-Design a regular expression for a language that accept all strings of lowercase letters containing the five english vowels (a,e,i,o,u) in order and each occurring exactly at once. For instance, a valid string is:
+Design a regular expression for a language that accept all strings of lowercase letters containing the five english vowels (a,e,i,o,u) in order and each occurring exactly at once.
+
+For instance, a valid string is:
 ```
 h a b e c i k o u m
 ```
@@ -137,11 +146,11 @@ and an invalid string is:
 s a a a a b e
 ```
 ###### Answer:
-The idea to think about this question is we have to specify string . For example, we create a format as:
+The idea to think about this question is designing a pattern to match five signle vowels in the alphabetical order. For example, we can create a format as:
 ```
-?a?e?i?o?u
+?a?e?i?o?u?
 ```
-Let ? be a character class to match non-vowels: 
+Let `?` be a character class to match non-vowels: 
 ```
 ? = [b-df-hj-np-t-v-z]
 ```
