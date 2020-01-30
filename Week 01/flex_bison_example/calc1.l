@@ -11,7 +11,6 @@
                         /* 'val' in 'yylval.val' is the field declared in
                            calc1.y with the %union directive. */
 [0-9]+                  { yylval.val = atoi(yytext); return NUM; }
-   /* Q: How to write regex for string containing letters */
 "+"                     { return PLUS; }
 "-"                     { return MINUS; }
 "*"                     { return MUL; }

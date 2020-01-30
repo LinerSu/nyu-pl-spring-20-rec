@@ -9,4 +9,4 @@ bison -d $1.y
 flex $1.l
 g++ lex.yy.c $1.tab.c
 
-rm lex.yy.c $1.tab.h $1.tab.c
+# rm lex.yy.c $1.tab.h $1.tab.c
