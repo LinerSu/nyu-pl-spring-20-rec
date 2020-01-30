@@ -125,7 +125,7 @@ Make sure you have make.sh, <file_name>.l and <file_name>.y in your folder. Run 
 # click control + D to exit
 ```
 
-## Exercise Questions
+## Sample Questions 
 **Question 1:**
 
 Design a regular expression for a language that accept all strings of lowercase letters containing the five english vowels (a,e,i,o,u) in order and each occurring exactly at once. For instance, a valid string is:
@@ -137,13 +137,17 @@ and an invalid string is:
 s a a a a b e
 ```
 ###### Answer:
-Let C be the character class 
+The idea to think about this question is we have to specify string . For example, we create a format as:
 ```
-C = [b-df-hj-np-t-v-z]
+?a?e?i?o?u
+```
+Let ? be a character class to match non-vowels: 
+```
+? = [b-df-hj-np-t-v-z]
 ```
 Then we could generate regex like this:
 ```
-C*aC*eC*iC*oC*uC*
+(?*)a(?*)e(?*)i(?*)o(?*)u(?*)
 ```
 
 **Question 2:**
@@ -153,7 +157,7 @@ Design a context-free grammar that accept this language:
 <img src="http://latex.codecogs.com/svg.latex?\{  a^i b^j c^k \, | \, i,j,k \geq 0 \,\, and \,\, i=j+k \}" border="0"/>
 
 ###### Answer:
-The idea is that the number of occurences of c must equal to the sum of the occurences for a and b. That is, if a string contains `a`, it must also contains either `b` or `c`. Here is one possible solution:
+The idea is that the number of occurences of `c` must equal to the sum of the occurences for `a` and `b`. That is, if a string contains `a`, it must also contains either `b` or `c`. Here is one possible solution:
 ```
 S -> aSc | X
 X -> aXb | ε
