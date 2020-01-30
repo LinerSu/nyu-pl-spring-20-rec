@@ -12,7 +12,6 @@ If you have installed homebrew, do those two commands in your terminal:
 brew install flex # to install flex
 brew install bison # to install bison
 ```
-https://ftp.gnu.org/gnu/bison/
 
 **Windows:**
 
@@ -37,7 +36,7 @@ Please find [this page](https://ccm.net/faq/30635-how-to-install-flex-and-bison-
 
 - Remember, the following regular expressions are the extended expressions, but they can be converted back to the basic as follows:
 <p align="left">
-<img src="img/extregex.png" height="50%" width="50%">
+<img src="img/extregex.png" height="30%" width="30%">
 </p>
 
 ## Syntax analysis
@@ -98,8 +97,8 @@ Additional C/C++ code
 "+"               { return PLUS; }
 %%
 ```
-
-- Here is [a table](https://www.cs.virginia.edu/~cr4bd/flex-manual/Patterns.html) of regular expressions that flex could support.
+- Here is one sample [table](https://www.cs.virginia.edu/~cr4bd/flex-manual/Patterns.html) of regular expressions that flex could support.
+- To test the correctness of regular expression, I recommend you to use a online [tool](https://regex101.com/).
 
 ## Bison Parser (*.y files)
 **Skeleton (structure for a bison file):**
@@ -139,7 +138,10 @@ prog :  NUM PLUS NUM /* This is the same as CFG: prog -> NUM + NUM*/
      ;
 %%
 ```
+- **Note that** Bison takes as input a context-free grammar specification
+- Here is a [website](https://web.stanford.edu/class/archive/cs/cs103/cs103.1156/tools/cfg/) for testing the correctness of CFG.
 - Don't forget to put the main function in your parser at the end of the bison file.
+- A [tutorial](https://www.gnu.org/software/bison/manual/html_node/Rules.html) to design bison grammar rules.
 
 ## Calculator Example
 - Please download those examples through the NYU Classes.
@@ -198,11 +200,9 @@ X -> aXb | ε
 ```
 
 ## Notes
-1. If you plan to learn more about flex and bison, please see [this manual](http://web.iitd.ac.in/~sumeet/flex__bison.pdf).
-2. Here is the [website](https://web.stanford.edu/class/archive/cs/cs103/cs103.1156/tools/cfg/) for testing the correctness of CFG.
-3. Here is one [website](https://regex101.com/) for testing the correctness of regular expression.
+- To learn more about flex and bison, please see [this manual](http://web.iitd.ac.in/~sumeet/flex__bison.pdf).
 
-## Installation
+## Installation (dep)
 
 ### Bison
 - Please go to [this page](https://ftp.gnu.org/gnu/bison/) and download the bison package with version 3.0.4.
