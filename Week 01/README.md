@@ -50,7 +50,7 @@ Please find [this page](https://ccm.net/faq/30635-how-to-install-flex-and-bison-
       - `A+` means one or more occurrences of `A`
     - Option: `[A]` represent zero or one occurrence of `A`
     - Grouping: `(A | B)` could group `A | B`
-  - EBNF form Regex could always be translated into Backus-Naur Form (BNF) format. My solution to convert above rules:
+  - EBNF form Regex could always be translated into Backus-Naur Form (BNF) format. Here is my solution to convert the rules above:
 <p align="center">
 <img src="img/ebnf.png" height="50%" width="50%">
 </p>
@@ -59,7 +59,7 @@ Please find [this page](https://ccm.net/faq/30635-how-to-install-flex-and-bison-
 - Def. A parser is a component that takes the tokens produced by the lexer as input and builds a parse tree based on the input.
   - Parser: Tokens → Parse Tree
 - There are two kinds of parser: LL and LR (Bison use this type of parser). The main difference between these two is the analysis strategy (parsing procedure).
-- Consider this simple grammar for calculator:
+- Consider this simple grammar for a numerical calculator:
 ```
 E → E + T | T
 T → T ∗ F | F
@@ -69,7 +69,7 @@ Note: E is the root symbol in this grammar.
 **Q:** How to build a parse tree for parsing such a string contains `id * id`? Remember, both two strategies will scan a string from left-to-right.
 
 ###### Answer:
-Here is my solution based on top down parsing. Remember, top down parsing procedure attempts to find a [left most derivation](https://en.wikipedia.org/wiki/Context-free_grammar#Derivations_and_syntax_trees) of the input string. That is, the left most derivation for string `id * id` is:
+Here is my solution by using the top down parsing. Remember, top down parsing procedure attempts to find a [left most derivation](https://en.wikipedia.org/wiki/Context-free_grammar#Derivations_and_syntax_trees) of the input string. For instance, the left most derivation for string `id * id` is:
 ```
 E => T => T * F => F * F => id * F => id * id
 ```
@@ -88,13 +88,13 @@ Next, you can generate a parse tree by the stepwise derivation process:
 ```
 Please read [this tutorial](https://www.tutorialspoint.com/automata_theory/context_free_grammar_introduction.htm) to help you understand the difference.
 
-- Thus, by a combination of lexer and parser, the whole process for those two analysis is:
+- To summarize, by a combination of lexer and parser, here is an outline of the whole process:
 <p align="center">
 <img src="img/process.png" height="50%" width="50%">
 </p>
 
 ## Precedence and Associativity
-- Please check Lecture 01, slide 22 ~ 23.
+- Please check the Lecture 01, slide 22 ~ 23.
 
 ## Flex Scanner (*.l files)
 **Skeleton (structure for a flex file):**
@@ -119,7 +119,7 @@ Additional C/C++ code
 <regular expression>        { <actions> }
 %%
 ```
-- For example, suppose we want to create regexes for positive integers and plus sign:
+- For example, this is how we create regexes for positive integers and plus sign:
 ```c++
 %%
 [1-9]*[0-9]       { return INT; }
@@ -169,7 +169,7 @@ prog :  NUM PLUS NUM /* This is the same as CFG: prog -> NUM + NUM*/
 ```
 - **Note that** Bison takes as input a context-free grammar specification
 - Here is a [website](https://web.stanford.edu/class/archive/cs/cs103/cs103.1156/tools/cfg/) for testing the correctness of CFG.
-- Don't forget to put the main function in your parser at the end of the bison file.
+- Don't forget to put the `main` function in your parser at the end of the bison file.
 - A [tutorial](https://www.gnu.org/software/bison/manual/html_node/Rules.html) to design bison grammar rules.
 
 ## Numerical Calculator Example
@@ -191,13 +191,13 @@ Make sure you have `make.sh`, `<file_name>.l` and `<file_name>.y` in your folder
 ###### Answer:
 1. Define tokens to represent terminals.
 
-For this question, we need to represent logical operators, boolean values, and parentheses. That is, we can define inside bison file:
+For this question, we need to represent logical operators, boolean values, and parentheses. Thus, we firstly need to define those tokens inside the bison file:
 ```bison
 %token LPAREN RPAREN
 %token AND OR NOT
 %token BOOL
 ```
-2. Next, in the flex file, we have to do a lexical analysis for generating the tokens. My answer is:
+2. Next, in the flex file, we have to do a lexical analysis for generating the tokens. My sample answer is:
 ```flex
 "TRUE"                  { return BOOL; }
 "FALSE"                 { return BOOL; }
@@ -207,14 +207,22 @@ For this question, we need to represent logical operators, boolean values, and p
 "("                     { return LPAREN; }
 ")"                     { return RPAREN; }
 ```
-Remember the flex syntax requires you to do some actions, those actions mean "Once your input sequence of characters match each regular expression, what is the next thing you need to do?". For our purpose, we need to return the corresponded token back to the parser.
-3. Build the grammar for the calculator
-4. Construct the semantics of your grammar
+Remember, the flex syntax requires you to do some actions, those actions mean "Once your input sequence of characters match each regular expression, what is the next thing you need to do?". For our purpose, we need to return the corresponded token back to the parser.
+3. Build the grammar for the calculator.
 
-5. Make some actions based on each rule.
-Take one example as explanation, if you have a sequences of tokens follow `expr ::= expr OR expr`, you have to 
-6. Don't forget about precedence and associative property!
-7. Run your solution for testing.
+For example, here is my ambiguous grammar for this question:
+```
+E → E || E
+  | E && E
+  | ! E
+  | ( E ) 
+  | TRUE | FALSE
+```
+4. Construct the semantics of your grammar. That is, for each grammar rule, we make some actions.
+
+Take one example as explanation, once we have a sequences of tokens follow `expr ::= expr OR expr`, we need to calculate the result by using the logical operator in C/C++ `$1 || $2`.
+5. Don't forget to consider operators' precedence and associative property!
+6. Run the solution for testing.
 
 ## Sample thoughts to design Regex and Grammar
 **Question 1:**
