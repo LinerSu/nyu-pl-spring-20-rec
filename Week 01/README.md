@@ -43,6 +43,17 @@ Please find [this page](https://ccm.net/faq/30635-how-to-install-flex-and-bison-
 **Q:** How to specify a language syntax?
   - Context free grammar (CFG) which consists of the set of rules (productions)
   - Uses special notation to represent (BNF – [Backus Naur Form](https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form)) 
+- Extended-BNF
+  - Given two nonterminals `A` `B`, the three extended rules for Extended-BNF are:
+    - Repetition: 
+      - `{A}` and `A*` represent zero or more occurrences of `A`
+      - `A+` means one or more occurrences of `A`
+    - Option: `[A]` represent zero or one occurrence of `A`
+    - Grouping: `(A | B)` could group `A | B`
+  - EBNF form Regex could always be translated into Backus-Naur Form (BNF) format. My solution to convert above rules:
+<p align="center">
+<img src="img/ebnf.png" height="50%" width="50%">
+</p>
 
 ### Parser
 - Def. A parser is a component that takes the tokens produced by the lexer as input and builds a parse tree based on the input.
@@ -56,6 +67,26 @@ F → ( E ) | id
 Note: E is the root symbol in this grammar.
 ```
 **Q:** How to build a parse tree for parsing such a string contains `id * id`? Remember, both two strategies will scan a string from left-to-right.
+
+###### Answer:
+Here is my solution based on top down parsing. Remember, top down parsing procedure attempts to find a [left most derivation](https://en.wikipedia.org/wiki/Context-free_grammar#Derivations_and_syntax_trees) of the input string. That is, the left most derivation for string `id * id` is:
+```
+E => T => T * F => F * F => id * F => id * id
+```
+Next, you can generate a parse tree by the stepwise derivation process:
+```
+1.    2.   3.       4.         5.
+   E     E     E         E            E          E
+         |     |         |            |          |           
+         T     T         T            T          T
+             / | \     / | \        / | \      / | \
+            T  *  F   T  *  F      T  *  F    T  *  F
+                      |            |          |     |
+                      F            F          F     id
+                                   |          |
+                                   id         id
+```
+Please read [this tutorial](https://www.tutorialspoint.com/automata_theory/context_free_grammar_introduction.htm) to help you understand the difference.
 
 - Thus, by a combination of lexer and parser, the whole process for those two analysis is:
 <p align="center">
@@ -95,7 +126,7 @@ Additional C/C++ code
 "+"               { return PLUS; }
 %%
 ```
-- Here is one sample [table](https://www.cs.virginia.edu/~cr4bd/flex-manual/Patterns.html) of regular expressions that flex could support.
+- Here is one reference [table](https://www.cs.virginia.edu/~cr4bd/flex-manual/Patterns.html) of regular expressions that flex could support.
 - To test the correctness of regular expression, I recommend you to use a online [tool](https://regex101.com/).
 
 ## Bison Parser (*.y files)
@@ -141,7 +172,7 @@ prog :  NUM PLUS NUM /* This is the same as CFG: prog -> NUM + NUM*/
 - Don't forget to put the main function in your parser at the end of the bison file.
 - A [tutorial](https://www.gnu.org/software/bison/manual/html_node/Rules.html) to design bison grammar rules.
 
-## Calculator Example
+## Numerical Calculator Example
 - Please download those examples through the NYU Classes.
 
 ## How to run the program
@@ -154,8 +185,36 @@ Make sure you have `make.sh`, `<file_name>.l` and `<file_name>.y` in your folder
 # click control + D to exit
 ```
 
-## Hands on: Boolean calculator
-**Q:** How could we build a calculator for Boolean operations?
+## Design and Implement a Boolean calculator
+**Q:** If you want to evaluate a boolean expression like `((TRUE)&&!(FALSE||TRUE))`. How could we build a calculator for such Boolean operations through flex and bison?
+
+###### Answer:
+1. Define tokens to represent terminals.
+
+For this question, we need to represent logical operators, boolean values, and parentheses. That is, we can define inside bison file:
+```bison
+%token LPAREN RPAREN
+%token AND OR NOT
+%token BOOL
+```
+2. Next, in the flex file, we have to do a lexical analysis for generating the tokens. My answer is:
+```flex
+"TRUE"                  { return BOOL; }
+"FALSE"                 { return BOOL; }
+"&&"                    { return AND; }
+"||"                    { return OR; }
+"!"                     { return NOT; }
+"("                     { return LPAREN; }
+")"                     { return RPAREN; }
+```
+Remember the flex syntax requires you to do some actions, those actions mean "Once your input sequence of characters match each regular expression, what is the next thing you need to do?". For our purpose, we need to return the corresponded token back to the parser.
+3. Build the grammar for the calculator
+4. Construct the semantics of your grammar
+
+5. Make some actions based on each rule.
+Take one example as explanation, if you have a sequences of tokens follow `expr ::= expr OR expr`, you have to 
+6. Don't forget about precedence and associative property!
+7. Run your solution for testing.
 
 ## Sample thoughts to design Regex and Grammar
 **Question 1:**
@@ -199,10 +258,3 @@ X -> aXb | ε
 
 ## Notes
 - To learn more about flex and bison, please see [this manual](http://web.iitd.ac.in/~sumeet/flex__bison.pdf).
-
-## Installation (dep)
-
-### Bison
-- Please go to [this page](https://ftp.gnu.org/gnu/bison/) and download the bison package with version 3.0.4.
-- Uncompress the downloaded file and open the terminal with a path inside that folder
-- run `./configure`, `make` and `make install`
