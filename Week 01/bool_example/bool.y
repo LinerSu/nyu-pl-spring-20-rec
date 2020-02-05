@@ -50,4 +50,4 @@ std::string printer (bool x) {
     return x ? "true" : "false";
 }
 
-// ((TRUE)&&!(FALSE||TRUE))
+// ((TRUE)&&!(FALSE||TRUE)) = false

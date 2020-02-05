@@ -5,6 +5,7 @@
 %}
 
 %option noyywrap
+/* %option noyywrap allows lexer stop lexing when reach first end-of-file */
 
 %%
 

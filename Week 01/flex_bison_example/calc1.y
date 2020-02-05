@@ -4,7 +4,7 @@
 int yylex(); // A function that is to be generated and provided by flex,
              // which returns a next token when called repeatedly.
 int yyerror(const char *p) { std::cerr << "error: " << p << std::endl; };
-//void printer (int val_par);
+void printer (int val_par);
 %}
 
 %union { /* Declare the collection of data types that semantic values may have  */
@@ -24,7 +24,7 @@ int yyerror(const char *p) { std::cerr << "error: " << p << std::endl; };
 
 %%
 
-prog : expr                             {std::cout<<$1<<std::endl;}
+prog : expr                             {printer($1);}
      ;
 
 expr : expr PLUS term                   { $$ = $1 + $3; }
