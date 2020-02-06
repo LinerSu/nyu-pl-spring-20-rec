@@ -9,7 +9,7 @@ int i = 1; // Name value
 void my_func () {} // Name function
 typedef int myint; // Name type
 ```
-- Binding time: the time to make this association
+- Binding time: the time ([program lifecycle phase](https://en.wikipedia.org/wiki/Program_lifecycle_phase)) to make this association
 
 ### Early Binding (Static)
 - Def. name binding performed before the program is running (at compile time).
@@ -60,6 +60,7 @@ cout<<"The x outside f is: "<<x<<endl;
 ### Static / Lexical Scoping
 - Def. binding of a name is determined by rules that refer only to the program text (i.e. its syntactic structure)
 - The scope for a variable depends on the code structure.
+
 **Q:** How do we know a variable's scoping by using static scoping approach?
 
 ```c++
@@ -76,6 +77,7 @@ void f () {
     y = y - x;
 }
 ```
+- Typically, compiled programming languages (C++, Java) use parse tree to detect scoping error during compile time, and interpreted languages (Python) use stack (via static link) to check variable's scoping in the run time.
 
 ### Dynamic Scoping
 - Def. binding of a name is given by the most recent declaration encountered during run-time.
@@ -92,11 +94,17 @@ void g() {
     int x = 1;
     f();
 }
+
+g();
 ```
 
+- In dynamic programming languages, there are two ways to implement dynamic scoping:
+	- Deep access (via dynamic link): during run time, traverse the dynamic chain
+	- Shallow access: use one stack for each variable name
+- But dynamic scoping is not a good idea for developing.
+
 ### Scoping examples
-To help you understand the difference, consider this 
-C++ code:
+To help you understand the difference, consider this C++ code:
 ```c++
 int x = 2; // This is not a global variabe
 
@@ -118,21 +126,22 @@ printf("function g returns %d", g());
 printf("function h returns %d", h());
 ```
 1. Assume program will run under static scoping, what does this program print?
-<details><summary>Solution</summary>
-<p>
+	<details><summary>Solution</summary>
+	<p>
 
-     ```
-		function g returns 6
-		function h returns 6
-	  ```
+	```
+	function g returns 6
+	function h returns 6
+	```
      </p></details>
 
 2. Assume program will run under dynamic scoping, what does this program print?
-<details><summary>Solution</summary>
-<p>
+	<details><summary>Solution</summary>
+	<p>
 
-     ```
-		function g returns 6
-		function h returns 9
-	  ```
+        ```
+	function g returns 6
+	function h returns 9
+	```
      </p></details>
+     
