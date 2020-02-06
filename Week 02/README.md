@@ -85,17 +85,17 @@ void f () {
 
 **Q:** How to determine scoping of each variable under dynamic scoping?
 
-```c++
-void f() {
-    cout<<x<<endl;
-}
+```lisp
+(defun f ()
+    (print x)
+)
 
-void g() {
-    int x = 1;
-    f();
-}
+(defun g()
+    (defvar x 2)
+    (f)
+)
 
-g();
+(g)
 ```
 
 - There are two ways to implement dynamic scoping:
