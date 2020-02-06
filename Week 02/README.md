@@ -77,7 +77,7 @@ void f () {
     y = y - x;
 }
 ```
-- Typically, compiled programming languages (C++, Java) use parse tree to detect scoping error during compile time, and interpreted languages (Python) use stack (via static link) to check variable's scoping in the run time.
+- Typically, compiled programming languages (C++, Java) use (parse) tree structure to detect scoping error during compile time, and interpreted languages (Python) use stack (via static link) to check variable's scoping in the run time.
 
 ### Dynamic Scoping
 - Def. binding of a name is given by the most recent declaration encountered during run-time.
@@ -145,3 +145,56 @@ printf("function h returns %d", h());
 	```
      </p></details>
      
+## Control Flow
+- Def. the order of execution for individual statements, function calls.
+
+### Sequencing
+- Def. execute statements or evaluate expression in sequential order.
+- Statement vs. expression:
+	- Expression is a combination of one or more explicit identifiers, literals and operators.
+```c++
+1 + 2 // Arithmetic expression
+func_call(3) // Callsite expression
+```
+	- Statement is the smallest element that expresses some action to be carried out.
+```c++
+int x; // Declaration Statement
+x = 1; // Assignment Statement
+if (true) {x;} else {0;} // If statement
+for (int i = 0;i<10;i++){x++;} // For loop statement
+return x; // Return statement
+{ x = 3; x = x + 1;} // Block Statement
+```
+	- We could say an expression is part of a statement.
+- Evaluate expression
+- Order of value computation
+	- We have learned precedence and associativity last week, those guide compiler to do computation.
+	- Do not confuse order of value computation with order of evaluation.
+
+
+### Selection
+- Def. execute one of two statements according to the value of a Boolean expression.
+- Short circuit evaluation: given a Boolean expression, the second argument will not be evaluated if the first condition meets.
+- Consider the following C++ code:
+```c++
+void f () {
+    bool x = true;
+    bool y = false;
+    if (x || (x && y)) {
+        cout<<"Pass here!"<<endl;
+        return;
+    }
+}
+
+f();
+```
+
+### Iteration
+- Def. execute a piece of statements repeatedly.
+```c++
+while (condition) statement
+```
+	- `condition` is evaluated at each iteration
+	- if it evaluates to `true`, we execute `statement`
+	- otherwise, if `false`, we exit the loop.
+- Breaking: `break` allows you to jump out of the loop early.
