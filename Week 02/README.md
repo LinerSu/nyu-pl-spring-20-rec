@@ -139,7 +139,7 @@ printf("function h returns %d", h());
 	<details><summary>Solution</summary>
 	<p>
 
-        ```
+	```
 	function g returns 6
 	function h returns 9
 	```
