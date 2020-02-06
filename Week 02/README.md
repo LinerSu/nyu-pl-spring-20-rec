@@ -58,8 +58,8 @@ cout<<"The x outside f is: "<<x<<endl;
 ```
 
 ### Static / Lexical Scoping
-- Def. binding of a name is determined by rules that refer only to the program text (i.e. its syntactic structure)
-- The scope for a variable depends on the code structure.
+- Def. binding of a name is determined by rules that refer only to the program text.
+- Thus, the scope of a variable depends on the code (syntactic) structure.
 
 **Q:** How do we know a variable's scoping by using static scoping approach?
 
@@ -77,16 +77,16 @@ void f () {
     y = y - x;
 }
 ```
-- Typically, compiled programming languages (C++, Java) use (parse) tree structure to detect scoping error during compile time, and interpreted languages (Python) use stack (via static link) to check variable's scoping in the run time.
+- Typically, compiled programming languages (e.g. C++, Java) use (parse) tree structure to detect scoping error during the compile time, and interpreted languages (e.g. Python) use stack (via static link) to check variable's scoping in the run time.
 
 ### Dynamic Scoping
-- Def. binding of a name is given by the most recent declaration encountered during run-time.
-- The variable's scope is depending on the execution order.
+- Def. binding of a name is given by the most recent declaration encountered during the run-time.
+- That means: the variable's scope is depending on the execution order.
 
 **Q:** How to determine scoping of each variable under dynamic scoping?
 
 ```c++
-void f () {
+void f() {
     cout<<x<<endl;
 }
 
@@ -98,10 +98,10 @@ void g() {
 g();
 ```
 
-- In dynamic programming languages, there are two ways to implement dynamic scoping:
-	- Deep access (via dynamic link): during run time, traverse the dynamic chain
-	- Shallow access: use one stack for each variable name
-- But dynamic scoping is not a good idea for developing.
+- There are two ways to implement dynamic scoping:
+	- Deep access (via dynamic link): during the run time, the compiler traverses the dynamic chain of stacks to look up the variables.
+	- Shallow access: use one stack for each variable name.
+- But using dynamic scoping is not a better idea than using static for developing.
 
 ### Scoping examples
 To help you understand the difference, consider this C++ code:
@@ -146,31 +146,29 @@ printf("function h returns %d", h());
      </p></details>
      
 ## Control Flow
-- Def. the order of execution for individual statements, function calls.
+- Def. the order of execution for individual statements, expressions, or function calls.
 
 ### Sequencing
 - Def. execute statements or evaluate expression in sequential order.
 - Statement vs. expression:
 	- Expression is a combination of one or more explicit identifiers, literals and operators.
-```c++
-1 + 2 // Arithmetic expression
-func_call(3) // Callsite expression
-```
+		```c++
+		1 + 2 // Arithmetic expression
+		func_call(3) // Callsite expression
+		```
 	- Statement is the smallest element that expresses some action to be carried out.
-```c++
-int x; // Declaration Statement
-x = 1; // Assignment Statement
-if (true) {x;} else {0;} // If statement
-for (int i = 0;i<10;i++){x++;} // For loop statement
-return x; // Return statement
-{ x = 3; x = x + 1;} // Block Statement
-```
+		```c++
+		int x; // Declaration Statement
+		x = 1; // Assignment Statement
+		if (true) {x;} else {0;} // If statement
+		for (int i = 0;i<10;i++){x++;} // For loop statement
+		return x; // Return statement
+		{ x = 3; x = x + 1;} // Block Statement
+		```
 	- We could say an expression is part of a statement.
-- Evaluate expression
-- Order of value computation
-	- We have learned precedence and associativity last week, those guide compiler to do computation.
+- Order of value computation vs. Order of evaluation
+	- We have learned the precedence and associativity last week, those guide the compiler to do each computation.
 	- Do not confuse order of value computation with order of evaluation.
-
 
 ### Selection
 - Def. execute one of two statements according to the value of a Boolean expression.
@@ -191,9 +189,9 @@ f();
 
 ### Iteration
 - Def. execute a piece of statements repeatedly.
-```c++
-while (condition) statement
-```
+	```c++
+	while (condition) statement
+	```
 	- `condition` is evaluated at each iteration
 	- if it evaluates to `true`, we execute `statement`
 	- otherwise, if `false`, we exit the loop.
