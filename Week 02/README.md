@@ -32,9 +32,28 @@ for i in range(3):
         return i + x
     func_lsts.append(adder)
 
-print('{}'.format(str([adr(2) for adr in func_lsts])))
+print('{}'.format(str([adr(2) for adr in func_lsts]))) # [4, 4, 4] 
 ```
 **Q:** What does this program output?
+- Here, we define a function `adder` that is a nested function. When you call this nested function, the current environement might differ than defined. So you need a data structure to store those variable binding or value. The closure is a technique to handle this situation.
+- Typically, closure is a function object that remember values in enclosing.
+- Python's closures are late binding. This means that the values of variables used in closures are bounded at the time the inner function is called.
+	- Before `adr(2)` is called, `i` is not bounded to the function `adder`. So, you can imagine each function object contains a function like `def adder(x): return i + x` but not the `def adder(x): return 0/1/2 + x`.
+	- Once `adr(2)` has benn called, the last assignement for `i` is used, which is `2`.
+- Try to add the following code after the `print` to check it:
+```python
+print(i) # 2
+i = 4
+g = func_lsts[0]
+print(g(2)) # 4 + 2 = 6
+```
+- More generally, closure is usually created inside a function for the inner function, for instance:
+```python
+def create_adders():
+    return [lambda x : i + x for i in range(3)]
+
+print('{}'.format(str([adr(2) for adr in create_adders()]))) # [4, 4, 4] 
+```
 
 ## Scoping
 - Def. A scope is the region of program text where a binding is active.
@@ -56,6 +75,7 @@ void f () {
 f();
 cout<<"The x outside f is: "<<x<<endl;
 ```
+- To be clarified, the `x` we defined outside the `f` has file scope (informally we usually call "global" scope). Here is more [general way](https://en.wikipedia.org/wiki/Global_variable#C_and_C++) to define one real global vairable in C/C++.
 
 ### Static / Lexical Scoping
 - Def. binding of a name is determined by rules that refer only to the program text.
@@ -78,6 +98,10 @@ void f () {
 }
 ```
 - Typically, compiled programming languages (e.g. C++, Java) use (parse) tree structure to detect scoping error during the compile time, and interpreted languages (e.g. Python) use stack (via static link) to check variable's scoping in the run time.
+- Here is the real (simplified) parse tree for the program:
+<p align="center">
+<img src="img/parset.png" height="50%" width="50%">
+</p>
 
 ### Dynamic Scoping
 - Def. binding of a name is given by the most recent declaration encountered during the run-time.
@@ -169,6 +193,20 @@ printf("function h returns %d", h());
 - Order of value computation vs. Order of evaluation
 	- We have learned the precedence and associativity last week, those guide the compiler to do each computation.
 	- Do not confuse order of value computation with order of evaluation.
+- Back to `5 + 2 * 3` example:
+```
+          E
+       /  |   \         
+      E   +    T
+      |      / | \
+      T     T  *  F
+      |     |     |
+      F     F     3
+      |     |
+      5     2
+```
+- It is true that we should follow the precedence and associativity rule to get the correct result `5 + (2 * 3) = 11`. However, the compiler could evaluate `5`, `2` or `3` in any order, it won't affect the final computation.
+- Typically, the order of evaluation follows the preorder traversal.
 
 ### Selection
 - Def. execute one of two statements according to the value of a Boolean expression.
