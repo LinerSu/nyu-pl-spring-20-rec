@@ -47,7 +47,7 @@ i = 4
 g = func_lsts[0]
 print(g(2)) # 4 + 2 = 6
 ```
-- More generally, closure is usually created inside a function for the inner function, for instance:
+- More generally, closure is created inside a function for the inner function, for instance:
 ```python
 def create_adders():
     return [lambda x : i + x for i in range(3)]
@@ -193,20 +193,20 @@ printf("function h returns %d", h());
 - Order of value computation vs. Order of evaluation
 	- We have learned the precedence and associativity last week, those guide the compiler to do each computation.
 	- Do not confuse order of value computation with order of evaluation.
-- Back to `5 + 2 * 3` example:
-```
-          E
-       /  |   \         
-      E   +    T
-      |      / | \
-      T     T  *  F
-      |     |     |
-      F     F     3
-      |     |
-      5     2
-```
-- It is true that we should follow the precedence and associativity rule to get the correct result `5 + (2 * 3) = 11`. However, the compiler could evaluate `5`, `2` or `3` in any order, it won't affect the final computation.
-- Typically, the order of evaluation follows the preorder traversal.
+	- Back to `5 + 2 * 3` example:
+		```
+			  E
+		       /  |   \         
+		      E   +    T
+		      |      / | \
+		      T     T  *  F
+		      |     |     |
+		      F     F     3
+		      |     |
+		      5     2
+		```
+		- It is true that we should follow the precedence and associativity rule to get the correct result `5 + (2 * 3) = 11`. However, the compiler could evaluate `5`, `2` or `3` in any order, it won't affect the final computation.
+		- Typically, the order of evaluation follows the preorder traversal.
 
 ### Selection
 - Def. execute one of two statements according to the value of a Boolean expression.
@@ -216,7 +216,7 @@ printf("function h returns %d", h());
 void f () {
     bool x = true;
     bool y = false;
-    if (x || (x && y)) {
+    if (x || (1/0)) {
         cout<<"Pass here!"<<endl;
         return;
     }
@@ -234,3 +234,13 @@ f();
 	- if it evaluates to `true`, we execute `statement`
 	- otherwise, if `false`, we exit the loop.
 - Breaking: `break` allows you to jump out of the loop early.
+```c++
+void f () {
+    int i = 0;
+    while (i < 10) {
+        if (i == 5) break;
+        i ++;
+    }
+    printf("i: %d", i); // i: 5
+}
+```
