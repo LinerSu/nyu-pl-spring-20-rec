@@ -100,8 +100,10 @@ void f () {
 - Typically, compiled programming languages (e.g. C++, Java) use (parse) tree structure to detect scoping error during the compile time, and interpreted languages (e.g. Python) use stack (via static link) to check variable's scoping in the run time.
 - Here is the real (simplified) parse tree for the program:
 <p align="center">
-<img src="img/parset.png" height="50%" width="50%">
+<img src="img/parset.png" height="70%" width="70%">
 </p>
+- Each intermidiate node indicates the current variabls' scoping.
+- To get these results, the compiler will run the preorder traversal algorithm.
 
 ### Dynamic Scoping
 - Def. binding of a name is given by the most recent declaration encountered during the run-time.
