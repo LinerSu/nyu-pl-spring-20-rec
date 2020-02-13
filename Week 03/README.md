@@ -13,12 +13,34 @@
 
 ## Activation Records / Stack Frames
 - Def. the piece of memory on the stack used for storing information of a particular function call.
-- Layouts: TODOOOO!
+- Layouts (in general):
+```
+|                          |
+├──────────────────────────┤<- stack pointer
+| Local Data               |
+├──────────────────────────┤
+| Saved registers (Callee) |
+├──────────────────────────┤
+| Saved fp (static link)   |
+├──────────────────────────┤
+| Saved fp (dynamic link)  |
+|==========================|<- frame pointer
+| Return address           |
+├──────────────────────────┤
+| Actual Parameters        |
+├──────────────────────────┤
+| Saved registers (Caller) |
+├──────────────────────────┤
+| Caller activation record |
+|==========================|
+| ...                      |
+```
+	- If we use a different calling convention, the layout of a frame might differ. 
 - Stack Pointer (SP): points to the top of the stack. That is, it holds the address of the last item put on the stack.
 - Components
 	- Return Address: store the return address that resumes at the point in the code after the call.
 	- Frame Pointer (FP): a pointer that points into the activation record of a subroutine so that any objects allocated on the stack can be referred with a static offset from the frame pointer.
-	- Parameter: store the data provided as input to the subroutine on the stack.
+	- Local Data: a space to allow the subroutine to store local vairables.
 	- Static Link: a pointer that points to the activation record of the lexically surrounding subroutine. The value that is stored here is the address of the frame of the procedure that statically encloses the current procedure.
 	- Dynamic Link: a pointer that points to the frame of the caller. The value that is stored here is the address of its caller’s frame on the stack.
 		- What is the difference? Consider the following Python example:
@@ -89,75 +111,103 @@ int a = 0, b = 0;
 func(a, b); // a and b are actual parameters
 func(a+b, atoi("10")); // a+b and atoi("10") are acutual parameters
 ```
-- Value assignment
-	- l-value: a value for expression that could be stored in memory.
-		- E.g. Variable expression.
-	- r-value: a temporary value for expression that is stored in register.
-		- E.g. Arithmetic expression.
-	- In general, we could not do an assignment to an expression who has a r-value.
-	```c++
-		int x = 10 + 20;
-		/*
-			expression "10 + 20" has a r-value 30.
-			After the execution, 'x' contains a l-value 30.
-		*/
-		10 = x; // Get error!
+- Assignment and Parameter
+	- Mutable parameter: a formal parameter could do assignment.
+	- Immutable parameter: a formal parameter only allows to refer the value.
+	- In general, we could not do an assignment to a parameter who is immutable.
+	```scala
+		def f(x: Int):Int = {
+		x = x + 1 // reassignment to val
+	return x
+}
 	```
-	- In Ada, we have `input`, `output` and `input/output` parameter.
+	- In Scala, every parameter is immutable (val object).
+	- In Ada, we have `in`, `out` and `in out` parameter.
 
 ### Evaluation strategy
 
 #### Strict Evaluation
-- Def. the actual is evaluated before the function is evaluated.
+- Def. the actual parameter (actual) is evaluated before the function is evaluated.
 - Call by value
-  - Formal is bound to copy of value of actual
-  - Assignment to formal, if allowed, changes value at location of local copy, not at location of the actual that stores the original value.
+  - Formal parameter (formal) is bound to copy of value of actual
+  - If you do an assignment to formal, it only changes the value of formal, but not the actual.
   - Language specified by default: C/C++, Java.
 - Call by reference
   - Formal is bound to location of actual, forming an alias
-  - Assignment to formal, if allowed, also affects actual
-  - Only works if actual evaluates to a l-value (l-value: value refers to memory location)
+  - If you do an assignment to formal, it changes the value of actual.
   - Language supported: C++, C#.
 
 #### Lazy Evaluation
 - Def. the actual is evaluated only if it needs to be evaluated.
 - Call by name
-  - Formal is bound to *expression* of actual
-  - Expression is evaluated **each time** formal is read when executing
-  - Not common for doing an assginment in recent languages, usually you cannot assign a value to formal.
-  	- Formal parameter has r-value. 
+  - Formal is bound to the *expression* of actual
+  - Expression is evaluated **each time** when the formal is used during execution
+  - In general, you cannot assign a value to formal. Formal parameter using call-by-name is immutable.  
   - Language supported: Algol 60, Scala.
 - Call by need
-  - Formal is bound to *expression* of actual
-  - Expression is evaluated **only the first time** its value is needed
+  - Formal is bound to the *expression* of actual
+  - Expression is evaluated **only once** when the formal is used at the first time.
   - **Subsequent reads** from the formal will use the value computed earlier.
-  - Not common for doing an assginment in recent languages, usually you cannot assign a value to formal.
-  	- Formal parameter has r-value. 
+  - In general, you cannot assign a value to formal. Formal parameter using call-by-need is immutable. 
   - Language supported: Haskell, R.
   
 ####  How to calculate the values of several variables in the parameter passing modes? 
 
-1. Call by value --- values are copied by actual parameters when they pass. For instance, in c: TODOOO
+1. Call by value --- values are copied by actual parameters when they pass. For instance, in c:
+	```c
+	int sum (int a, int b) {
+		int c = a + b;
+		return c;
+	}
+	
+	printf("result: %d\n", sum(1, 2));
+	```
 
-2. Call by reference --- formal parameter is the actual one (change formal also change actual). For example, in C++: TODOOOO
+2. Call by reference --- formal parameter is the actual one. If you do assignement to the formal, it also affect the value of actual. For example, in C++:
+	```c++
+	void my_swap (int& x, int& y) {
+	    int temp;
+	    temp = x;
+	    x = y;
+	    y = temp;
+	}
+	
+	int a = 3, b = 4;
+	my_swap(a, b);
+	cout<<"a: "<<a<<"; b: "<<b<<endl; // a: 4, b: 3
+	```
 
-3. Call by name --- formal parameter is bound by the expression (execute formal by executing the expression). The expression is evaluated until the parameter will be used. That is, whenever the parameter is used, the expression will be evaluated. Take a Scala code as an example: TODOOOO
+3. Call by name --- formal parameter is bound by the expression (execute formal by executing the expression). The expression is evaluated until the parameter will be used. That is, whenever the parameter is used, the expression will be evaluated. Take a Scala code as an example:
+	```scala
+	def f(x: Int, h: => Unit): Unit = {
+	  for(a <- 1 to x){
+	    h;
+	  }
+	}
+	
+	f(3, println("Eval!"))
+	```
 
-4. Call by need --- At first, formal parameter is bound by the expression (execute formal by executing the expression). The expression is evaluated until it will be used firstly. After that used, the parameter is bound by the evaluated result. In other words, the expression is evaluated for the first time, but the remianed uses of that parameter will be treated as a normal value. Consider the following Haskell code: TODOOOO
+4. Call by need --- At first, formal parameter is bound by the expression (execute formal by executing the expression). The expression is evaluated when the formal will be used firstly. After that used, the parameter is bound by the evaluated result. In other words, the expression is evaluated only once, and the remianed uses of that parameter will be treated as a value.
 
-#### Sample Question
+#### Differences Between Strategy
 Consider this following Pseudo code:
 ```scala
-def f(x: Int, y: Int) {
+Int incr(Int& k) { // call by reference
+	k = k + 1
+	return k
+}
+
+Void f(Int x, Int y) {
   x = y + 1
   println(x + y)
 }
 
-var z = 1
-f(z, {z = z + 1; z}) // {z = z + 1; z} means increase z by 1 and return z
+Int z = 1
+f(z, incr(z))
 println(z)
 ```
-**Q:** What does this program print if we make the following assumptions about the parameter passing modes for the parameters `x` and `y` of `f`:
+**Q:** What does this program print if we make the following assumptions about the parameter passing modes for the parameters `x` and `y` of the function `f`:
 
 1. `x` and `y` using call-by-value parameter
 	<details><summary>Solution</summary>
@@ -199,21 +249,30 @@ println(z)
 	```
      </p></details>
 
-- Here are more examples to practice, please check [this page](https://courses.cs.washington.edu/courses/cse341/03wi/imperative/parameters.html).
-
 ### First-class functions and Parameter Passing for functions (Optional)
 - In some programming languages (usually functional languages), they treat functions as [first-class citizen](https://en.wikipedia.org/wiki/First-class_citizen).
-- The question is how could nested function access some local variables that are enclosing scopes when we call it.
+- Thus, those languages support a subroutine to pass a function as a parameter or to return a function.
+- However, function allows to access some local variables defined in an enclosing scope.
+- The question is if we pass a function or return a function, how could we remian the environment of that function declared.
+	```python
+	def create_adder():
+    i = 3 # Local variable
+    return lambda x : i + x
+
+adder = create_adder()
+# print(i) error!
+print(adder(2)) # 5 
+	```
 - Closure: a record storing function (reference) together with an environment.
-- Environment: a mapping associating each free variable of the function (variables that are used locally, but defined in an enclosing scope) with the value or reference to which the name was bound when the closure was created.
+- Environment: a mapping associating each free variable of the function with the value or reference to which the name was bound when the closure was created.
 - Free variable: variable is not defined by the current function.
+- Two ways to do the environment binding.
 
 #### Evaluation strategy
 
-1. Deep binding: When an inner function is passed as an argument, it will create a closure that storing function's information and environment. When it is called, the referencing environment is restored from when the closure of that function created.
+1. Deep binding: When an function is passed as an argument / returned by the outer function, it will create a closure that storing function's information and environment. When it is called, the referencing environment is restored.
 
-
-2. Shallow binding: When the inner function is called, it uses the current referencing environment at the call site.
+2. Shallow binding: When the function is called, it uses the current referencing environment at the call site. This relies on the current binding of the variable can always be found.
 
 #### Example
 - Consider the following Python code example:
@@ -262,7 +321,7 @@ def f(x, h):
 x = 3
 
 def z(b):
-	return  b + x # 3
+	return  b + x
 
 print(f(0, z)(4))
 ```
