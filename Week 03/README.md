@@ -92,10 +92,10 @@ int fib (int n) {
 - Def. A tree structure to represent the sequence of steps. Execution corresponds to depth-first traversal of the activation tree.
 - This tree is used for control flows. It represents a series of activations (function execution order).
 - Consider the previous function call, it will have this activation tree:
-
 <p align="center">
 <img src="img/tree.png" height="50%" width="50%">
 </p>
+
 - **Q:** Do you find any redundant execution?
 
 ## Parameter passing modes
@@ -118,7 +118,7 @@ func(a+b, atoi("10")); // a+b and atoi("10") are acutual parameters
 	- In general, we could not do an assignment to a parameter who is immutable.
 	```scala
 	def f(x: Int):Int = {
-		x = x + 1
+		x = x + 1 // reassignment to val
 		return x
 	}
 	
@@ -316,25 +316,24 @@ closure_test(1, void)
 - Consider another Python example:
 ```python
 def f(x, h):
-	def g(y):
-		return h(x) + y
-	if (x == 0):
-	    return f(2, g)
-	else: return g
+  def g(y):
+    return h(x) + y
+  if (x == 0):
+    return f(2, g)
+  else: return g
 
 x = 3
 
 def z(b):
-	return  b + x
+  return  b + x
 
 print(f(0, z)(4))
 ```
 **Q:** What does this function print? (Note that, python uses static scoping and deep binding)
-
 <details><summary>Solution</summary>
-	<p>
-
-	```
-	9
-	```
-     </p></details>
+  <p>
+	  
+  ```
+  9
+  ```
+  </p></details>
