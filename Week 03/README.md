@@ -14,27 +14,27 @@
 ## Activation Records / Stack Frames
 - Def. the piece of memory on the stack used for storing information of a particular function call.
 - Layouts (in general):
-```
-|                          |
-├──────────────────────────┤<- stack pointer
-| Local Data               |
-├──────────────────────────┤
-| Saved registers (Callee) |
-├──────────────────────────┤
-| Saved fp (static link)   |
-├──────────────────────────┤
-| Saved fp (dynamic link)  |
-|==========================|<- frame pointer
-| Return address           |
-├──────────────────────────┤
-| Actual Parameters        |
-├──────────────────────────┤
-| Saved registers (Caller) |
-├──────────────────────────┤
-| Caller activation record |
-|==========================|
-| ...                      |
-```
+	```
+	|                          |
+	├──────────────────────────┤<- stack pointer
+	| Local Data               |
+	├──────────────────────────┤
+	| Saved registers (Callee) |
+	├──────────────────────────┤
+	| Saved fp (static link)   |
+	├──────────────────────────┤
+	| Saved fp (dynamic link)  |
+	|==========================|<- frame pointer
+	| Return address           |
+	├──────────────────────────┤
+	| Actual Parameters        |
+	├──────────────────────────┤
+	| Saved registers (Caller) |
+	├──────────────────────────┤
+	| Caller activation record |
+	|==========================|
+	| ...                      |
+	```
 	- If we use a different calling convention, the layout of a frame might differ. 
 - Stack Pointer (SP): points to the top of the stack. That is, it holds the address of the last item put on the stack.
 - Components
@@ -96,6 +96,7 @@ int fib (int n) {
 <p align="center">
 <img src="img/tree.png" height="50%" width="50%">
 </p>
+- **Q:** Do you find any redundant execution?
 
 ## Parameter passing modes
 
@@ -116,10 +117,13 @@ func(a+b, atoi("10")); // a+b and atoi("10") are acutual parameters
 	- Immutable parameter: a formal parameter only allows to refer the value.
 	- In general, we could not do an assignment to a parameter who is immutable.
 	```scala
-		def f(x: Int):Int = {
-		x = x + 1 // reassignment to val
-	return x
-}
+	def f(x: Int):Int = {
+		x = x + 1
+		return x
+	}
+	
+	var z = 1
+	incr(z)
 	```
 	- In Scala, every parameter is immutable (val object).
 	- In Ada, we have `in`, `out` and `in out` parameter.
@@ -256,12 +260,12 @@ println(z)
 - The question is if we pass a function or return a function, how could we remian the environment of that function declared.
 	```python
 	def create_adder():
-    i = 3 # Local variable
-    return lambda x : i + x
+		i = 3 # Local variable
+		return lambda x : i + x
 
-adder = create_adder()
-# print(i) error!
-print(adder(2)) # 5 
+	adder = create_adder()
+	# print(i) error!
+	print(adder(2)) # 5 
 	```
 - Closure: a record storing function (reference) together with an environment.
 - Environment: a mapping associating each free variable of the function with the value or reference to which the name was bound when the closure was created.
