@@ -13,7 +13,7 @@
 
 ## Activation Records / Stack Frames
 - Def. the piece of memory on the stack used for storing information of a particular function call.
-- Layouts: TODODODODODODODODO!
+- Layouts: TODOOOO!
 - Stack Pointer (SP): points to the top of the stack. That is, it holds the address of the last item put on the stack.
 - Components
 	- Return Address: store the return address that resumes at the point in the code after the call.
@@ -137,11 +137,13 @@ func(a+b, atoi("10")); // a+b and atoi("10") are acutual parameters
   
 ####  How to calculate the values of several variables in the parameter passing modes? 
 
-1. Call by value --- values are copied by actual parameters when they pass.
+1. Call by value --- values are copied by actual parameters when they pass. For instance, in c: TODOOO
 
-2. Call by reference --- formal parameter is the actual one (change formal also change actual).
+2. Call by reference --- formal parameter is the actual one (change formal also change actual). For example, in C++: TODOOOO
 
-3. Call by name --- formal parameter is bound by expression (execute formal by executing the expression), the parameter is evaluated until it will be used.
+3. Call by name --- formal parameter is bound by the expression (execute formal by executing the expression). The expression is evaluated until the parameter will be used. That is, whenever the parameter is used, the expression will be evaluated. Take a Scala code as an example: TODOOOO
+
+4. Call by need --- At first, formal parameter is bound by the expression (execute formal by executing the expression). The expression is evaluated until it will be used firstly. After that used, the parameter is bound by the evaluated result. In other words, the expression is evaluated for the first time, but the remianed uses of that parameter will be treated as a normal value. Consider the following Haskell code: TODOOOO
 
 #### Sample Question
 Consider this following Pseudo code:
@@ -155,7 +157,7 @@ var z = 1
 f(z, {z = z + 1; z}) // {z = z + 1; z} means increase z by 1 and return z
 println(z)
 ```
-What does this program print if we make the following assumptions about the parameter passing modes for the parameters `x` and `y` of `f`:
+**Q:** What does this program print if we make the following assumptions about the parameter passing modes for the parameters `x` and `y` of `f`:
 
 1. `x` and `y` using call-by-value parameter
 	<details><summary>Solution</summary>
@@ -199,7 +201,7 @@ What does this program print if we make the following assumptions about the para
 
 - Here are more examples to practice, please check [this page](https://courses.cs.washington.edu/courses/cse341/03wi/imperative/parameters.html).
 
-### First-class functions and Closure (Optional)
+### First-class functions and Parameter Passing for functions (Optional)
 - In some programming languages (usually functional languages), they treat functions as [first-class citizen](https://en.wikipedia.org/wiki/First-class_citizen).
 - The question is how could nested function access some local variables that are enclosing scopes when we call it.
 - Closure: a record storing function (reference) together with an environment.
@@ -233,7 +235,7 @@ closure_test(1, void)
 **Q:** What does this program print if we make the following assumptions about the parameter passing:
 
 1. This code is running under static scoping and deep binding.
-<details><summary>Solution</summary>
+	<details><summary>Solution</summary>
 	<p>
 
 	```
@@ -241,7 +243,7 @@ closure_test(1, void)
 	```
      </p></details>
 2. This code is running under dynamic scoping and shallow binding.
-<details><summary>Solution</summary>
+	<details><summary>Solution</summary>
 	<p>
 
 	```
