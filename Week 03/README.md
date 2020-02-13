@@ -45,20 +45,20 @@
 	- Dynamic Link: a pointer that points to the frame of the caller. The value that is stored here is the address of its caller’s frame on the stack.
 		- What is the difference? Consider the following Python example:
 		```python
-		def main ():
-		    x = 10
-		    def f():
-		        print(x)
-		        g(3)
-		
-		    def g(y):
-		        if y == 1:
-		            f()
-		        else:
-		            print("exit!")
-		    g(1)
-		
-		main()
+		1: def main ():
+		2:    x = 10
+		3:    def f():
+		4:        print(x)
+		5:        g(3)
+		6:
+		7:    def g(y):
+		8:        if y == 1:
+		9:            f()
+		10:        else:
+		11:            print("exit!")
+		12:    g(1)
+		13:
+		14: main()
 		```
 
 ## Calling & Return Sequence
