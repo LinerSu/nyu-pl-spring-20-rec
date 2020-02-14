@@ -61,9 +61,9 @@
 		14: main()
 		```
 	- Here is the stack layout when the program executes at line 11:
-<p align="center">
-<img src="img/stack.png" height="50%" width="50%">
-</p>
+		<p align="center">
+		<img src="img/stack.png" height="70%" width="70%">
+		</p>
 	- As you can see, the static link stores the frame pointer based on the code structure. When the function `f` referred variable `x` at line 4, it used static link chains to traverse each frame and found the most recently declared `x` that is in function `main`.
 
 ## Calling & Return Sequence
