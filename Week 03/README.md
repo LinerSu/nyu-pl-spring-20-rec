@@ -60,6 +60,11 @@
 		13:
 		14: main()
 		```
+	- Here is the stack layout when the program executes at line 11:
+<p align="center">
+<img src="img/stack.png" height="50%" width="50%">
+</p>
+	- As you can see, the static link stores the frame pointer based on the code structure. When the function `f` referred variable `x` at line 4, it used static link chains to traverse each frame and found the most recently declared `x` that is in function `main`.
 
 ## Calling & Return Sequence
 - Def. it is the conventional sequence of instructions to set up and call a given subroutine and to return after the subroutine is executed.
@@ -116,6 +121,7 @@ func(a+b, atoi("10")); // a+b and atoi("10") are acutual parameters
 	- Mutable parameter: a formal parameter could do assignment.
 	- Immutable parameter: a formal parameter only allows to refer the value.
 	- In general, we could not do an assignment to a parameter who is immutable.
+	- In Scala, every parameter is immutable (val object).
 	```scala
 	def f(x: Int):Int = {
 		x = x + 1 // reassignment to val
@@ -125,7 +131,6 @@ func(a+b, atoi("10")); // a+b and atoi("10") are acutual parameters
 	var z = 1
 	incr(z)
 	```
-	- In Scala, every parameter is immutable (val object).
 	- In Ada, we have `in`, `out` and `in out` parameter.
 
 ### Evaluation strategy
@@ -164,7 +169,7 @@ func(a+b, atoi("10")); // a+b and atoi("10") are acutual parameters
 		return c;
 	}
 	
-	printf("result: %d\n", sum(1, 2));
+	printf("result: %d\n", sum(1, 2)); // 3
 	```
 
 2. Call by reference --- formal parameter is the actual one. If you do assignement to the formal, it also affect the value of actual. For example, in C++:
@@ -221,6 +226,9 @@ println(z)
 	5
 	2
 	```
+	<p align="center">
+		<img src="img/ans1.png" height="70%" width="70%">
+	</p>
      </p></details>
 
 2. `x` is call-by-reference and `y` is call-by-value
@@ -231,6 +239,9 @@ println(z)
 	5
 	3
 	```
+	<p align="center">
+		<img src="img/ans2.png" height="70%" width="70%">
+	</p>
      </p></details>
 
 3. `x` is call-by-value and `y` is call-by-name
@@ -241,6 +252,9 @@ println(z)
 	6
 	3
 	```
+	<p align="center">
+		<img src="img/ans3.png" height="70%" width="70%">
+	</p>
      </p></details>
 
 4. `x` is call-by-reference and `y` is call-by-name
@@ -251,6 +265,9 @@ println(z)
 	7
 	4
 	```
+	<p align="center">
+		<img src="img/ans4.png" height="70%" width="70%">
+	</p>
      </p></details>
 
 ### First-class functions and Parameter Passing for functions (Optional)
