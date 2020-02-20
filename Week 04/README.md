@@ -3,7 +3,12 @@
 	- Develope everything as a 'function'.
 - Functional Programming Languages: **Scheme**, OCaml, Haskell, **Standard ML**, etc.
 
-## High Order Function
+## Function
+### Lambda Calculus
+- More details in the future class.
+- It is the fundation of functional languages. Each function definition, function call, and recursion is represented as a formal mathematical logic.
+
+### High Order Function
 - Def. A function could take one or more functions as argument or return a function as a result.
 - Consider the following python code:
 ```python
