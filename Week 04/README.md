@@ -82,13 +82,14 @@ let rec fib n = (*Recursive function*)
 ## Other Properties
 
 - Avoid mutable data: you can write programs without assignment in principle. That is, if you try to modify a data, just **bind** your result to a new variable name.
-```scheme
-(define x 1) ; Allows you to use it in the future
-(let ((x 1)) (+ x 5)) ; Binding a value to variable x for use
-```
+- Consider the following Scheme declarations:
+	```scheme
+	(define x 1) ; Allows you to use it in the future
+	(let ((x 1)) (+ x 5)) ; Binding a value to variable x for use
+	```
 - Programming is done with expressions or declarations instead of statements. Besides, each expression must be evaluated as a value with a corresponded type.
 	- E.g. It treats `if` as an expression, so it must be evaluated as some values.
-	- Consider the following code:
+	- Consider the following OCaml code:
 	```ocaml
 	let x = if 10 < 20 then 7 else 5
 	```
