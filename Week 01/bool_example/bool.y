@@ -31,8 +31,8 @@ std::string printer (bool x);
 prog : expr                           {std::cout<<printer($1)<<std::endl;}
      ;
 
-expr : expr OR expr                   { $$ = $1 && $3; }
-     | expr AND expr                  { $$ = $1 || $3; }
+expr : expr OR expr                   { $$ = $1 || $3; }
+     | expr AND expr                  { $$ = $1 && $3; }
      | NOT expr                       { $$ = ! $2; }
      | BOOL
      | LPAREN expr RPAREN             { $$ = $2; }
