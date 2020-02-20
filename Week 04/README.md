@@ -1,20 +1,40 @@
-# Functional Programming
+# Overview of Functional Programming
 - Def. a style of programming that builds the structures and elements by treating each computation as the evaluation of mathematical functions.
 	- Develope everything as a 'function'.
 - Functional Programming Languages: **Scheme**, OCaml, Haskell, **Standard ML**, etc.
 
 ## High Order Function
 - Def. A function could take one or more functions as argument or return a function as a result.
+- Consider the following python code:
+```python
+def printer(x):
+    print(x)
+
+def high_order_f1(f, x):
+    f(x)
+
+def high_order_f2():
+    return printer
+
+high_order_f1(high_order_f2(), 1) # 1
+```
 ### Recursion
 - Def. a method of solving a problem where the solution depends on solutions to smaller instances of the same problem.
-	- In Programming Langauges, when a subroutine is called from within itself
+	- In Programming Langauges, it happens when a subroutine is called from within itself.
+	- For example, in Scheme:
+	```scheme
+	(define (rec n) ; recursive function
+	  (if (zero? n) 1 (rec (- n 1)))
+	)
+	(rec 10) ; 1
+	```
 - Functional languages don't need loop statement. That is, if you want to write a iterative loop, just make it as function's recursion.
 - Suppose you want to do some actions as:
-```
-for (x in collection) {
-	action
-}
-```
+	```python
+	for (x in collection) {
+		action
+	}
+	```
 - The developer will translate as a function, instead of a procedure.
 - The actions ususally could be classified as three parts:
 	- **Filter** something inside a collection.
@@ -27,39 +47,40 @@ for (x in collection) {
 - recursive call: A function call inside its body.
 - Def. recursion in which no additional computation ever follows a recursive call.
 - Consider the following standard ML example:
-```sml
-fun factorial n =
-    if n <= 1 then
-      1
-    else
-      n * factorial (n - 1);
+	```sml
+	fun factorial n =
+	    if n <= 1 then
+	      1
+	    else
+	      n * factorial (n - 1);
 
-fun factorial_tail n a =
-    if n <= 1 then
-      a
-    else
-      factorial_tail (n - 1) (n * a);
-      
-factorial 3; (* 6 *)
-factorial_tail 3 1; (* 6 *)
-```
+	fun factorial_tail n a =
+	    if n <= 1 then
+	      a
+	    else
+	      factorial_tail (n - 1) (n * a);
+
+	factorial 3; (* 6 *)
+	factorial_tail 3 1; (* 6 *)
+	```
 - The most benefit for tail recursion is that the compiler can reuse the current activation record at the time of the recursive call, eliminating the need to allocate a new one, i.e. constant stack space.
 
 ## Type System
 - Def. a system by giving a set of rules that assigns a type to the various constructs of a computer program, such as variables, expressions, functions or modules.
 - In imperative programming languages, we usually need to annotate a type for each vairable to let compiler do type checking.
+- However, the most of functional languages analyze a program to infer the types of all expressions during the compile time.
 
 ### Type Inference
 - Instead of annotating types for variables and functions, type inference allows you to omit type annotation while still permmiting type checking.
 - Consider the following OCaml code:
-```ocaml
-let rec fib n = (*Recursive function*)
-  if n < 3 
-  then 1 
-  else fib (n-2) + fib (n-1)
-    
-(*val fib : int -> int = <fun>*)
-```
+	```ocaml
+	let rec fib n = (*Recursive function*)
+	  if n < 3 
+	  then 1 
+	  else fib (n-2) + fib (n-1)
+
+	(*val fib : int -> int = <fun>*)
+	```
 - More details in the future class.
 
 ## Polymorphism
@@ -88,7 +109,7 @@ let rec fib n = (*Recursive function*)
 	(define x 1) ; Allows you to use it in the future
 	(let ((x 1)) (+ x 5)) ; Binding a value to variable x for use
 	```
-- Programming is done with expressions or declarations instead of statements. Besides, each expression must be evaluated as a value with a corresponded type.
+- Programming is done with expressions or declarations instead of statements. Besides, each expression must be evaluated as a value with a corresponded type (if languages support typed lambda calculus).
 	- E.g. It treats `if` as an expression, so it must be evaluated as some values.
 	- Consider the following OCaml code:
 	```ocaml
