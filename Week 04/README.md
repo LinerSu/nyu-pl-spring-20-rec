@@ -115,7 +115,7 @@ high_order_f1(high_order_f2(), 1) # 1
 		(define x 1) ; Allows you to use it in the future
 		(let ((x 1)) (+ x 5)) ; Binding a value to variable x for use
 		```
-- Programming is done with expressions or declarations instead of statements. Besides, each expression must be evaluated as a value with a corresponded type (if languages support typed lambda calculus).
+- Programming is done with expressions or declarations instead of statements. Besides, each expression must be evaluated as a value (with a corresponded type if languages support typed lambda calculus).
 	- E.g. It treats `if` as an expression, so it must be evaluated as some values.
 	- Consider the following OCaml code:
 	```ocaml
