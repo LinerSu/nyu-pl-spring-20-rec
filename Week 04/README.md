@@ -49,8 +49,8 @@ high_order_f1(high_order_f2(), 1) # 1
 	- **Reduce** data to a single value.
 		-  `fold`, `zip`, etc.
 #### Tail Recursion
-- recursive call: A function call inside its body.
-- Def. recursion in which no additional computation ever follows a recursive call.
+- Recursive call: A function call to call itself inside its body.
+- Def. it is a recursion in which no additional computation ever follows a recursive call.
 - Consider the following standard ML example:
 	```sml
 	fun factorial n =
