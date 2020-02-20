@@ -89,22 +89,23 @@ high_order_f1(high_order_f2(), 1) # 1
 - More details in the future class.
 
 ## Polymorphism
-- Def. by giving a single interface.
-- Ad hoc polymorphism (Overloading): functions or operators can be applied to arguments of different types. That is, one interface, multiple implementations.
-	- Function overloading, operator overloading, etc.
-	- Functional languages usually does not enable operator overloading. Each type of value has its own operations.
-- Parametric polymorphism: a function or a data type can be written generically so that it can handle values identically without depending on their type.
-	- **Generic Programming**: templates in C++, generic type for function's parameter.
-	- For example, consider the following OCaml program:
-	```OCaml
-	let id x = x
-	(*val fib : 'a -> 'a = <fun>*)
-	Format.printf "Hello, %s world!\n" (id "functional")
-	Format.printf "Oh, we could get %d by calling id!\n%!" (id 3);
-	```
-	- One interface, one implementation.
-- Subtyping (related to type system): If type `S` is a subtype of type `T`, does each operation on elements of the type `T` that can also operate on elements of the subtype `S`?
-	- E.g. **Dynamic dispatch**, Covariance and Contravariance, etc.
+- Def. by providing a single interface, the interface(e.g. type, operator, variable, function) could represent many forms.
+- Categories
+	- Ad hoc polymorphism (Overloading): functions or operators can be applied to arguments of different types. That is, one interface, multiple implementations.
+		- Function overloading, operator overloading, etc.
+		- Functional languages usually does not enable operator overloading. Each type of value has its own operations.
+	- Parametric polymorphism: a function or a data type can be written generically so that it can handle values identically without depending on their type.
+		- **Generic Programming**: templates in C++, generic type for function's parameter.
+		- For example, consider the following OCaml program:
+		```OCaml
+		let id x = x
+		(*val fib : 'a -> 'a = <fun>*)
+		Format.printf "Hello, %s world!\n" (id "functional")
+		Format.printf "Oh, we could get %d by calling id!\n%!" (id 3);
+		```
+		- One interface, one implementation.
+	- Subtyping (related to type system): If type `S` is a subtype of type `T`, does each operation on elements of the type `T` that can also operate on elements of the subtype `S`?
+		- E.g. **Dynamic dispatch**, Covariance and Contravariance, etc.
 
 ## Other Properties
 
