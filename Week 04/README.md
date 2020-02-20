@@ -7,6 +7,7 @@
 - Def. A function could take one or more functions as argument or return a function as a result.
 ### Recursion
 - Def. a method of solving a problem where the solution depends on solutions to smaller instances of the same problem.
+	- In Programming Langauges, when a subroutine is called from within itself
 - Functional languages don't need loop statement. That is, if you want to write a iterative loop, just make it as function's recursion.
 - Suppose you want to do some actions as:
 ```
