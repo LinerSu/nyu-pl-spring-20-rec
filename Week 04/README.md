@@ -42,7 +42,7 @@ fun factorial_tail n a =
 factorial 3; (* 6 *)
 factorial_tail 3 1; (* 6 *)
 ```
-- The most benefit for tail recursion is the compiler can reuse the current activation record at the time of the recursive call, eliminating the need to allocate a new one, i.e. constant stack space.
+- The most benefit for tail recursion is that the compiler can reuse the current activation record at the time of the recursive call, eliminating the need to allocate a new one, i.e. constant stack space.
 
 ## Type System
 - Def. a system by giving a set of rules that assigns a type to the various constructs of a computer program, such as variables, expressions, functions or modules.
@@ -86,7 +86,7 @@ let rec fib n = (*Recursive function*)
 (define x 1) ; Allows you to use it in the future
 (let ((x 1)) (+ x 5)) ; Binding a value to variable x for use
 ```
-- Programming is done with expressions or declarations instead of statements.
+- Programming is done with expressions or declarations instead of statements. Besides, each expression must be evaluated as a value with a corresponded type.
 	- E.g. It treats `if` as an expression, so it must be evaluated as some values.
 	- Consider the following code:
 	```ocaml
