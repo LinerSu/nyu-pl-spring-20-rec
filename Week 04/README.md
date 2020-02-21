@@ -99,7 +99,7 @@ high_order_f1(high_order_f2(), 1) # 1
 		- For example, consider the following OCaml program:
 		```OCaml
 		let id x = x
-		(*val fib : 'a -> 'a = <fun>*)
+		(*val id : 'a -> 'a = <fun>*)
 		Format.printf "Hello, %s world!\n" (id "functional")
 		Format.printf "Oh, we could get %d by calling id!\n%!" (id 3);
 		```
