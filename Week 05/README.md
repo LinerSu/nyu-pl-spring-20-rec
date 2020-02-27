@@ -134,7 +134,7 @@ x    app
 - **Renaming rules**
     - Only bound variables can be renamed, not free variables.
     - Renaming consistency: if we rename `x` in a term `λ x. t`, all occurrences of `x` in `t` must be replaced by `y`. 
-        - `λ x. t =a= λ y. t[y/x]`
+        - `λ x. t <rename x to y> =a= λ y. t[y/x]`
     - Renaming capture-avoiding: if we rename `x` in a term `λ x. t`, for every subterm `t'` inside `t`, if `t'` has a variable `x` that **is bound to** by current `λ x. t`, then `y` must be free in term `t'` by the renaming. Otherwise, you should do renaming for `y` firstly to free `y`.
     	- For instance, `(λ x. (λ y. y x)) <rename x to y> -> (λ y. (λ y. y y))` is not allowed, because `y` does not occur free in `(λ y. y x)`.
 		```
