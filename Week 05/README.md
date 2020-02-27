@@ -323,11 +323,12 @@ Think about `let*` as a block like this:
 }
 ```
 - `letrec`: the letrec form can be used to define (mutually) recursive functions. 
-```scheme
-(letrec
-  ((x1 init1) (x2 init2) ... (xn initn))
-  body)
-```
+	```scheme
+	(letrec
+	  ((x1 init1) (x2 init2) ... (xn initn))
+	  body)
+	```
+	- The syntax is simmilar with `let` binding, except the allowance of recursive call inside each `init`.
 
 ### Exercise
 1. Installation: follow [this link](https://racket-lang.org/) to download DrRacket. When you finish installation, open `recitation.rkt` and click the lower left corner to choose languages. Click 'Other languages' and use 'R5RS' as your scheme compiler.
