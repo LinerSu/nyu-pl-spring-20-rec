@@ -74,7 +74,7 @@
 	- `λ x y. t1 t2` means `(λ x y. t1 t2)`
 - Compound example:
 ```
-λ x y. x y (λ x. y) ⟺ λ x y. ((x y)  (λ x. y))
+λ x y. x y (λ x. y) ⟺ (λ x y. ((x y)  (λ x. y)))
 ```
 
 ### Binding and Variables
