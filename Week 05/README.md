@@ -331,6 +331,7 @@ Think about `let*` as a block like this:
 
 ### Exercise
 1. Installation: follow [this link](https://racket-lang.org/) to download DrRacket. When you finish installation, open `recitation.rkt` and click the lower left corner to choose languages. Click 'Other languages' and use 'R5RS' as your scheme compiler.
+	- The following functions could be referred to the `recitation.rkt`.
 2. `rev`: define a function `rev` to reverse a list such as:
 ```scheme
 > (rev '(1 2 3))
@@ -398,7 +399,22 @@ Think about `let*` as a block like this:
   )
 )
 ```
-4. `filter`
+4. `filter`: a function takes a [predicate](https://en.wikipedia.org/wiki/Predicate_(mathematical_logic)) and an input list, and outputs a list such that an item i in the input list will appear in the output list if pred(i) is true. Concretely, the predicate function takes an item from the list and returns a Boolean value. For instance:
+```scheme
+> (filter even? '(1 2 3 4))
+(2 4)
+> (filter integer? '(1 #t 3 (1 2) 3.3 4))
+(1 3 4)
+> (filter (lambda (y) (> y 2)) '(1 2 3 4))
+(3 4)
+```
+- Intuition: a. iterate the input list; b. for each item in that list, check the item whether it satisfies the predicate or not; c. If that item meets the requirement, put it into the result list.
+- You can also use `foldl` and `rev` for defining `filter`:
+```scheme
+(define (filter pred lst)
+  (rev (foldl (lambda (x y) (if (pred x) (cons x y) y)) '() lst))
+)
+```
 
 #### Unit testing
 If you prefer giving the test case during your implementation, here is one package very useful:
