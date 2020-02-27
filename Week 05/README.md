@@ -134,20 +134,18 @@ x    app
 - **Renaming rules**
     - Only bound variables can be renamed, not free variables.
     - Renaming consistency: if we rename `x` in a term `λ x. t`, all occurrences of `x` in `t` must be replaced by `y`. 
-        - `λ x. t = λ y. t[x/y]`
+        - `λ x. t =a= λ y. t <rename x to y>`
     - Renaming capture-avoiding: if we rename `x` in a term `λ x. t`, for every subterm `t'` inside `t`, if `t'` has a variable `x` that **is bound to** by current `λ x. t`, then `y` must be free in term `t'` by the renaming. Otherwise, you should do renaming for `y` firstly to free `y`.
-    	- For instance, `(λ x. (λ y. y x)) [rename x to y]-> (λ y. (λ y. y x)[y/x])` is not allowed, because `y` does not occur free in `(λ y. y x[y/x])`.
+    	- For instance, `(λ x. (λ y. y x)) <rename x to y> -> (λ y. (λ y. y y))` is not allowed, because `y` does not occur free in `(λ y. y x)`.
 		```
-		(λ x. (λ y. y x)) [rename x to y] <=> 
-		(λ x. (λ y. y x)[rename y to z]) [rename x to y] <=> 
-		(λ x. (λ z. z x)) [rename x to y] <=>
+		(λ x. (λ y. y x)) <rename x to y> =a= 
+		(λ x. (λ y. y x) <rename y to z> ) <rename x to y> =a= 
+		(λ x. (λ z. z x)) <rename x to y> =a=
 		(λ y. (λ z. z y))
 		```
 - Renaming examples:
-	- `λ x . (λ x. (λ y. x) y) z x [rename outer x to w] <=> λ w . (λ x. (λ y. x) y) z w`
-	- `λ x . (λ y. y) x [rename x to y] <=> λ y . (λ z. z) y`
-
-
+	- `λ y. x y <rename y to z> =a= λ z. x z`
+	- `λ x . (λ x. (λ y. x) y) z x <rename outer x to w> =a= λ w . (λ x. (λ y. x) y) z w`
 
 ### Evaluation via reduction (β reduction)
 - Def. A technique to evaluate lambda expression
@@ -163,9 +161,9 @@ x    app
 
 **Question: How to do the β reduction by giving a lambda expression?**
 - My solution is:
-	- Before each reduction step, check if  alpha-renaming firstly
-- Choose one evaluation order or combined
-- Each time check whether the reduced parameter should do 
+	- Before each reduction step, choose one evaluation order or combined
+	- Once you selected the application, check if the function needs to do alpha-renaming.
+	- Repeat above two steps until no reduction could be made (From outer to inner).
 
 ### Renaming & Reduction Examples
 1. **Question: How does β reduction relate to α renaming?**
@@ -179,11 +177,13 @@ Consider the following examples:
 ```
 - Example 2:
 ```
-	(λ x. (λ x. x) x) (λ x. x)  #|Evaluate by applicative order|# 
-=> (λ x. (λ x. x) x) (λ x. x)  ; x conflicts with abstraction: rename x to z
-=> (λ x. (λ z. z) x) (λ x. x) ; do one step reduction for λ z
-=> (λ x. x) (λ x. x) ; λ x conflicts with abstraction: rename x to z
-=> (λ z. z) (λ x. x) ; do one step reduction for λ z
+	(λ x. (λ x. x) x) (λ x. (λ x. x) x)  #|Evaluate by applicative order|# 
+=> (λ x. (λ x. x) x) (λ x. (λ x. x) x)  ; evaluate the argument first, right most x conflicts with λ x: rename x to z
+=> (λ x. (λ x. x) x) (λ x. (λ z. z) x)  ; do one step reduction for λ z
+=> (λ x. (λ x. x) x) (λ x. x) ; right λ x conflicts with left λ x: rename left x to y
+=> (λ y. (λ x. x) y) (λ x. x) ; do one step reduction for λ y
+=> (λ x. x) (λ x. x) ; right λ x conflicts with left λ x: rename left x to w
+=> (λ w. w) (λ x. x) ; do one step reduction for λ w
 => λ x. x
 ```
 2. Consider the church encodings, we know that:
@@ -196,7 +196,7 @@ false = (λ x y. y)
 ```
 **Question: How do we compute `iszero 1` to get `false` via beta reduction?**
 ```
-    iszero 1
+    iszero 1                           #|Evaluate by normal order|# 
 => (λ n. n (λ x. false) true) 1        ; by def of iszero
 => 1 (λ x. false) true                 ; do one step reduction for λ n
 => (λ s z. s z) (λ x. false) true      ; by def of 1
