@@ -136,9 +136,16 @@ x    app
     - Renaming consistency: if we rename `x` in a term `λ x. t`, all occurrences of `x` in `t` must be replaced by `y`. 
         - `λ x. t = λ y. t[x/y]`
     - Renaming capture-avoiding: if we rename `x` in a term `λ x. t`, for every subterm `t'` inside `t`, if `t'` has a variable `x` that **is bound to** by current `λ x. t`, then `y` must be free in term `t'` by the renaming. Otherwise, you should do renaming for `y` firstly to free `y`.
+    	- For instance, `(λ x. (λ y. y x)) [rename x to y]-> (λ y. (λ y. y x)[y/x])` is not allowed, because `y` does not occur free in `(λ y. y x[y/x])`.
+		```
+		(λ x. (λ y. y x)) [rename x to y] <=> 
+		(λ x. (λ y. y x)[rename y to z]) [rename x to y] <=> 
+		(λ x. (λ z. z x)) [rename x to y] <=>
+		(λ y. (λ z. z y))
+		```
 - Renaming examples:
-	- `λ x . (λ x. (λ y. x) y) z x (rename outer x to w) <=> λ w . (λ x. (λ y. x) y) z w`
-	- `λ x . (λ y. y) x (rename x to y) <=> λ y . (λ z. z) y`
+	- `λ x . (λ x. (λ y. x) y) z x [rename outer x to w] <=> λ w . (λ x. (λ y. x) y) z w`
+	- `λ x . (λ y. y) x [rename x to y] <=> λ y . (λ z. z) y`
 
 
 
@@ -155,6 +162,8 @@ x    app
     - You can combine these two order strategies during reduction, but the only way to get a terminating reduction is using normal order if the terminating reduction exists.
 
 **Question: How to do the β reduction by giving a lambda expression?**
+- My solution is:
+	- Before each reduction step, check if  alpha-renaming firstly
 - Choose one evaluation order or combined
 - Each time check whether the reduced parameter should do 
 
@@ -177,7 +186,7 @@ Consider the following examples:
 => (λ z. z) (λ x. x) ; do one step reduction for λ z
 => λ x. x
 ```
-2. Consider the church encoding, we know that:
+2. Consider the church encodings, we know that:
 ```
 iszero = (λ n. n (λ x. false) true)
 0 = (λ s z. z)
