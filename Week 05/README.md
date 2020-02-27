@@ -130,7 +130,7 @@ x    app
          </p></details>
 
 ### Alpha renaming (α convension)
-- Def. Alpha-renaming is a way to change a bound variable names.
+- Def. Alpha-renaming is a way to change a bound variable's name.
 - **Renaming rules**
     - Only bound variables can be renamed, not free variables.
     - Renaming consistency: if we rename `x` in a term `λ x. t`, all occurrences of `x` in `t` must be replaced by `y`. 
@@ -148,7 +148,7 @@ x    app
 	- `λ x . (λ x. (λ y. x) y) z x <rename outer x to w> =a= λ w . (λ x. (λ y. x) y) z w`
 
 ### Evaluation via reduction (β reduction)
-- Def. A technique to evaluate lambda expression
+- Def. A technique to evaluate lambda expression or to reduce it to a simplified one.
 - Reduction rule: `(λ x. t) s = t[s/x]`
     - `t[s/x]`: for the term `t`, substitute all occurrences of `x` that are bounded by current `λ x. t` to the term `s`.
     - Normal form (reduction's result): an expression cannot be reducted any further.
