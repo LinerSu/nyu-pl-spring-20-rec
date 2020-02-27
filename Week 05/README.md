@@ -5,8 +5,8 @@
 ```scheme
 (define (factorial n) ; standard recursion
         (if (= n 0) 
-           1 
-          (* n (factorial (- n 1)))
+           1 			    ; return 1
+          (* n (factorial (- n 1))) ; return n * factorial (n - 1)
         )
 )
 (factorial 100000)
@@ -15,8 +15,8 @@
   (letrec
     ( ; rec param
      (fac-tr (lambda (x acc)
-       (if (zero? x) acc
-         (fac-tr (- x 1) (* x acc)))))
+       (if (zero? x) acc		; return acc
+         (fac-tr (- x 1) (* x acc)))))	; return fac-tr(x - 1, x * acc)
     )
     (fac-tr x 1) ; rec body
   )
@@ -33,7 +33,7 @@
      (fact_loop (lambda (x acc)
          (do ((i x (- i 1))          ;   for (i = x; i != 0; i--)
               (acc acc (* acc i)))   ;       acc = acc * i;
-              ((zero? i) acc)
+              ((zero? i) acc)        ;   return acc;
           )))
     )
     (fact_loop x 1)
