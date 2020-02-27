@@ -31,9 +31,9 @@
   (let
     (
      (fact_loop (lambda (x acc)
-         (do ((i 1 (+ i 1))
-              (acc acc (* acc i)))
-              ((> i x) acc)
+         (do ((i x (- i 1))          ;   for (i = x; i != 0; i--)
+              (acc acc (* acc i)))   ;       acc = acc * i;
+              ((zero? i) acc)
           )))
     )
     (fact_loop x 1)
