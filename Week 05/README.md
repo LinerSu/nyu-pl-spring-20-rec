@@ -351,11 +351,12 @@ Think about `let*` as a block like this:
          (rev_acc ls '()))
 )
 ```
-3. `fold` function (optional): it is [a function](https://en.wikipedia.org/wiki/Fold_(higher-order_function)) to process a collection in a order recursively by applying an external function to each data to build a return value. Thus, the parameter contains
+3. `fold` function (optional): it is [a function](https://en.wikipedia.org/wiki/Fold_(higher-order_function)) to process a collection in a order recursively by applying an external function to each data and to build a return value. Thus, the parameters of `fold` function contains
 	- A collection, typically a list or an array.
 	- An external function `f` to apply with two parameters:
 		- Terminal value `z` - the value for aggregating results to return.
 		- Element inside the list
+	- Terminal value `z` - a value with the initial format you want to output.
 - `foldl`: define a function `foldl` that crosses the list from the begin to the end and recursively fold the list into a single terminal value. So, this function will take a function `f` as parameter, a single value `z` and a list `ls` for traversal. Moreover, for fuction `f`, it will takes two value, the first is an element in the list `ls` and second is the single value `z`.
 	- For instance:
 	```scheme
