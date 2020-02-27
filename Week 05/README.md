@@ -294,7 +294,7 @@ or more general form:
 ```
 #### Binding constructs
 There are three binding constructs:
-- `let`: The `let` form evaluates all the `inits` in the current environment; it will introduces the variables `x1` to `xn` simultaneously. The scope of these bindings is `body`.
+- `let`: The `let` form evaluates all the `inits` in the current environment; it will introduces the symbols (variables or functions) `x1` to `xn` simultaneously. The scope of these bindings is `body`.
 ```scheme
 (let
   ((x1 init1) (x2 init2) ... (xn initn))
