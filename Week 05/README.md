@@ -83,10 +83,9 @@ x    app
 **Question: What is the set of free variables in this term?**
 	<details><summary>Solution</summary>
 	<p>
-	λ x . (λ x. (λ y. x) **y**) **z** x
-	
-	Free variables are **y** and **z**.
-     </p></details>
+		λ x . (λ x. (λ y. x) **y**) **z** x <br />
+		Free variables are **y** and **z**.
+         </p></details>
 
 ### Alpha renaming (α convension)
 - Def. Alpha-renaming is a way to change a bound variable names.
@@ -305,13 +304,13 @@ Think about `let*` as a block like this:
 	- An external function `f` to apply with two parameters:
 	- Terminal value `z`: The value for aggregating results to return.
 - `foldl`: define a function `foldl` that traverse the list from the begin to the end and recursively fold the list into a single value. So, this function will take a function `f` as parameter, a single value `z` and a list `ls` for traversal. Moreover, for fuction `f`, it will takes two value, the first is an element in the list `ls` and second is the single value `z`.
-For instance:
-```scheme
-> (foldl + 0 '(1 2 3 4 5)) ; sum of the list
-15
-> (foldl (lambda (x z) (+ 1 z)) 0 '(1 2 3 4)) ; length of the list
-4 
-```
+	- For instance:
+	```scheme
+	> (foldl + 0 '(1 2 3 4 5)) ; sum of the list
+	15
+	> (foldl (lambda (x z) (+ 1 z)) 0 '(1 2 3 4)) ; length of the list
+	4 
+	```
 	- Intuition: Your implementation should iterate the list `ls` and recursively call function `foldl` to fold the list into a single value as `f (car ls) z` as `z` for next iteration.
 		- This means you 'reduce' each result by applying function `f` with `z` from the head to the tail.
 	- Here is an example that how `foldl` works (picture from [WIKI](https://en.wikipedia.org/wiki/Wikipedia:Image_use_policy)):
@@ -337,6 +336,7 @@ For instance:
 <p align="center">
 <img src="img/foldr.png" height="60%" width="60%">
 </p>
+
 - This means you 'reduce' the list to get each result by applying function `f` with `z` from the lastest value to the head.
 - You can also use `foldr` for defining `map`:
 ```scheme
