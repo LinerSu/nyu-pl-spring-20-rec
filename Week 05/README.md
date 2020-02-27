@@ -138,9 +138,9 @@ x    app
     - Renaming capture-avoiding: if we rename `x` in a term `λ x. t`, for every subterm `t'` inside `t`, if `t'` has a variable `x` that **is bound to** by current `λ x. t`, then `y` must be free in term `t'` by the renaming. Otherwise, you should do renaming for `y` firstly to free `y`.
     	- For instance, `(λ x. (λ y. y x)) <rename x to y> -> (λ y. (λ y. y y))` is not allowed, because `y` does not occur free in `(λ y. y x)`.
 		```
-		(λ x. (λ y. y x)) <rename x to y> =a= 
-		(λ x. (λ y. y x) <rename y to z> ) <rename x to y> =a= 
-		(λ x. (λ z. z x)) <rename x to y> =a=
+		(λ x. (λ y. y x)) <rename x to y>                    =a= 
+		(λ x. (λ y. y x) <rename y to z> ) <rename x to y>   =a= 
+		(λ x. (λ z. z x)) <rename x to y>                    =a=
 		(λ y. (λ z. z y))
 		```
 - Renaming examples:
@@ -170,20 +170,20 @@ x    app
 Consider the following examples:
 - Example 1:
 ```
-	(λ x. x) x
+   (λ x. x) x
 => (λ x. x) x         ; x conflicts with abstraction: rename x to z 
 => (λ z. z) x         ; do one step reduction for λ z
 => x
 ```
 - Example 2:
 ```
-	(λ x. (λ x. x) x) (λ x. (λ x. x) x)  #|Evaluate by applicative order|# 
-=> (λ x. (λ x. x) x) (λ x. (λ x. x) x)  ; evaluate the argument first, right most x conflicts with λ x: rename x to z
-=> (λ x. (λ x. x) x) (λ x. (λ z. z) x)  ; do one step reduction for λ z
-=> (λ x. (λ x. x) x) (λ x. x) ; right λ x conflicts with left λ x: rename left x to y
-=> (λ y. (λ x. x) y) (λ x. x) ; do one step reduction for λ y
-=> (λ x. x) (λ x. x) ; right λ x conflicts with left λ x: rename left x to w
-=> (λ w. w) (λ x. x) ; do one step reduction for λ w
+   (λ x. (λ x. x) x) (λ x. (λ x. x) x)    #|Evaluate by applicative order|# 
+=> (λ x. (λ x. x) x) (λ x. (λ x. x) x)    ; evaluate the argument first, right most x conflicts with λ x: rename x to z
+=> (λ x. (λ x. x) x) (λ x. (λ z. z) x)    ; do one step reduction for λ z
+=> (λ x. (λ x. x) x) (λ x. x)             ; right λ x conflicts with left λ x: rename left x to y
+=> (λ y. (λ x. x) y) (λ x. x)             ; do one step reduction for λ y
+=> (λ x. x) (λ x. x)                      ; right λ x conflicts with left λ x: rename left x to w
+=> (λ w. w) (λ x. x)                      ; do one step reduction for λ w
 => λ x. x
 ```
 2. Consider the church encodings, we know that:
