@@ -150,14 +150,19 @@ func(a+b, atoi("10")); // a+b and atoi("10") are acutual parameters
 - Def. the actual is evaluated only if it needs to be evaluated.
 - Call by name
   - Formal is bound to the *expression* of actual
-  - Expression is evaluated **each time** when the formal is used during execution
-  - In general, you cannot assign a value to formal. Formal parameter using call-by-name is immutable.  
+  - Expression is evaluated **each time** when the formal is used during execution 
+  - Algol 60 or more general principle
+  	- If the actual parameter is a variable, this is the same as call by reference. 
+  	- If the actual parameter is an expression, the expression is re-evaluated on each reference.
+  - Scala
+  	- Formal parameter using call-by-name is immutable.
   - Language supported: Algol 60, Scala.
 - Call by need
   - Formal is bound to the *expression* of actual
   - Expression is evaluated **only once** when the formal is used at the first time.
   - **Subsequent reads** from the formal will use the value computed earlier.
-  - In general, you cannot assign a value to formal. Formal parameter using call-by-need is immutable. 
+  - If the actual parameter is a variable, this is the same as call by reference.
+  - If the actual parameter is an expression, the expression is re-evaluated at the first access.
   - Language supported: Haskell, R.
   
 ####  How to calculate the values of several variables in the parameter passing modes? 
