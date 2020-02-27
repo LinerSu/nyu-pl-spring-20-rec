@@ -1,4 +1,46 @@
-# Lambda Calculus & Scheme Programming
+# Tail Recursion, Lambda Calculus & Scheme Programming
+## Tail Recursion
+- Def. it is a recursion in which no additional computation ever follows a recursive call.
+- The recursive function returns what the next recursive call returns. **No more computations** after the recursive call.
+```scheme
+(define (factorial n) ; standard recursion
+        (if (= n 0) 
+           1 
+          (* n (factorial (- n 1)))
+        )
+)
+(factorial 100000)
+
+(define (fac x) ; tail recursion
+  (letrec
+    ( ; rec param
+     (fac-tr (lambda (x acc)
+       (if (zero? x) acc
+         (fac-tr (- x 1) (* x acc)))))
+    )
+    (fac-tr x 1) ; rec body
+  )
+)
+(fac 100000) ; This one is faster than standard recursion
+```
+- The most benefit for tail recursion is that the compiler can reuse the current activation record at the time of the recursive call, eliminating the need to allocate a new one, i.e. constant stack space.
+- The Scheme compiler will detect the tail recursion `fac` and performs [tail-call elimination](https://stackoverflow.com/a/310980) to ensure that `fac` will run in constant stack space. 
+- Effectively, tail call elimination yields an implementation that is equivalent to one that uses a loop:
+```scheme
+(define (fact x)
+  (let
+    (
+     (fact_loop (lambda (x acc)
+         (do ((i 1 (+ i 1))
+              (acc acc (* acc i)))
+              ((> i x) acc)
+          )))
+    )
+    (fact_loop x 1)
+  )
+)
+```
+
 ## [Lambda Calculus](https://en.wikipedia.org/wiki/Lambda_calculus)
 - Def. a mathematical logic for expressing computation based on fucntion abstraction and application.
 - Thinking lambda calculus as imperative:
@@ -25,7 +67,7 @@
 - Precedence: application has higher precedence than lambda abstraction.
 - Associative: 
 	- Applications are left associative
-	- Abstraction are right associative
+	- Abstractions are right associative
 - Shorthand:
 	- `λ x y. t` is a shothand for `λ x. (λ y. t)`
 	- `t1 t2 t3` is a shothand for `(t1 t2) t3`
@@ -220,7 +262,7 @@ The inbuilt list data type provides one constant and three primitive operations:
 	;   expected: pair?
 	;   given: '()
 	```
-- Note that, the above operations comes from [dotted pair](https://wiki.call-cc.org/man/4/The%20R5RS%20standard#pairs-and-lists).
+- Note that, the above operations come from [dotted pair](https://wiki.call-cc.org/man/4/The%20R5RS%20standard#pairs-and-lists).
 
 #### Lambda expression
 Scheme supports implementing anonymous functions that are similar to lambda terms in the lambda calculus.
@@ -287,7 +329,7 @@ Think about `let*` as a block like this:
 > (rev '(1 (2 3) 4))
 (4 (2 3) 1)
 ```
-- Intuition: you can use an auxiliary function to take two lists: one for extracting element from the list and another for constructing the reversed list.
+- Intuition: you can use an auxiliary function to take two lists: one for extracting element from the origin list and another for constructing the reversed list.
 - Sample code:
 ```scheme
 ; reverse a list
@@ -302,8 +344,9 @@ Think about `let*` as a block like this:
 3. `fold` function (optional): it is [a function](https://en.wikipedia.org/wiki/Fold_(higher-order_function)) to process a collection in a order recursively by applying an external function to each data to build a return value. Thus, the parameter contains
 	- A collection, typically a list or an array.
 	- An external function `f` to apply with two parameters:
-	- Terminal value `z`: The value for aggregating results to return.
-- `foldl`: define a function `foldl` that traverse the list from the begin to the end and recursively fold the list into a single value. So, this function will take a function `f` as parameter, a single value `z` and a list `ls` for traversal. Moreover, for fuction `f`, it will takes two value, the first is an element in the list `ls` and second is the single value `z`.
+		- Terminal value `z` - the value for aggregating results to return.
+		- Element inside the list
+- `foldl`: define a function `foldl` that crosses the list from the begin to the end and recursively fold the list into a single terminal value. So, this function will take a function `f` as parameter, a single value `z` and a list `ls` for traversal. Moreover, for fuction `f`, it will takes two value, the first is an element in the list `ls` and second is the single value `z`.
 	- For instance:
 	```scheme
 	> (foldl + 0 '(1 2 3 4 5)) ; sum of the list
