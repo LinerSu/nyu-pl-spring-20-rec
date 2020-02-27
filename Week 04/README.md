@@ -33,7 +33,7 @@ high_order_f1(high_order_f2(), 1) # 1
 	)
 	(rec 10) ; 1
 	```
-- Functional languages don't need loop statement. That is, if you want to write a iterative loop, just make it as function's recursion.
+- Functional languages don't need loop statement. That is, if you want to write an iterative loop, just make it as a function with recursion.
 - Suppose you want to do some actions as:
 	```python
 	for (x in collection) {
@@ -73,7 +73,7 @@ high_order_f1(high_order_f2(), 1) # 1
 ## Type System
 - Def. a system by giving a set of rules that assigns a type to the various constructs of a computer program, such as variables, expressions, functions or modules.
 - In imperative programming languages, we usually need to annotate a type for each vairable to let compiler do type checking.
-- However, the most of functional languages analyze a program to infer the types of all expressions during the compile time.
+- However, the most of functional languages analyze a program to automatically infer the types of all expressions during the compile time.
 
 ### Type Inference
 - Instead of annotating types for variables and functions, type inference allows you to omit type annotation while still permmiting type checking.
