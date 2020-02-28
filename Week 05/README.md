@@ -151,7 +151,7 @@ x    app
 - Def. A technique to evaluate lambda expression or to reduce it to a simplified one.
 - Reduction rule: `(λ x. t) s = t[s/x]`
     - `t[s/x]`: for the term `t`, substitute all occurrences of `x` that are bounded by current `λ x. t` to the term `s`.
-    - Normal form (reduction's result): an expression cannot be reducted any further.
+    - Normal form (reduction's result): an expression cannot be reduced any further.
 - Evaluation strategy
     - Normal order: reduce the outermost “redex” first. 
         - `(λ x. (λ y. x y)) ((λ x. x) z) = λ y. ((λ x. x) z) y = λ y. z y`
