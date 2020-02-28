@@ -340,7 +340,7 @@ Think about `let*` as a block like this:
 > (rev '(1 (2 3) 4))
 (4 (2 3) 1)
 ```
-- Intuition: you can use an inbuilt function which takes two lists as inputs: one for extracting element from the origin list and another for constructing the reversed list. Then, allow that function do recursively call until the extracting list is empty.
+- Intuition: you can use an inbuilt function `rev_acc` which takes two lists as inputs: one for extracting element from the origin list `acc` and another for constructing the reversed list `rv`. Then, you extract one item from `acc` and append it into `rv` each time. Finally, allow that function do recursively call until the extracting list `acc` is empty.
 - Sample code:
 ```scheme
 ; reverse a list
