@@ -160,10 +160,13 @@ x    app
     - You can combine these two order strategies during reduction, but the only way to get a terminating reduction is using normal order if the terminating reduction exists.
 
 **Question: How to do the β reduction by giving a lambda expression?**
-- My solution is:
-	- Before each reduction step, choose one evaluation order or combined
-	- Once you selected the application, check if the function needs to do alpha-renaming.
-	- Repeat above two steps until no reduction could be made (From outer to inner).
+
+My solution is:
+- Before each reduction step, choose one evaluation order or combined
+- Once you selected the application, check if the function needs to do alpha-renaming.
+	- Renaming criteria for `(λ x. t) s = t[s/x]`
+		- We should do α-renaming if `t` have any free variables that are captured (i.e. bound by `λ`'s) when we do the substitution in `t`.
+- Repeat above two steps until no reduction could be made (From outer to inner).
 
 ### Renaming & Reduction Examples
 1. **Question: How does β reduction relate to α renaming?**
@@ -180,10 +183,8 @@ Consider the following examples:
    (λ x. (λ x. x) x) (λ x. (λ x. x) x)    #|Evaluate by applicative order|# 
 => (λ x. (λ x. x) x) (λ x. (λ x. x) x)    ; evaluate the argument first, right most x conflicts with λ x: rename x to z
 => (λ x. (λ x. x) x) (λ x. (λ z. z) x)    ; do one step reduction for λ z
-=> (λ x. (λ x. x) x) (λ x. x)             ; right λ x conflicts with left λ x: rename left x to y
-=> (λ y. (λ x. x) y) (λ x. x)             ; do one step reduction for λ y
-=> (λ x. x) (λ x. x)                      ; right λ x conflicts with left λ x: rename left x to w
-=> (λ w. w) (λ x. x)                      ; do one step reduction for λ w
+=> (λ x. (λ x. x) x) (λ x. x)             ; do one step reduction for left most λ x
+=> (λ x. x) (λ x. x)                      ; do one step reduction for left λ x
 => λ x. x
 ```
 2. Consider the church encodings, we know that:
