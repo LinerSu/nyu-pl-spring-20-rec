@@ -166,16 +166,18 @@ My solution is:
 - Before each reduction step, choose one evaluation order or combined
 - Once you selected the application, check if the function needs to do alpha-renaming.
 	- Renaming criteria for `(λ x. t) s = t[s/x]`
-		- We should do α-renaming if `t` have any free variables that are captured (i.e. bound by `λ`'s) when we do the substitution in `t`.
+		- When we do the substitution in `t`, we should do α-renaming if `t` have any free variables (variables in `s`) that are captured (i.e. bound by `λ`'s).
 		- For instance:
 		```
 		(λ y. (λ x. y)) x ; the substituted x was supposed to be free but ended up being bound
+		≠> λ x. x         ; WRONG ✘ !!!! 
 		```
 		- `x` inside `(λ x. y)` should be free (not bounded) after reduction. Thus, we have to do renaming for `λ x` to free `x`.
 		- Thus, we have to do α-renaming before reduction:
 		```
 		=> (λ y. (λ x. y)) x ; x conflicts with abstraction: rename x to z 
-		=> (λ y. (λ z. y)) x ; do reduction
+		=> (λ y. (λ z. y)) x ; do one step reduction for λ y
+		=> λ z. x
 		```
 - Repeat above two steps until no reduction could be made (From outer to inner).
 
