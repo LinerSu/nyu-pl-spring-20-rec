@@ -347,7 +347,7 @@
 ## Polymorphism
 - Def. by providing a single interface, the compiler could use that interface(e.g. type, operator, variable, function) to represent many forms.
 - Categories
-	- Ad hoc polymorphism (Overloading): functions or operators can be applied to arguments of different types. That is, one name interface, multiple implementations.
+	- Ad hoc polymorphism (Overloading): functions or operators can be applied to arguments of different types.
 		- Function overloading, operator overloading, etc.
 		- For instance, consider the following C++ code:
 		```c++
@@ -381,7 +381,6 @@
 		print("Hello, "^(id "functional")^" world!\n");
 		print("Oh, we could get "^(Int.toString (id 3))^" by calling id!\n");
 		```
-		- One interface, one implementation.
 	- Subtyping (related to type system): If type `S` is a subtype of type `T`, does each operation on elements of the type `T` that can also operate on elements of the subtype `S`?
 		- E.g. **Dynamic dispatch**, Covariance and Contravariance, etc.
 		- Take a C++ class inheritence as an example:
