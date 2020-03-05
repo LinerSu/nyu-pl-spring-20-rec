@@ -1,3 +1,191 @@
+# Introduction to Standard ML
+## Installation
+- You can use [this](https://www.smlnj.org/) website to download Standard ML.
+- Please follow the [instructions](https://www.smlnj.org/dist/working/110.96/index.html) to download SML.
+- Once installed, type `sml` in your terminal to use SML compiler.
+- You can also write a file of your assignment by using `.sml` extension. After named SML source file, open the compiler and type this:
+```
+- use "<file_name>.sml";
+```
+
+## Basic Syntax
+
+### Declarations
+- Binding: A binding from a name to a value
+- value bindings
+	- Bind a value to a variable
+	```sml
+	val x = 3
+	val y = x + 1
+	```
+- function bindings
+	- Bind a function to a expression
+	```sml
+	fun fib x = if x < 3 then 1 
+		else fib (x - 1) + fib (x - 2)
+	```
+- Generally, formats of those bindings could be
+ ```sml
+ val <pat> = <exp>
+ fun f <pat> = <exp>
+ ``` 
+
+### Expressions
+- Basic expressions
+	```sml
+	(* Integers *)
+	1;
+	~3; (*Negative 3*)
+	
+	(* Reals *)
+	3.14;
+	~3.2E3;
+	
+	(* Booleans *)
+	true
+	false
+	
+	(* Strings *)
+	"A string" ^ " with another";
+	""
+	```
+- Arithmetic expressions
+	```sml
+	3 + 4;
+	3 + 4.0; (* WRONG ✘! SML does not support convertion *)
+	real 3 + 4.0; (* or 3.0 + 4.0 *)
+	3 <> 4; (* not equal, val it = true : bool *)
+	```
+- Control flow expressions
+	- if-then-else:
+		```sml
+		(* Format: 
+			if c then b1 else b2 
+		*)
+		 
+		if true then 3 else false (* WRONG ✘! types of then branch and else branch should be the same *)
+		```
+	- Multiple selection (switch): 
+		```sml
+		(* Format:
+			case <exp1> of
+			<pattern_1> => <exp>
+			| <pattern_2> => <exp>
+			| · · · · · · · · ·
+			| <pattern_n> => <exp>
+		*)
+		fun compare (x, y) =
+					if x < y then ~1
+					else if x > y then 1
+					else 0;
+					
+		case compare(3, 4) of
+				   1 => "Greater"
+				 | ~1 => "Less"
+				 | 0 => "Equal"
+				 | _ => "Error input!" ;
+		```
+- `let` binding expression
+	```sml
+	(* Format
+	let <decl> in <expr> end
+	*)
+	let 
+		val x = 2
+		fun add_two y = x + y
+	in
+		add_two 3
+	end
+	```
+	
+### Lists and Tuples
+- Lists
+	- Basic forms
+	```sml
+	(* Format:
+	[ <exp1>, ..., <expn> ] means constructing a list
+	:: means adding an element at the beginning
+	*)
+	[] or nil (* an empty list *)
+	[1,2,3] or 1::2::3::nil (* int list *)
+	[1,false,"test"] (* WRONG ✘! The elements inside list must have the same type *)
+	```
+	- Manipulations
+	```sml
+	(* Matching a list *)
+	val lst = [1, 2];
+	val a::b::nil = lst;
+	
+	let 
+		val lst = ["1","2","3"]
+   		val lst2 = "0" :: lst (* Bind a new list*)
+	in
+	case lst2 of
+	    [] => print "Empty\n"
+	    | hd::tl => print (hd^"\n")
+	end;
+	```
+- Tuples
+	- Basic forms
+	```sml
+	(* Format:
+	(exp1, ... , expn) means construct a tuple
+	#i means get an i-th item from a tuple
+	*)
+	val tp = (3, true, "This")
+	val snd = #2 tp
+	(* val snd = true : bool *)
+	```
+	- Manipulations
+	```sml
+	(* Matching a tuple *)
+	val p = (3, 4)
+	val (x, y) = p (* Match patterns for a tuple *)
+	
+	fun plus (x, y) = x + y
+	(* val plus = fn : int * int -> int *)
+	```
+
+### Functions
+- Function declarations
+	```sml
+	(* Format:
+	fun <fun_name> <param 1...> = <fun_body>
+	<param 1...> must contain at least one parameter
+	fn <param> => <fun_body>
+	<param> has to contain (at most) one parameter 
+	*)
+	fun add x y = x + y;   (* function declaration *)
+	fn x => fn y => x + y; (* anonymous function *)
+	```
+- Examples:
+	```sml
+	val plusOne = fn x => x + 1;
+	```
+	- A `fn` that is defined by a lambda abstraction as in the previous example can be abbreviated by:
+	```sml
+	fun plusOne x = x + 1;
+	```
+- Function types: function types are constructed using the arrow type constructor `->`. The type `t1 -> t2` represents functions that take a value of type `t1` and return a value of type `t2`.
+	- For instance,
+	```sml
+	fun add x y = x + y;
+	(* val add = fn : int -> int -> int *)
+	```
+	- Remember that, lambda  abstraction is right associative. The type of that function should be interpreted as `int -> (int -> int)`. **Why?**
+	- If you call function `add` with only one argument, you will get a new function with a body:
+	```sml
+	val add_one = add 1; 
+	(* val add_one = fn : int -> int *)
+	
+	(* The body of add_one is:
+	val add_one = fn y => 1 + y;
+	*)
+	```
+
+## Types and Semantics
+- Check details in next class
+
 # Types, Type System & Polymorphism
 
 ## Type or Data Type
@@ -36,7 +224,38 @@
 			}
 			f("test"); // Based on the declaration, this call won't be allowed.
 			``` 
-	- Abstraction:
+	- Abstraction: Types are fundamental to module and class that help to structure large programs into smaller components. 
+		- In particular, types help to abstract away implementation details of these components.
+		- That is, if we changes the internal implementation details of one module, it does not affect other modules in the program.
+		- E.g. abstract class in Java:
+		```java
+		abstract class Collection  
+		{ 
+		    // declare fields 
+		    int size;
+		    ArrayList<Integer> data;
+		      
+		    // declare non-abstract methods 
+		    // it has default implementation 
+		    public int getSize() { return this.size; } 
+		      
+		    // abstract methods which will be 
+		    // implemented by its subclass(es) 
+		    abstract public void push(int item);
+		}
+		
+		class Stack extends Collection { 
+		    public void push(int item) {
+		        ...
+		    }
+		}
+		
+		class Queue extends Collection { 
+		    public void push(int item) {
+		        ...
+		    }
+		} 
+		```
 
 ## Type System
 - Def. a system by giving a set of rules that assigns a type to the various constructs of a computer program, such as variables, expressions, functions or modules.
@@ -158,29 +377,29 @@
 		```
 		- One interface, one implementation.
 	- Subtyping (related to type system): If type `S` is a subtype of type `T`, does each operation on elements of the type `T` that can also operate on elements of the subtype `S`?
-	- E.g. **Dynamic dispatch**, Covariance and Contravariance, etc.
-	- Take a C++ class inheritence as an example:
-		```c++
-		class A
-		{
-		public:
-		  virtual void f() { cout<<"Use method inside Class A"<<endl; }
-		};
-		
-		class B: public A
-		{
-		public:
-		  void f() { cout<<"Use method inside Class B"<<endl; }
-		};
-		
-		int main()
-		{
-		    A *pa = new B();
-		    pa->f(); // What does this line print?
-		    return 0;
-		}	
-		```
-	- More details in the future class.
+		- E.g. **Dynamic dispatch**, Covariance and Contravariance, etc.
+		- Take a C++ class inheritence as an example:
+			```c++
+			class A
+			{
+			public:
+			  virtual void f() { cout<<"Use method inside Class A"<<endl; }
+			};
+			
+			class B: public A
+			{
+			public:
+			  void f() { cout<<"Use method inside Class B"<<endl; }
+			};
+			
+			int main()
+			{
+			    A *pa = new B();
+			    pa->f(); // What does this line print?
+			    return 0;
+			}	
+			```
+		- More details in the future class.
 
 ## Limitations of Type System
 - Problem: the compiler (type checker) will reject all bad programs but also some good ones
