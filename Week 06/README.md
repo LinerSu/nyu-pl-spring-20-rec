@@ -60,7 +60,7 @@
 	- if-then-else:
 		```sml
 		(* Format: 
-			if c then b1 else b2 
+			if <cond> then <exp> else <exp> 
 		*)
 		 
 		if true then 3 else false (* WRONG ✘! types of then branch and else branch should be the same *)
