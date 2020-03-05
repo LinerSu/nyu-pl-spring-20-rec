@@ -156,7 +156,7 @@
 	<param> has to contain (at most) one parameter 
 	*)
 	fun add x y = x + y;   (* function declaration *)
-	fn x => fn y => x + y; (* anonymous function *)
+	fn x => fn y => x + y; (* anonymous function expression *)
 	```
 - Examples:
 	```sml
