@@ -414,7 +414,7 @@
 	fun id x = x; (*val id = fn : 'a -> 'a*)
 	val main = 
 	    let
-	        fun g (f : 'a -> 'a) = (f 3, f true)
+	        fun g f = (f 3, f true)
 	    in
 	        g id
 	    end;
