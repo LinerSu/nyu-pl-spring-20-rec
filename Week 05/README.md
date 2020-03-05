@@ -76,6 +76,7 @@
 ```
 λ x y. x y (λ x. y) ⟺ (λ x y. ((x y)  (λ x. y)))
 ```
+- Here are [more examples](https://stackoverflow.com/a/4794804) of precedence and associativity.
 
 ### Binding and Variables
 1. Binding and scope
@@ -166,6 +167,16 @@ My solution is:
 - Once you selected the application, check if the function needs to do alpha-renaming.
 	- Renaming criteria for `(λ x. t) s = t[s/x]`
 		- We should do α-renaming if `t` have any free variables that are captured (i.e. bound by `λ`'s) when we do the substitution in `t`.
+		- For instance:
+		```
+		(λ y. (λ x. y)) x ; the substituted x was supposed to be free but ended up being bound
+		```
+		- `x` inside `(λ x. y)` should be free (not bounded) after reduction. Thus, we have to do renaming for `λ x` to free `x`.
+		- Thus, we have to do α-renaming before reduction:
+		```
+		=> (λ y. (λ x. y)) x ; x conflicts with abstraction: rename x to z 
+		=> (λ y. (λ z. y)) x ; do reduction
+		```
 - Repeat above two steps until no reduction could be made (From outer to inner).
 
 ### Renaming & Reduction Examples
