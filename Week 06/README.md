@@ -411,7 +411,7 @@
 - Restirction with polymorphism: do not trust programmer given input parameter with correct type
 	- Consider the following SML example:
 	```sml
-	fun id x = x;
+	fun id x = x; (*val id = fn : 'a -> 'a*)
 	val main = 
 	    let
 	        fun g f = (f 3, f true)
