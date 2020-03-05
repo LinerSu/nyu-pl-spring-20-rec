@@ -11,7 +11,7 @@
 ## Basic Syntax
 
 ### Declarations
-- Binding: A binding from a name to a value
+- Binding: a binding is a name associated with a value.
 - value bindings
 	- Bind a value to a variable
 	```sml
@@ -24,37 +24,37 @@
 	fun fib x = if x < 3 then 1 
 		else fib (x - 1) + fib (x - 2)
 	```
-- Generally, formats of those bindings could be
- ```sml
- val <pat> = <exp>
- fun f <pat> = <exp>
- ``` 
+- Generally, formats of those bindings could be:
+	```sml
+	val <pat> = <exp>
+	fun f <pat> = <exp>
+	``` 
 
 ### Expressions
 - Basic expressions
 	```sml
 	(* Integers *)
-	1;
-	~3; (*Negative 3*)
+	1
+	~3 (*Negative 3*)
 	
 	(* Reals *)
-	3.14;
-	~3.2E3;
+	3.14
+	~3.2E3
 	
 	(* Booleans *)
 	true
 	false
 	
 	(* Strings *)
-	"A string" ^ " with another";
-	""
+	" This is a string "
+	"A string" ^ " with another"
 	```
 - Arithmetic expressions
 	```sml
-	3 + 4;
-	3 + 4.0; (* WRONG ✘! SML does not support convertion *)
-	real 3 + 4.0; (* or 3.0 + 4.0 *)
-	3 <> 4; (* not equal, val it = true : bool *)
+	3 + 4
+	3 + 4.0 (* WRONG ✘! SML does not support convertion *)
+	real 3 + 4.0 (* or 3.0 + 4.0 *)
+	3 <> 4 (* not equal, val it = true : bool *)
 	```
 - Control flow expressions
 	- if-then-else:
@@ -75,17 +75,17 @@
 			| <pattern_n> => <exp>
 		*)
 		fun compare (x, y) =
-					if x < y then ~1
-					else if x > y then 1
-					else 0;
+			if x < y then ~1
+			else if x > y then 1
+			else 0;
 					
 		case compare(3, 4) of
-				   1 => "Greater"
-				 | ~1 => "Less"
-				 | 0 => "Equal"
-				 | _ => "Error input!" ;
+			 1 => "Greater"
+			| ~1 => "Less"
+			| 0 => "Equal"
+			| _ => "Error input!" ;
 		```
-- `let` binding expression
+- [`let` binding expression](https://en.wikipedia.org/wiki/Let_expression)
 	```sml
 	(* Format
 	let <decl> in <expr> end
@@ -183,7 +183,7 @@
 	*)
 	```
 
-## Types and Semantics
+## SML Types and Semantics
 - Check details in next class
 
 # Types, Type System & Polymorphism
