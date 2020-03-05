@@ -347,7 +347,7 @@
 ## Polymorphism
 - Def. by providing a single interface, the compiler could use that interface(e.g. type, operator, variable, function) to represent many forms.
 - Categories
-	- Ad hoc polymorphism (Overloading): functions or operators can be applied to arguments of different types. That is, one interface, multiple implementations.
+	- Ad hoc polymorphism (Overloading): functions or operators can be applied to arguments of different types. That is, one name interface, multiple implementations.
 		- Function overloading, operator overloading, etc.
 		- For instance, consider the following C++ code:
 		```c++
@@ -359,13 +359,19 @@
 			return x.compare(y) > 0 ? true : false;
 		}
 		
+		int comp () {
+			return 0;
+		}
+		
 		int main()
 		{
+		    cout<<"Empty: "<<comp()<<endl;
 		    cout<<"Int: "<<comp(2, 3)<<endl;
 		    cout<<"Str: "<<comp("c", "b")<<endl;
 		    return 0;
 		}
 		```
+		- Note that, the `comp` functions could also have different numbers of parameters and different types of output.
 	- Parametric polymorphism: a function or a data type can be written generically so that it can handle values identically without depending on their type.
 		- **Generic Programming**: templates in C++, generic type for function's parameter.
 		- For example, consider the following SML program:
