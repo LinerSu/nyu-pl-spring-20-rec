@@ -183,7 +183,7 @@ Consider the following examples:
    (λ x. (λ x. x) x) (λ x. (λ x. x) x)    #|Evaluate by applicative order|# 
 => (λ x. (λ x. x) x) (λ x. (λ x. x) x)    ; evaluate the argument first, right most x conflicts with λ x: rename x to z
 => (λ x. (λ x. x) x) (λ x. (λ z. z) x)    ; do one step reduction for λ z
-=> (λ x. (λ x. x) x) (λ x. x)             ; do one step reduction for left most λ x
+=> (λ x. (λ x. x) x) (λ x. x)             ; do one step reduction for leftmost λ x
 => (λ x. x) (λ x. x)                      ; do one step reduction for left λ x
 => λ x. x
 ```
@@ -197,14 +197,15 @@ false = (λ x y. y)
 ```
 **Question: How do we compute `iszero 1` to get `false` via beta reduction?**
 ```
-    iszero 1                           #|Evaluate by normal order|# 
-=> (λ n. n (λ x. false) true) 1        ; by def of iszero
-=> 1 (λ x. false) true                 ; do one step reduction for λ n
-=> (λ s z. s z) (λ x. false) true      ; by def of 1
-=> ((λ s z. s z) (λ x. false)) true    ; application are left associative
-=> (λ z. (λ x. false) z) true          ; do one step reduction for λ s
-=> (λ x. false) true                   ; do one step reduction for λ z
-=> false                               ; do one step reduction for λ x
+    iszero 1                           #|Evaluate by normal order|#
+=> iszero 1                            ; by def of iszero
+=> (λ n. n (λ x. false) true) 1        ; do one step reduction for λ n
+=> 1 (λ x. false) true                 ; by def of 1
+=> (λ s z. s z) (λ x. false) true      ; application are left associative
+=> ((λ s z. s z) (λ x. false)) true    ; do one step reduction for λ s
+=> (λ z. (λ x. false) z) true          ; do one step reduction for λ z
+=> (λ x. false) true                   ; do one step reduction for λ x
+=> false
 ```
 
 ## Scheme Programming
