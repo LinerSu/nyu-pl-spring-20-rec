@@ -349,7 +349,7 @@
 - Categories
 	- Ad hoc polymorphism (Overloading): functions or operators can be applied to arguments of different types.
 		- Function overloading, operator overloading, etc.
-		- For instance, consider the following C++ code:
+		- For instance of function overloading, consider the following C++ code:
 		```c++
 		bool comp (int x , int y) {
 			return x > y;
@@ -374,7 +374,7 @@
 		- Note that, the `comp` functions could also have different numbers of parameters and different types of output.
 	- Parametric polymorphism: a function or a data type can be written generically so that it can handle values identically without depending on their type.
 		- **Generic Programming**: templates in C++, generic type for function's parameter.
-		- For example, consider the following SML program:
+		- For example of the generic type, consider the following SML program:
 		```sml
 		fun id x = x;
 		(*val id = fn : 'a -> 'a*)
@@ -383,7 +383,7 @@
 		```
 	- Subtyping (related to type system): If type `S` is a subtype of type `T`, does each operation on elements of the type `T` that can also operate on elements of the subtype `S`?
 		- E.g. **Dynamic dispatch**, Covariance and Contravariance, etc.
-		- Take a C++ class inheritence as an example:
+		- Take a C++ class inheritence and dynamic dispatch as an example:
 			```c++
 			class A
 			{
@@ -439,4 +439,4 @@
 	    hungry = (fn x : int => hungry)
 	*)
 	```
-	- The reason 	is causing by occurs check: unification of a variable V and a structure S to fail if S contains V
+	- The reason is causing by [occurs check](https://en.wikipedia.org/wiki/Occurs_check): unification of a variable V and a structure S to fail if S contains V
