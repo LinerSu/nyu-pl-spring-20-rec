@@ -17,20 +17,20 @@
             - `a+` = `aa*`
 
 ### Exercise
-1. Write an regular expression that matches the positive float point number with the following restriction:
-```
-Should Match:
-1.2
-0.35
-0.007
-0.0
-Should not match:
-+1.2
--3.4
-01.23
-3
-0
-```
+1. **[Easy]** Write an regular expression that matches the positive float point number with the following restriction:
+	```
+	Should Match:
+	1.2
+	0.35
+	0.007
+	0.0
+	Should not match:
+	+1.2
+	-3.4
+	01.23
+	3
+	0
+	```
 
 	<details><summary>Solution</summary>
 	<p>
@@ -39,6 +39,14 @@ Should not match:
 	([1-9][0-9]*|0)\.[0-9]+
 	```
      </p></details>
+2. **[Medium]** Write a regular expression to recognise patterns in the log files which contains *email id* and *date* separated by underscore. 
+	- <Email id>: email id can be alphanumeric. `.` and `_` are the only special characters allowed. They can occur multiple times and should be preceded and succeeded by atleast one alphanumeric character. This should be followed by `@` and alphanumeric characters with one `.` in between. 
+	- <Date>: the date can be in mm-dd-yyyy or yyyy-mm-dd format and it has to be valid.
+For example, the following string should be accepted:
+	```
+	john.wick2_cs.nyu@abc.com_2020-01-01
+	ROBERT.Smith@example.com_03-12-2008
+	```
 
 ## Context Free Grammar
 - Terminals: the set of the alphabet of the language
@@ -48,13 +56,13 @@ Should not match:
 ### Exercise
 Provide a context free grammar over the alphabet {`a`,`b`} such as:
 1. Accept a string that `a` followed by `b` and the number of `a`'s is more than the number of `b`'s:
-```
-a
-aab
-aaab
-aaaaabbb
-...
-```
+	```
+	a
+	aab
+	aaab
+	aaaaabbb
+	...
+	```
 	<details><summary>Solution</summary>
 	<p>
 
@@ -66,14 +74,14 @@ aaaaabbb
      </p></details>
 
 2. Challenge yourself to consider all strings with more a’s than b’s:
-```
-a
-bbabaaa
-ababaab
-aba
-baaaa
-...
-```
+	```
+	a
+	bbabaaa
+	ababaab
+	aba
+	baaaa
+	...
+	```
 	<details><summary>Solution</summary>
 	<p>
 
@@ -362,19 +370,19 @@ For example:
 ```
 - Intuition: using foldr will help you simplify the conversion. Basically, foldr will iterate the list from end to begin and use the input function `f` with two arguments to reduce the result (an element on the list and single value `z`). Thus, you can create an empty list as `z` for calling `foldr`. During `foldr` iterating list, check element in the list and contruct either current element should build a new sublist or append it into the first sublist inside `z`. 
 For example, consider giving `foldr` function a list `'(a a a b b)`:
-```
-      f =>    '((a a a) (b b))
-     / \
-    a   f =>  '((a a) (b b))
-       / \
-      a   f => '((a) (b b))
-         / \
-        a   f => '((b b))
-           / \
-          b   f => '((b))
-             / \
-            b   z = '()
-```
+	```
+	      f =>    '((a a a) (b b))
+	     / \
+	    a   f =>  '((a a) (b b))
+	       / \
+	      a   f => '((a) (b b))
+		 / \
+		a   f => '((b b))
+		   / \
+		  b   f => '((b))
+		     / \
+		    b   z = '()
+	```
 
 	<details><summary>Solution</summary>
 	<p>
@@ -400,28 +408,26 @@ For example, consider giving `foldr` function a list `'(a a a b b)`:
 	```
      </p></details>
 
-2. `split`: define a function `split` that splits an input list into two parts by given a length of the first part.
-
-For instance:
-```scheme
-> (split '(a b c d e f g) 3)
-((a b c)(d e f g))
-```
+2. `split`: define a function `split` that splits an input list into two parts by given a length of the first part. For instance:
+	```scheme
+	> (split '(a b c d e f g) 3)
+	((a b c)(d e f g))
+	```
 
 	<details><summary>Solution</summary>
 	<p>
 
-```scheme
-; split
-(define (split ls n)
-  (letrec ((split-rec (lambda (ls n res)
-      (cond
-        ((= n 0) (append res (cons ls '())))
-        (else (split-rec (cdr ls) (- n 1) (cons (append (car res) (list (car ls))) (cdr res)))))
-  )))
-  (split-rec ls n '(())))
-)
-```
+	```scheme
+	; split
+	(define (split ls n)
+	  (letrec ((split-rec (lambda (ls n res)
+	      (cond
+		((= n 0) (append res (cons ls '())))
+		(else (split-rec (cdr ls) (- n 1) (cons (append (car res) (list (car ls))) (cdr res)))))
+	  )))
+	  (split-rec ls n '(())))
+	)
+	```
      </p></details>
 
 # Memory Management and Garbage Collection
@@ -483,14 +489,15 @@ Suppose the root pointer now points to object `A`. Draw the FROM and TO space af
 
 #### Exercise
 Consider this FROM heap, assume the root pointer points to objects `A`, `B`. Draw the FROM and TO space after the call to `traverse` for each of root pointer. To be clear, you should draw 2 heaps (each with FROM and TO space) with forwarding address pointers.
-<p align="center">
-<img src="img/exer.png" height="60%" width="60%">
-</p>
+	<p align="center">
+	<img src="img/exer.png" height="60%" width="60%">
+	</p>
 
-	<details><summary>Solution</summary>
-	<p>
-		<p align="center">
-		<img src="img/ans.jpg" height="80%" width="80%">
-		    </p>
-     </p></details>
+<details><summary>Solution</summary>
+<p>
+	
+<p align="center">
+<img src="img/ans.jpg" height="80%" width="80%">
+</p>
+</p></details>
      
