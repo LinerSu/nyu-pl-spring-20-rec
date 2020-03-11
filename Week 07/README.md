@@ -435,12 +435,21 @@ For example, consider giving `foldr` function a list `'(a a a b b)`:
 	<p>
 
 	```scheme
+	; rev
+	(define (rev ls)
+	  (letrec
+	    ((rev_acc (lambda (acc rv)
+	       (if (null? acc) rv
+		 (rev_acc (cdr acc) (cons (car acc) rv))))))
+		 (rev_acc ls '()))
+	)
+
 	; split
 	(define (split ls n)
 	  (letrec ((split-rec (lambda (ls n res)
 	      (cond
-		((= n 0) (append res (cons ls '())))
-		(else (split-rec (cdr ls) (- n 1) (cons (append (car res) (list (car ls))) (cdr res)))))
+		((= n 0) (cons (rev (car res)) (cons ls '())))
+		(else (split-rec (cdr ls) (- n 1) (cons (cons (car ls) (car res)) (cdr res)))))
 	  )))
 	  (split-rec ls n '(())))
 	)
