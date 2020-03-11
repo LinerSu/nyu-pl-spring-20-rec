@@ -514,7 +514,7 @@ Consider this FROM heap, assume the root pointer points to objects `A`, `B`. Dra
 <p>
 	
 <p align="center">
-<img src="img/ans.jpg" height="80%" width="80%">
+<img src="img/ans.jpg" height="100%" width="100%">
 </p>
 </p></details>
      
