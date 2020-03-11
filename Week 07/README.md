@@ -86,7 +86,7 @@ Provide a context free grammar over the alphabet {`a`,`b`} such as:
 
 	```
 	S -> aA
-	A -> aA | B
+	A -> aA  | B
 	B -> aBb | ε
 	```
      </p></details>
@@ -104,9 +104,8 @@ Provide a context free grammar over the alphabet {`a`,`b`} such as:
 	<p>
 
 	```
-	S -> aA | MS | SMA
-	A -> aA | ε
-	M -> MM | bMa | aMb | ε
+	S -> aM  | MS  | aS
+	M -> aMb | bMa | MM | ε
 	
 	```
      </p></details>
