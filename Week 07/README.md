@@ -40,13 +40,31 @@
 	```
      </p></details>
 2. **[Medium]** Write a regular expression to recognise patterns in the log files which contains *email id* and *date* separated by underscore. 
-	- <Email id>: email id can be alphanumeric. `.` and `_` are the only special characters allowed. They can occur multiple times and should be preceded and succeeded by atleast one alphanumeric character. This should be followed by `@` and alphanumeric characters with one `.` in between. 
-	- <Date>: the date can be in mm-dd-yyyy or yyyy-mm-dd format and it has to be valid.
-For example, the following string should be accepted:
+	- \<Email id\>: email id for this question should have this format: `<name>@<domain>`:
+		- `<name>`: it can be alphanumeric with two special characters. `.` and `-` are the only special characters allowed. They can occur multiple times and should be preceded and succeeded by atleast one alphanumeric character (That is, they could not appear consecutively, e.g. `--`, `..`, `-.`, or `.-`). 
+		- `<domain>`: it should contain alphanumeric characters with only one `.` in between. 
+	- \<Date\>: the date can be in `mm-dd-yyyy` or `yyyy-mm-dd` format with the following rules:
+		- `mm`: should between `01` to `12`.
+		- `dd`: should betweeen `01` to `30` if the `mm` is even. Otherwise, `dd` should between `01` to `31`.
+- For example, the following string should be accepted:
 	```
-	john.wick2_cs.nyu@abc.com_2020-01-01
+	john.wick2-cs.nyu@abc.com_2020-01-01
 	ROBERT.Smith@example.com_03-12-2008
+	test-one.one-test@123.123_0000-01-01
 	```
+	<details><summary>Solution</summary>
+	<p>
+
+	```
+	name   := [a-zA-Z0-9]+((\.|\-)[a-zA-Z0-9]+)*
+	domain := [a-zA-Z0-9]+\.[a-zA-Z0-9]+
+	mmdd   := 
+	((01|03|05|07|09|11)-(0[1-9]|[1-2][0-9]|3[0-1]))|((02|04|06|08|10|12)-(0[1-9]|[1-2][0-9]|30))
+	yyyy   := \d\d\d\d
+	Thus, the result should be:
+		name\@domain\_((mmdd\-yyyy)|(yyyy\-mmdd))
+	```
+     </p></details>
 
 ## Context Free Grammar
 - Terminals: the set of the alphabet of the language
@@ -55,7 +73,7 @@ For example, the following string should be accepted:
 - Starting symbol: a nonterminal, used to represent the whole sentence (or program)
 ### Exercise
 Provide a context free grammar over the alphabet {`a`,`b`} such as:
-1. Accept a string that `a` followed by `b` and the number of `a`'s is more than the number of `b`'s:
+1. **[Easy]** Accept a string that `a` followed by `b` and the number of `a`'s is more than the number of `b`'s:
 	```
 	a
 	aab
@@ -73,7 +91,7 @@ Provide a context free grammar over the alphabet {`a`,`b`} such as:
 	```
      </p></details>
 
-2. Challenge yourself to consider all strings with more a’s than b’s:
+2. **[Hard]** Challenge yourself to consider all strings with more a’s than b’s:
 	```
 	a
 	bbabaaa
@@ -130,7 +148,7 @@ int main()
     return 0;
 }
 ```
-1. In c programming, we know that c is using static scoping. What does this program print when it runs?
+1. **[Medium]** In c programming, we know that c is using static scoping. What does this program print when it runs?
 
 	<details><summary>Solution</summary>
 	<p>
@@ -141,7 +159,7 @@ int main()
 	```
      </p></details>
 
-2. Now assume the program is running under dynamic scoping. What does this program print?
+2. **[Hard]** Now assume the program is running under dynamic scoping. What does this program print?
 
 	<details><summary>Solution</summary>
 	<p>
@@ -193,7 +211,7 @@ printf("%d\n", z);
 ```
 What does this program print if we make the following assumptions about the parameter passing modes for the parameters `x` and `y` of `f`:
 
-1. `x` and `y` using call-by-value parameter
+1. **[Easy]** `x` and `y` using call-by-value parameter
 
 	<details><summary>Solution</summary>
 	<p>
@@ -216,7 +234,7 @@ f(z, {z = z + 1; z}); // {z = z + 1; z} = 2
 printf("%d\n", z);
 ```
 
-2. `x` is call-by-reference and `y` is call-by-value
+2. **[Easy]** `x` is call-by-reference and `y` is call-by-value
 
 	<details><summary>Solution</summary>
 	<p>
@@ -239,7 +257,7 @@ f(z, {z = z + 1; z}); // {z = z + 1; z} = 2
 printf("%d\n", z);
 ```
 
-3. `x` is call-by-value and `y` is call-by-name
+3. **[Medium]** `x` is call-by-value and `y` is call-by-name
 
 	<details><summary>Solution</summary>
 	<p>
@@ -262,7 +280,7 @@ f(z, {z = z + 1; z});
 printf("%d\n", z);
 ```
 
-4. `x` is call-by-reference and `y` is call-by-name
+4. **[Medium]** `x` is call-by-reference and `y` is call-by-name
 
 	<details><summary>Solution</summary>
 	<p>
@@ -288,7 +306,7 @@ printf("%d\n", z); // z = 5
 ## Lambda Calculus
 
 ### Exercise
-1. Determine the set of free variables inside this lambda expression:
+1. **[Easy]** Determine the set of free variables inside this lambda expression:
 ```
 (λ x. (λ y. x) y (λ x. x)) (λ z. z) x
 ```
@@ -330,7 +348,7 @@ fst = (λ p. p true)
 snd = (λ p. p false)
 pred = λ n. snd (n (λ p. pair (succ (fst p)) (fst p)) (pair 0 0))
 ```
-How do we compute `pred 1` to get `0` via beta reduction?
+**[Hard]** How do we compute `pred 1` to get `0` via beta reduction?
 
 	<details><summary>Solution</summary>
 	<p>
@@ -361,7 +379,7 @@ How do we compute `pred 1` to get `0` via beta reduction?
 ## Scheme Programming
 
 ### Exercise
-1. `pack`: define a function `pack` that packs consecutive duplicates of list elements into sublists.
+1. **[Medium]** `pack`: define a function `pack` that packs consecutive duplicates of list elements into sublists.
 
 For example:
 ```scheme
@@ -408,7 +426,7 @@ For example, consider giving `foldr` function a list `'(a a a b b)`:
 	```
      </p></details>
 
-2. `split`: define a function `split` that splits an input list into two parts by given a length of the first part. For instance:
+2. **[Medium]** `split`: define a function `split` that splits an input list into two parts by given a length of the first part. For instance:
 	```scheme
 	> (split '(a b c d e f g) 3)
 	((a b c)(d e f g))
