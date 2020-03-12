@@ -426,19 +426,20 @@ For example, consider giving `foldr` function a list `'(a a a b b)`:
 	- Data segment: stores objects whose life cycle lives the entire program execution
 	    - E.g. Global variables, code of program etc.
 	- Heap: store the values of objects whose life cycle is dynamic
-	    - The lifetime of objects 
-	    - Managed by the programmer, probably casued those issues:
-		- Use after free occurs --- access a dangling pointer
-		- Double free errors --- deallocating objects multiple times
-		- Memory leaks --- not deallocating after no longer used
-	    - Automatically by the language, the techniques include:
-		- Garbage collection: [Garbage collector](https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html) in Java
-		- Reference counting
-			- Idea: it keeps track of how many references point to an object. When 0, free it.
-			- E.g. Python, C++ ([Smart Pointer](https://docs.microsoft.com/en-us/cpp/cpp/smart-pointers-modern-cpp?view=vs-2019), after C++ 11 version)
-		- Ownership types: 
-			- Idea: to move all the reasoning involved in determining which references are alive at what time from *run-time* to *compile-time*.
-			- E.g. [Rust](https://doc.rust-lang.org/book/ch04-00-understanding-ownership.html)
+		- The [lifetime](https://en.wikipedia.org/wiki/Object_lifetime) (life-cycle) of an object: its runtime life from its creation to its destruction.
+			- Dynamic in here means, object is allocated through [Dynamic Memory Allocation](https://en.wikipedia.org/wiki/Memory_management#Dynamic_memory_allocation).
+		- Managed by the programmer, probably casued those issues:
+			- Use after free occurs --- access a dangling pointer
+			- Double free errors --- deallocating objects multiple times
+			- Memory leaks --- not deallocating after no longer used
+		- Automatically by the language, the techniques include:
+			- Garbage collection: [Garbage collector](https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html) in Java
+			- Reference counting
+				- Idea: it keeps track of how many references point to an object. When 0, free it.
+				- E.g. Python, C++ ([Smart Pointer](https://docs.microsoft.com/en-us/cpp/cpp/smart-pointers-modern-cpp?view=vs-2019), after C++ 11 version)
+			- Ownership types: 
+				- Idea: to move all the reasoning involved in determining which references are alive at what time from *run-time* to *compile-time*.
+				- E.g. [Rust](https://doc.rust-lang.org/book/ch04-00-understanding-ownership.html)
 	- Stack: store the values of local variables in function activation records
 	    - Using stack is preferred because its low overhead. The allocated data is freed when data is no needed.
 	    - Objects that are allocated on the stack cannot change their size dynamically
