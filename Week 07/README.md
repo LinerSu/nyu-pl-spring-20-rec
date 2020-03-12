@@ -225,18 +225,6 @@ What does this program print if we make the following assumptions about the para
 	```
      </p></details>
 
-```c++
-int z = 1;
-
-void f(int x, int y) { // x = 1, y = 2, z = 2
-    x = y + z;
-    printf("%d %d\n", x, y);
-}
-
-f(z, {z = z + 1; z}); // {z = z + 1; z} = 2
-printf("%d\n", z);
-```
-
 2. **[Easy]** `x` is call-by-reference and `y` is call-by-value
 
 	<details><summary>Solution</summary>
