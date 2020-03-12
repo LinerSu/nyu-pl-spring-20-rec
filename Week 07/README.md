@@ -17,13 +17,15 @@
             - `a+` = `aa*`
 
 ### Exercise
-1. **[Easy]** Write an regular expression that matches the positive float point number with the following restriction:
+1. **[Easy]** Write an regular expression that matches the positive real number with the following restriction:
 	```
 	Should Match:
 	1.2
 	0.35
 	0.007
 	0.0
+	34.56
+	77.00
 	Should not match:
 	+1.2
 	-3.4
