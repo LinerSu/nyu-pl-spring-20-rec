@@ -475,7 +475,12 @@ traverse(p)
 </p>
 
 Suppose the root pointer now points to object `A`. Draw the FROM and TO space after the call of `GC()`. 
-
+<details><summary>Solution</summary>
+<p>
+<p align="center">
+<img src="img/heap.jpg" height="100%" width="100%">
+</p>
+</p></details>
 
 #### Exercise
 Consider this FROM heap, assume the root pointer points to objects `A`, `B`. Draw the FROM and TO space after the call to `traverse` for each of root pointer. To be clear, you should draw 2 heaps (each with FROM and TO space) with forwarding address pointers.
