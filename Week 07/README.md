@@ -119,33 +119,33 @@ Provide a context free grammar over the alphabet {`a`,`b`} such as:
 ### Exercise
 Consider this code snippet:
 ```c
-int a = 0, b = 0, c = 0; // Assume global variables
-void q(); // Declare function q
+1:  int a = 0, b = 0, c = 0; // Assume global variables
+2:  void q(); // Declare function q
+3:
+4:  void p() {
+5:     int a = 1;
+6:     b = 1;
+7:     c = a + b;
+8:     a = c + b;
+9:     q();
+10: }
+11: void print() { printf("%d %d %d\n", a, b, c); }
 
-void p() {
-    int a = 1;
-    b = 1;
-    c = a + b;
-    a = c + b;
-    q();
-}
-void print() { printf("%d %d %d\n", a, b, c); }
-
-void q() {
-    int b = 2;
-    a = 2;
-    c = a + b;
-    b = c + a;
-    print();
-}
-
-int main()
-{
-    int c = 3; 
-    p();
-    print();
-    return 0;
-}
+12: void q() {
+13:    int b = 2;
+14:    a = 2;
+15:    c = a + b;
+16:    b = c + a;
+17:    print();
+18: }
+19:
+20: int main()
+21: {
+22:    int c = 3; 
+23:    p();
+24:    print();
+25:    return 0;
+26: }
 ```
 1. **[Medium]** In c programming, we know that c is using static scoping. What does this program print when it runs?
 
@@ -193,20 +193,24 @@ int main()
 2. Lazy evaluation: call-by-name, call-by-need
 
 ### Exercise
-Consider this following code:
+Consider this following Pseudo code:
 ```c++
 /* static scoping */
-int z = 1;
-
-/*Note: evaluations for addition and printf are both left_to_right*/
-
-void f(int x, int y) { // suppose formal could be assigned
-    x = y + z;
-    printf("%d %d\n", x, y);
+Int Incr(Int& k) { // pass by reference
+	k = k + 1
+	return k
 }
 
-f(z, {z = z + 1; z}); // {z = z + 1; z} = increments z by 1 and then returns the value z
-printf("%d\n", z);
+Int z = 1
+/*Note: evaluations for addition and printf are both from left to right*/
+
+Void F(Int x, Int y) { // Suppose formal could be assigned
+    x = y + z;
+    Printf("%d %d\n", x, y);
+}
+
+F(z, Incr(z));
+Printf("%d\n", z);
 ```
 What does this program print if we make the following assumptions about the parameter passing modes for the parameters `x` and `y` of `f`:
 
@@ -244,18 +248,6 @@ printf("%d\n", z);
 	```
      </p></details>
 
-```c++
-int z = 1;
-
-void f(int x, int y) { // x = z = 2, y = 2
-    x = y + z;
-    printf("%d %d\n", x, y);
-}
-
-f(z, {z = z + 1; z}); // {z = z + 1; z} = 2
-printf("%d\n", z);
-```
-
 3. **[Medium]** `x` is call-by-value and `y` is call-by-name
 
 	<details><summary>Solution</summary>
@@ -266,18 +258,6 @@ printf("%d\n", z);
 	3
 	```
      </p></details>
-
-```c++
-int z = 1;
-
-void f(int x, int y) { // x = 1, y = {z = z + 1; z}
-    x = y + z; // y = {z = z + 1; z} = 2, z = 2
-    printf("%d %d\n", x, y); // y = {z = z + 1; z} = 3
-}
-
-f(z, {z = z + 1; z});
-printf("%d\n", z);
-```
 
 4. **[Medium]** `x` is call-by-reference and `y` is call-by-name
 
@@ -290,18 +270,6 @@ printf("%d\n", z);
 	```
      </p></details>
 
-```c++
-int z = 1;
-
-void f(int x, int y) { // x = z, y = {z = z + 1; z}
-    x = y + z; // y = {z = z + 1; z} = 2, z = 2 -> x = z = 4
-    printf("%d %d\n", x, y); // x = z = 4, y = {z = z + 1; z} = 5
-}
-
-f(z, {z = z + 1; z});
-printf("%d\n", z); // z = 5
-```
-
 ## Lambda Calculus
 
 ### Exercise
@@ -311,29 +279,29 @@ printf("%d\n", z); // z = 5
 ```
 Moreover, show an alpha-renaming of the term such that no variable is bound more than once.
 
-	<details><summary>Solution</summary>
-	<p>
+<details><summary>Solution</summary>
+<p>
 
-	```
-	free variable: y, x
-	(((λ x. (((λ y. x) *y*) (λ x. x))) (λ z. z)) *x*)
-	Syntax tree to determine those free variables:
-	                   app
-	                  /   \
-	                app   *x*
-	               /   \
-	             λ x   λ z
-	              |     |
-	             app    z
-	            /   \
-	          app   λ x
-	         /   \   |
-	       λ y   *y* x 
-	        |
-	        x
-	after renaming: (λ x1. (λ y. x1) y (λ x2. x2)) (λ z. z) x
-	```
-     </p></details>
+```
+free variable: y, x
+(((λ x. (((λ y. x) *y*) (λ x. x))) (λ z. z)) *x*)
+Syntax tree to determine those free variables:
+		   app
+		  /   \
+		app   *x*
+	       /   \
+	     λ x   λ z
+	      |     |
+	     app    z
+	    /   \
+	  app   λ x
+	 /   \   |
+       λ y   *y* x 
+	|
+	x
+after renaming: (λ x1. (λ y. x1) y (λ x2. x2)) (λ z. z) x
+```
+</p></details>
 
 2. Consider the church encoding, we know that:
 ```
@@ -349,31 +317,31 @@ pred = λ n. snd (n (λ p. pair (succ (fst p)) (fst p)) (pair 0 0))
 ```
 **[Hard]** How do we compute `pred 1` to get `0` via beta reduction?
 
-	<details><summary>Solution</summary>
-	<p>
-	
-	```
-	    pred 1
-	=> (λ n. snd (n (λ p. pair (succ (fst p)) (fst p)) (pair 0 0))) 1   ; by def of pred
-	=> snd (1 (λ p. pair (succ (fst p)) (fst p)) (pair 0 0))            ; do one step for λ n
-	=> snd ((λ s z. s z) (λ p. pair (succ (fst p)) (fst p)) (pair 0 0)) ; by def of 1
-	=> snd ((λ p. pair (succ (fst p)) (fst p)) (pair 0 0))              ; do two steps for λ s and λ z
-	=> snd (pair (succ (fst (pair 0 0))) (fst (pair 0 0)))              ; do one step for λ p
-	=> snd (pair (succ (fst (pair 0 0))) (fst ((λ x y b. b x y) 0 0)))  ; by def of pair
-	=> snd (pair (succ (fst (pair 0 0))) (fst (λ b. b 0 0)))            ; do two steps for λ x and λ y
-	=> snd (pair (succ (fst (pair 0 0))) ((λ p. p true) (λ b. b 0 0)))  ; by def of fst
-	=> snd (pair (succ (fst (pair 0 0))) ((λ b. b 0 0) true))           ; do one step for λ p
-	=> snd (pair (succ (fst (pair 0 0))) (true 0 0))                    ; do one step for λ b
-	=> snd (pair (succ (fst (pair 0 0))) ((λ x y. x) 0 0))              ; by def of true
-	=> snd (pair (succ (fst (pair 0 0))) 0)                             ; do two steps for λ x and λ y
-	=> (λ p. p false) (pair (succ (fst (pair 0 0))) 0)                  ; by def of snd
-	=> (pair (succ (fst (pair 0 0))) 0) false                           ; do one step for λ p
-	=> ((λ x y b. b x y) (succ (fst (pair 0 0))) 0) false               ; by def of pair
-	=> false (succ (fst (pair 0 0))) 0                                  ; do three steps for λ x, λ y and λ b
-	=> (λ x y. y) (succ (fst (pair 0 0))) 0                             ; by def of false
-	=> 0                                                                ; do two steps for λ x and λ y
-	```
-     </p></details>
+<details><summary>Solution</summary>
+<p>
+
+```
+    pred 1
+=> (λ n. snd (n (λ p. pair (succ (fst p)) (fst p)) (pair 0 0))) 1   ; by def of pred
+=> snd (1 (λ p. pair (succ (fst p)) (fst p)) (pair 0 0))            ; do one step for λ n
+=> snd ((λ s z. s z) (λ p. pair (succ (fst p)) (fst p)) (pair 0 0)) ; by def of 1
+=> snd ((λ p. pair (succ (fst p)) (fst p)) (pair 0 0))              ; do two steps for λ s and λ z
+=> snd (pair (succ (fst (pair 0 0))) (fst (pair 0 0)))              ; do one step for λ p
+=> snd (pair (succ (fst (pair 0 0))) (fst ((λ x y b. b x y) 0 0)))  ; by def of pair
+=> snd (pair (succ (fst (pair 0 0))) (fst (λ b. b 0 0)))            ; do two steps for λ x and λ y
+=> snd (pair (succ (fst (pair 0 0))) ((λ p. p true) (λ b. b 0 0)))  ; by def of fst
+=> snd (pair (succ (fst (pair 0 0))) ((λ b. b 0 0) true))           ; do one step for λ p
+=> snd (pair (succ (fst (pair 0 0))) (true 0 0))                    ; do one step for λ b
+=> snd (pair (succ (fst (pair 0 0))) ((λ x y. x) 0 0))              ; by def of true
+=> snd (pair (succ (fst (pair 0 0))) 0)                             ; do two steps for λ x and λ y
+=> (λ p. p false) (pair (succ (fst (pair 0 0))) 0)                  ; by def of snd
+=> (pair (succ (fst (pair 0 0))) 0) false                           ; do one step for λ p
+=> ((λ x y b. b x y) (succ (fst (pair 0 0))) 0) false               ; by def of pair
+=> false (succ (fst (pair 0 0))) 0                                  ; do three steps for λ x, λ y and λ b
+=> (λ x y. y) (succ (fst (pair 0 0))) 0                             ; by def of false
+=> 0                                                                ; do two steps for λ x and λ y
+```
+</p></details>
 
 ## Scheme Programming
 
