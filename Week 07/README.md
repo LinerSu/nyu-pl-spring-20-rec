@@ -119,7 +119,7 @@ Provide a context free grammar over the alphabet {`a`,`b`} such as:
 ### Exercise
 Consider this code snippet:
 ```c
-int a = 0, b = 0, c = 0; //
+int a = 0, b = 0, c = 0; // Assume global variables
 void q(); // Declare function q
 
 void p() {
