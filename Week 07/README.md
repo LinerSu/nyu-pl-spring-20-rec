@@ -309,7 +309,7 @@ pred = λ n. snd (n (λ p. pair (succ (fst p)) (fst p)) (pair 0 0))
 <p>
 
 ```
-    pred 1		#| By normal order |#
+    pred 1		#| By mixed order |#
 => (λ n. snd (n (λ p. pair (succ (fst p)) (fst p)) (pair 0 0))) 1   ; by def of pred
 => snd (1 (λ p. pair (succ (fst p)) (fst p)) (pair 0 0))            ; do one step for λ n
 => snd ((λ s z. s z) (λ p. pair (succ (fst p)) (fst p)) (pair 0 0)) ; by def of 1
@@ -415,22 +415,30 @@ For example, consider giving `foldr` function a list `'(a a a b b)`:
 # Memory Management and Garbage Collection
 
 ## Memory management
-In a program, the memory used to store the data and code at run-time typically is split into three pieces:
-- Data segment: stores objects whose life cycle lives the entire program execution
-    - E.g. Global variables, code of program etc.
-- Heap: store the values of objects whose life cycle is dynamic
-    - The lifetime of objects 
-    - Managed by the programmer
-        - Use after free occurs --- access a dangling pointer
-        - Double free errors --- deallocating objects multiple times
-        - Memory leaks --- not deallocating after no longer used
-    - Automatically by the language
-        - Garbage collection
-        - Reference mounting
-        - Ownership types
-- Stack: store the values of local variables in function activation records
-    - Using stack is preferred because low overhead, allocated data is freed when data is no needed
-    - Objects that are allocated on the stack cannot change their size dynamically
+- A quick recap of memory:
+	<p align="center">
+	<img src="img/123.png" height="50%" width="50%">
+	</p>
+- In a program, the memory used to store the data and code at run-time typically is split into three pieces:
+	- Data segment: stores objects whose life cycle lives the entire program execution
+	    - E.g. Global variables, code of program etc.
+	- Heap: store the values of objects whose life cycle is dynamic
+	    - The lifetime of objects 
+	    - Managed by the programmer, probably casued those issues:
+		- Use after free occurs --- access a dangling pointer
+		- Double free errors --- deallocating objects multiple times
+		- Memory leaks --- not deallocating after no longer used
+	    - Automatically by the language, the techniques include:
+		- Garbage collection: [Garbage collector](https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html) in Java
+		- Reference counting
+			- Idea: it keeps track of how many references point to an object. When 0, free it.
+			- E.g. Python, C++ ([Smart Pointer](https://docs.microsoft.com/en-us/cpp/cpp/smart-pointers-modern-cpp?view=vs-2019), after C++ 11 version)
+		- Ownership types: 
+			- Idea: to move all the reasoning involved in determining which references are alive at what time from *run-time* to *compile-time*.
+			- E.g. [Rust](https://doc.rust-lang.org/book/ch04-00-understanding-ownership.html)
+	- Stack: store the values of local variables in function activation records
+	    - Using stack is preferred because its low overhead. The allocated data is freed when data is no needed.
+	    - Objects that are allocated on the stack cannot change their size dynamically
 
 ## Garbage collection
 - Def. an automatic memory management. A garbage collector attempts to reclaim the memory occupied by objects that are no longer in use by the program.
