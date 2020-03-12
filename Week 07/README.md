@@ -197,8 +197,8 @@ Consider this following Pseudo code:
 ```c++
 /* static scoping */
 Int Incr(Int& k) { // pass by reference
-	k = k + 1
-	return k
+    k = k + 1
+    return k
 }
 
 Int z = 1
