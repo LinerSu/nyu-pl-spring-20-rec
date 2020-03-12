@@ -478,7 +478,7 @@ Suppose the root pointer now points to object `A`. Draw the FROM and TO space af
 <details><summary>Solution</summary>
 <p>
 <p align="center">
-<img src="img/heap.jpg" height="100%" width="100%">
+<img src="img/heap.png" height="100%" width="100%">
 </p>
 </p></details>
 
