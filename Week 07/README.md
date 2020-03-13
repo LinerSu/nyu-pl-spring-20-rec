@@ -160,7 +160,7 @@ Consider this code snippet:
 	2 1 4
 	```
 	<p align="center">
-		<img src="img/stack.png" height="70%" width="70%">
+		<img src="img/stack.png" height="80%" width="80%">
 	</p>
      </p></details>
 
@@ -174,10 +174,10 @@ Consider this code snippet:
 	0 1 4
 	```
 	<p align="center">
-		<img src="img/stack2.png" height="70%" width="70%">
+		<img src="img/stack2.png" height="80%" width="80%">
 	</p>
 	<p align="center">
-		<img src="img/stack3.png" height="70%" width="70%">
+		<img src="img/stack3.png" height="80%" width="80%">
 	</p>
      </p></details>
    
@@ -236,7 +236,7 @@ What does this program print if we make the following assumptions about the para
 	2
 	```
 	<p align="center">
-		<img src="img/value2.png" height="50%" width="50%">
+		<img src="img/value2.png" height="90%" width="90%">
 	</p>
      </p></details>
 
@@ -250,7 +250,7 @@ What does this program print if we make the following assumptions about the para
 	4
 	```
 	<p align="center">
-		<img src="img/valref.png" height="70%" width="70%">
+		<img src="img/valref.png" height="90%" width="90%">
 	</p>
      </p></details>
 
@@ -264,7 +264,7 @@ What does this program print if we make the following assumptions about the para
 	3
 	```
 	<p align="center">
-		<img src="img/valuename.png" height="70%" width="70%">
+		<img src="img/valuename.png" height="90%" width="90%">
 	</p>
      </p></details>
 
@@ -278,7 +278,7 @@ What does this program print if we make the following assumptions about the para
 	5
 	```
 	<p align="center">
-		<img src="img/refname.png" height="70%" width="70%">
+		<img src="img/refname.png" height="90%" width="90%">
 	</p>
      </p></details>
 
