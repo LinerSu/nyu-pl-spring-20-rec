@@ -159,6 +159,9 @@ Consider this code snippet:
 	2 1 4
 	2 1 4
 	```
+	<p align="center">
+		<img src="img/stack.png" height="70%" width="70%">
+	</p>
      </p></details>
 
 2. **[Hard]** Now assume the program is running under dynamic scoping. What does this program print?
@@ -170,6 +173,12 @@ Consider this code snippet:
 	2 6 4
 	0 1 4
 	```
+	<p align="center">
+		<img src="img/stack2.png" height="70%" width="70%">
+	</p>
+	<p align="center">
+		<img src="img/stack3.png" height="70%" width="70%">
+	</p>
      </p></details>
    
 - To consider dynamic scoping, you can use **stack frame** to remeber the declaration order during the running time. For instance, here is a simple stack frame when the program called `print()` inside function `q()`:
@@ -226,6 +235,9 @@ What does this program print if we make the following assumptions about the para
 	4 2
 	2
 	```
+	<p align="center">
+		<img src="img/value2.png" height="50%" width="50%">
+	</p>
      </p></details>
 
 2. **[Easy]** `x` is call-by-reference and `y` is call-by-value
@@ -237,6 +249,9 @@ What does this program print if we make the following assumptions about the para
 	4 2
 	4
 	```
+	<p align="center">
+		<img src="img/valref.png" height="70%" width="70%">
+	</p>
      </p></details>
 
 3. **[Medium]** `x` is call-by-value and `y` is call-by-name
@@ -248,6 +263,9 @@ What does this program print if we make the following assumptions about the para
 	4 3
 	3
 	```
+	<p align="center">
+		<img src="img/valuename.png" height="70%" width="70%">
+	</p>
      </p></details>
 
 4. **[Medium]** `x` is call-by-reference and `y` is call-by-name
@@ -259,6 +277,9 @@ What does this program print if we make the following assumptions about the para
 	4 5
 	5
 	```
+	<p align="center">
+		<img src="img/refname.png" height="70%" width="70%">
+	</p>
      </p></details>
 
 ## Lambda Calculus
@@ -484,6 +505,7 @@ Suppose the root pointer now points to object `A`. Draw the FROM and TO space af
 <p align="center">
 <img src="img/heap.png" height="100%" width="100%">
 </p>
+*Please check the `Copying.pdf` for details.*
 </p></details>
 
 #### Exercise
