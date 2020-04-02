@@ -93,7 +93,7 @@
 	```
 
 ### Algebraic datatypes (ADTs)
-- Def. a kind of compisite type, where a type formed by combining other types.
+- Def. a kind of composite type, where a type formed by combining other types.
     - `datatype` could be constructed by other types.
     - `datatype` could be defined recursively.
     - The "algebra" here is mixed by a "sum" (alternation) of the type’s members and a "product" (combination) of subtypes. 
