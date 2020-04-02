@@ -7,13 +7,14 @@
 ## Function types
 - Remeber that, function types are constructed using an arrow type constructor `->`. 
 - For instance, the type `t1 -> t2` represents functions that take a value of type `t1` and return a value of type `t2`.
+- Now we take a complicate function as an example:
 	```sml
 	fun example (i: int) (f: bool -> int) (lst: int list) : int list = 
 		...
 	```
-- The question is how could we represent the type of a function?
+	- The question is how could we represent the type for function `example`?
 - [Type signature](https://en.wikipedia.org/wiki/Type_signature): defines the inputs and outputs for each function.
-- [Currying](https://en.wikipedia.org/wiki/Currying): a process that translates a function taking multiple arguments into a sequence of functions, each with a single argument.
+- [Currying](https://en.wikipedia.org/wiki/Currying): a process that translates a function taking multiple arguments into a sequence of functions, each of them with a single argument.
 	- Remember that, the lambda abstraction are right associative. Is this a coincidence?
 - For example, if a function is defined and took this signature `int -> (bool -> int) -> int list -> int list`:
 	- In lower level representation, the SML interprets this function like an "onion":
@@ -31,8 +32,10 @@
 - Note that, in ML family, functions are defined in curried form by default.
 
 ## Pattern matching
-- Def. the act of checking a given sequence of tokens for the presence of the constituents of some patterns.
-    - Think about this like "We consider to do several actions based on different cases of a variable. For that variable,it contains a certain patterns.
+- Def. the act of checking a given sequence of variables for the presence of the constituents over some patterns.
+    - Any variable contains some patterns. However, the patterns for some variables may effect the code implementation.
+    	- For instance, by given a list, it has two patterns: empty or nonempty. The implementation for a function might need different actions based on those two patterns.
+    - To make it simpler, think about this like "We consider to do several actions based on different patterns of some vairables, but this time we don't need to write `if-then-else`."
 
 ### Patterns in SML
 - Constant `c` --- `1`, `"this"`, `()`, `{}`...
@@ -54,25 +57,26 @@
 	| · · · · · · · · ·
 	| <patterni> => <expi>
 	```
-	- For example, define a function that calculates the length of the list:
+	- For example, define a function that calculates the length of a list:
 	```sml
 	fun len lst = 
 	    case lst of
 	     [] => 0
 	    |(hd::tl) => 1 + (len tl)
 	```
-	- If you want to match multiple variables, you can make `<exp>` as a tuple --- `<arg1>, <arg2>, ..., <argn>`
-- Special case for only matching the parameters of a function: 
+	- If you want to match multiple variables at a same time, you can make `<exp>` as a tuple --- `<arg1>, <arg2>, ..., <argn>`
+	- For any variables you matching, I suggest you fully cover the patterns inside pattern matching, even though you know some patterns won't be matched at the run time.
+- Special case for matching the parameters of a function: 
 	```sml
 	fun name <pattern1> = · · ·
 	  | name <pattern2> = · · ·
 	  | · · ·
 	```
-	- In this format of pattern matching, you can match multiple arguments inside pattern by considering different combined cases. For instance:
+	- In this format of pattern matching, you can match multiple arguments inside patterns by considering different combined cases. For instance, we can implement a `&&` operator:
 	```sml
-	fun short_circuit_and false _ = false
-	  | short_circuit_and true false = false
-	  | short_circuit_and true true = true
+	fun && false _ = false
+	  | && true false = false
+	  | && true true = true
 	```
 
 ## Types in Standard ML
@@ -90,18 +94,20 @@
 
 ### Algebraic datatypes (ADTs)
 - Def. a kind of compisite type, where a type formed by combining other types.
-    - A type could be constructed by other types.
-    - A type could be defined recursively.
+    - `datatype` could be constructed by other types.
+    - `datatype` could be defined recursively.
     - The "algebra" here is mixed by a "sum" (alternation) of the type’s members and a "product" (combination) of subtypes. 
 - Forms (EBNF):
 	```sml
-	<datatype> ::= 'datatype' ['('<parameterized via type variables>')'] <name> '='
-		<subtypes> ['|' <subtypes>]*
-	<subtypes> := <user defined *type value*> | <name tag> of <product types>
-	<product types> := <type> ['*' <type>]*
+	<datatype>        ::= 'datatype' [<parameter_list>] <name> '=' <subtype> 
+				['|' <subtype>]*
+	<parameter_list>  ::= <type variable> | '('<type variables>')'
+	<subtype>         ::= <user defined data constructor> | <name tag> of <product types>
+	<product types>   ::= <type> ['*' <type>]*
+	<type variables>  ::= <type variable> `,` <type variables>
 	```
-	- `<subtypes>` represent a type’s member in datatype.
-	- `<parameterized via type variables>` in here means you can use any fresh type variables as type parameters.
+	- `<subtype>` represent a type’s member in datatype.
+	- `<parameter_list>` in here allows you to use any fresh type variables as type parameters.
 	- `<type>` in here could be any types (basic types or type generated by [type constructor](https://en.wikipedia.org/wiki/Type_constructor)).
 	- The `<name tag>` is not only used to combine the contained values into a single structure that can be assigned to a variable, but also used for distinguishing the different alternatives.
 - Structural equivalence vs Name equivalence
@@ -116,7 +122,7 @@
 			val c: day = b
 			``` 
 	- Name equivalence: two types are equal iff they have the same name.
-	- For example, define `datatype` in SML:
+		- For example, define `datatype` in SML:
 		```sml
 		datatype day = Date of int * string
 		val a: day = Date(3, "day")
@@ -127,7 +133,7 @@
 		val c: day = a (*Type of a and c are name equivalence*)
 		val d: month = c (* Error! datatype are not structural equivalence*)
 		```
-- For example, you can define variant datatypes for a binary tree like this:
+- Now back to `datatype`. For example, you can define a datatype for a binary tree like this:
 	```sml
 	datatype btree =
 	    Leaf
@@ -165,7 +171,7 @@ datatype ('a, 'b) bktree = (* multiple type parameters *)
 	```sml
 	datatype 'a option = NONE | SOME of 'a
 	```
-- This type is very useful when you try to search or find a value but may not always have a defined return value, instead of raising a NOT FOUND error. For instance, here is how we can implement a function to find the value in a binary search tree, if such a value exists:
+- This type is very useful when you try to search or find a value but may not always have a defined return value. You could return NONE as result instead of raising a NOT FOUND error. For instance, here is how we can implement a function to find the value in an `int` type binary search tree, if such a value exists:
 	```sml
 	datatype 'a bstree =
 	      Empty 
@@ -196,14 +202,19 @@ datatype ('a, 'b) bktree = (* multiple type parameters *)
 	  | Cons of 'a * 'a mylist
 	```
      </p></details>
-- **[Medium]** Write a function that `insert` a new tree Node to an int binary search tree:
+- **[Medium]** Write a function that `insert` a new tree Node to an `int` type binary search tree:
 	```sml
 	(* type for binary search tree *)
 	datatype 'a bstree =
 	      Empty 
 	    | Node of 'a * 'a bstree * 'a bstree
-	(* function signature *)
+	
+	(* 
+	function signature should be:
 	val insert = fn : int btree -> int -> int bstree
+	 *)
+	fun insert ... = ???
+	
 	(* for example *)
 	- val t1 = Node(1, Empty, Empty);
 	- insert t1 3;
@@ -237,12 +248,12 @@ datatype ('a, 'b) bktree = (* multiple type parameters *)
 	    [] => []
 	  | (h::t) => (reverse t) :: h
 	  
-   fun forall p l =
-   case l of 
-    [ ] => SOME true
-   | (h::t) => (case (forall p t) of
-         SOME b => (p h) orelse b (*orelse is '||'*)
-       | NONE => NONE)
+	fun forall p l =
+	  case l of 
+	  [ ] => SOME true
+	  | (h::t) => (case (forall p t) of
+		  SOME b => (p h) orelse b (*orelse is '||'*)
+		| NONE => NONE)
 	```
 	
 	<details><summary>Solution</summary>
