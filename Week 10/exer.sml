@@ -22,11 +22,14 @@ List.map (fn x => x + 1) [1,2,3];
 
 (* 3. Suppose we want to define a datatype for abstract syntax tree of an expression *)
 datatype expr =
-  Id of string | Int of int
+    Id of string | Int of int
   | Plus of expr * expr | Minus of expr * expr;
 
 val a = Minus (Int 5, Plus (Int 3, Int 7));
+(* 5 - (3 + 7) *)
 val c = (Plus (Minus (Int 15, Plus (Int 3, Int 7)), Id "x"));
+(* x + (15 - (3 + 7)) *)
+
 (* Define a function that simplify the expression
 Note. the expression could be simplified iff the inner expressions could simplify
 E.g. Plus (Int 6, (Plus (Int 5,Id "x")) will not be simplified.

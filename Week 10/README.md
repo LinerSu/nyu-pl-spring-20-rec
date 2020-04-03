@@ -82,14 +82,26 @@
 ## Types in Standard ML
 ### Type Inference
 - Please find my slides [here](https://github.com/LinerSu/nyu-pl-spring-20-rec/blob/master/Week%2010/Type%20inference.pdf).
-- [Optional] Here is a [tutorial](https://github.com/nyu-pl-fa18/class09#hindley-milner-type-system) to discuss more details of type inference algorithm.
+- [Optional] Here is a [tutorial](https://github.com/nyu-pl-fa18/class09) that discusses more details of type inference algorithm.
 - For examples, suppose we want to write SML functions that satisfy the following polymorphic type signatures:
 	```sml
 	(** f: ('a -> 'b) -> ('b -> 'c) -> 'a -> 'c *)
 	fun f ... = ???
+	(*
+		First, write down the number of parameters for the function:
+			fun f x y z = ???
+		Second, for each parameter, find the type relations based on the types we have
+			(a) x has a type 'a -> 'b, which means it takes z as input and returns a value.
+			fun f x y z = (x z)
+			(b) y has a type 'b -> 'c. This indicates the returned value for x z is an input for function y. Thus, we must have a call like y (x z).
+		Third, find the type consistency for the output and function body.
+			y (x z) will return a value with type 'c which is the same as the output for function f. Therefore, function f could be a body like:
+			fun f x y z = y (x z)
+	*)
 	
 	(** g: ('a * 'b -> 'c) -> 'a -> 'b -> 'c *)
 	fun g ... = ???
+	(* fun g x y z = x (y, z) *)
 	```
 
 ### Algebraic datatypes (ADTs)
@@ -260,7 +272,7 @@ datatype ('a, 'b) bktree = (* multiple type parameters *)
 	
 	1. `bigger`: Type error on variable `a`. The condition experssion expect variable `a` has a boolean type. However, `b - a` infers that `a` should be an `int`.
 	2. `compose`: No error.
-	3. `reverse`: Error on second match case `(reverse t) :: h`. Reason: In the first case, we could infer the reverse function returns a `'a list` as a result. However, in the second case, `reverse t` will construct a list of list as a result, which will cause type result circularity.
+	3. `reverse`: Error on second match case `(reverse t) :: h`. Reason: In the first matching case `[] => []`, we could infer the reverse function returns a `'a list` as a result. However, in the second case, `reverse t` will construct a list of list as a result, which will cause type result circularity.
 	4. `forall`: Error on `(p h) orelse b`. The result type for function `forall` expects `bool option` but that expression has type `bool`.
 	 </details>
 	 
