@@ -24,7 +24,7 @@
 	- However, I would rather use a "common" way to look at function type in functional languages.
 	- I say this function takes three arguments and returns a output.
 - [Partial application](https://en.wikipedia.org/wiki/Partial_application): a technique of fixing a number of arguments to a function, producing another function of smaller arguments.
-- For instance
+	- For instance
 	```sml
 	fun adder a b = a + b
 	fun add3 x = adder x 3 (*Closure required at the run time*)
