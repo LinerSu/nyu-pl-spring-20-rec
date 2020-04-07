@@ -185,7 +185,7 @@
 	```
 
 ### SML Types and Semantics
-- Check details in next class
+- Check details in [next class](https://github.com/LinerSu/nyu-pl-spring-20-rec/tree/master/Week%2010#standard-ml)
 
 ## Types, Type System & Polymorphism
 
