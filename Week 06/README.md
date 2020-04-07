@@ -1,5 +1,6 @@
-# Introduction to Standard ML
-## Installation
+# Standard ML, Types, Type System & Polymorphism
+## Introduction to Standard ML
+### Installation
 - You can use [this](https://www.smlnj.org/) website to download Standard ML.
 - Please follow the [instructions](https://www.smlnj.org/dist/working/110.96/index.html) to download SML.
 - Once installed, type `sml` in your terminal to use SML compiler.
@@ -8,9 +9,9 @@
 - use "<file_name>.sml";
 ```
 
-## Basic Syntax
+### Basic Syntax
 
-### Declarations
+#### Declarations
 - Binding: a binding is a name associated with a value.
 - value bindings
 	- Bind a value to a variable
@@ -30,7 +31,7 @@
 	fun f <pat> = <exp>
 	``` 
 
-### Expressions
+#### Expressions
 - Basic expressions
 	```sml
 	(* Integers *)
@@ -98,7 +99,7 @@
 	end
 	```
 	
-### Lists and Tuples
+#### Lists and Tuples
 - Lists
 	- Basic forms
 	```sml
@@ -146,7 +147,7 @@
 	(* val plus = fn : int * int -> int *)
 	```
 
-### Functions
+#### Functions
 - Function declarations
 	```sml
 	(* Format:
@@ -183,12 +184,12 @@
 	*)
 	```
 
-## SML Types and Semantics
+### SML Types and Semantics
 - Check details in next class
 
-# Types, Type System & Polymorphism
+## Types, Type System & Polymorphism
 
-## Type or Data Type
+### Type or Data Type
 - Def. a type describes a set of possible values that share the same mapping to the low-level representation and a set of operations that perform computations on those values. 
 - Different view points of type:
 	- Denotational view:
@@ -257,7 +258,7 @@
 		} 
 		```
 
-## Type System
+### Type System
 - Def. a system by giving a set of rules that assigns a type to the various constructs of a computer program, such as variables, expressions, functions or modules.
 - Motto: "Do not believe programmer!"
 - Type system also gives us a set of rules for:
@@ -286,7 +287,7 @@
 		(* A = B = int * int *)
 		```
 
-### Type checking
+#### Type checking
 - Strong vs. Weak type systems
 	- A strongly type language captures both consistent type invariants of the code, and ensure its correctness. This guarantees that all type errors and exceptions coudl be detected.
 		- E.g. Java, Scala, OCaml, Python, Lisp, and Scheme.
@@ -322,7 +323,7 @@
 	```
 - **Note that**, the distinction between weak/strong and static/dynamic is not always clear cut.
 
-### Type Inference
+#### Type Inference
 - Instead of annotating types for variables and functions, type inference allows you to omit type annotation while still permmiting type checking.
 - That is, it concerns the problem of statically inferring the type of an expression from the types of its parts.
 - Consider the following Standard ML code:
@@ -344,7 +345,7 @@
 		- Thus, the `if` expression has a type of `int`. This means function should return a value which has a type of `int`.
 - More details in the next class.
 
-## Polymorphism
+### Polymorphism
 - Def. by providing a single interface, the compiler could use that interface(e.g. type, operator, variable, function) to represent many forms.
 - Categories
 	- Ad hoc polymorphism (Overloading): functions or operators can be applied to arguments of different types.
@@ -406,7 +407,7 @@
 			```
 		- More details in the future class.
 
-## Limitations of Type System
+### Limitations of Type System
 - Problem: the compiler (type checker) will reject all bad programs but also some good ones
 - Restirction with polymorphism: do not trust programmer given input parameter with correct type
 	- Consider the following SML example:
