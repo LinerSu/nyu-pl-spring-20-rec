@@ -507,7 +507,7 @@ Suppose the root pointer now points to object `A`. Draw the FROM and TO space af
 <img src="img/heap.png" height="100%" width="100%">
 </p>
 
-Please check the `Copying.pdf` for details.
+Please check the [Copying.pdf](https://github.com/LinerSu/nyu-pl-spring-20-rec/blob/master/Week%2007/Copying.pdf) for details.
 
 ##### Exercise
 Consider this FROM heap, assume the root pointer points to objects `A`, `B`. Draw the FROM and TO space after the call to `traverse` for each of root pointer. To be clear, you should draw 2 heaps (each with FROM and TO space) with forwarding address pointers.
