@@ -1,6 +1,7 @@
-# Midterm Preparation
+# Midterm Prep, Memory Manag & Garbage Collection
 
-## Regular Expression
+## Midterm Preparation
+### Regular Expression
 - Syntax
     - Basic:
         - `ε`: represents an empty string, `ε` matches no characters string (empty string).
@@ -16,7 +17,7 @@
             - `a+b` matches `ab`, `aab`, `aaab` and so on.
             - `a+` = `aa*`
 
-### Exercise
+#### Exercise
 1. **[Easy]** Write an regular expression that matches the positive real number with the following restriction:
 	```
 	Should Match:
@@ -69,12 +70,12 @@
 	```
      </p></details>
 
-## Context Free Grammar
+### Context Free Grammar
 - Terminals: the set of the alphabet of the language
 - Nonterminals: the set of variables, each variable represents a different type of phrase or clause in the sentence
 - Productions: rules for replacing a single non-terminal with a string of terminals and non-terminals
 - Starting symbol: a nonterminal, used to represent the whole sentence (or program)
-### Exercise
+#### Exercise
 Provide a context free grammar over the alphabet {`a`,`b`} such as:
 1. **[Easy]** Accept a string that `a` followed by `b` and the number of `a`'s is more than the number of `b`'s:
 	```
@@ -115,11 +116,11 @@ Provide a context free grammar over the alphabet {`a`,`b`} such as:
 
 - Here is the [website](https://web.stanford.edu/class/archive/cs/cs103/cs103.1156/tools/cfg/) for testing the correctness of CFG.
 
-## Static vs. Dynamic Scoping
+### Static vs. Dynamic Scoping
 1. Static scoping: binding of a name is determined by rules that refer only to the program text. (i.e. its syntactic structure)
 2. Dynamic scoping: binding of a name is given by the most recent declaration encountered during run-time.
 
-### Exercise
+#### Exercise
 Consider this code snippet:
 ```c
 1:  int a = 0, b = 0, c = 0; // Assume global variables
@@ -200,11 +201,11 @@ Consider this code snippet:
 	```
 - The variable `a`, `b` and `c` inside `print()` should be bounded the most recent declaration, where referred `a` is bounded by variable `a` inside function `p()`, `b` is bounded by variable `b` inside function `q()`, and `c` is bounded by variable `c` inside function `main()`.
 
-## Parameter Passing Modes
+### Parameter Passing Modes
 1. Strict evaluation: call-by-value, call-by-reference
 2. Lazy evaluation: call-by-name, call-by-need
 
-### Exercise
+#### Exercise
 Consider this following Pseudo code:
 ```c++
 /* static scoping */
@@ -282,9 +283,9 @@ What does this program print if we make the following assumptions about the para
 	</p>
      </p></details>
 
-## Lambda Calculus
+### Lambda Calculus
 
-### Exercise
+#### Exercise
 1. **[Easy]** Determine the set of free variables inside this lambda expression:
 ```
 (λ x. (λ y. x) y (λ x. x)) (λ z. z) x
@@ -355,9 +356,9 @@ pred = λ n. snd (n (λ p. pair (succ (fst p)) (fst p)) (pair 0 0))
 ```
 </p></details>
 
-## Scheme Programming
+### Scheme Programming
 
-### Exercise
+#### Exercise
 1. **[Medium]** `pack`: define a function `pack` that packs consecutive duplicates of list elements into sublists.
 
 For example:
@@ -436,9 +437,9 @@ For example, consider giving `foldr` function a list `'(a a a b b)`:
 	```
      </p></details>
 
-# Memory Management and Garbage Collection
+## Memory Management and Garbage Collection
 
-## Memory management
+### Memory management
 - A quick recap of memory:
 	<p align="center">
 	<img src="img/123.png" height="50%" width="50%">
@@ -465,10 +466,10 @@ For example, consider giving `foldr` function a list `'(a a a b b)`:
 	    - Using stack is preferred because its low overhead. The allocated data is freed when data is no needed.
 	    - Objects that are allocated on the stack cannot change their size dynamically
 
-## Garbage collection
+### Garbage collection
 - Def. an automatic memory management. A garbage collector attempts to reclaim the memory occupied by objects that are no longer in use by the program.
 
-### Copying
+#### Copying
 - Intuition
     - Two parts: FROM space, TO space
     - Objects allocated in FROM space
@@ -508,7 +509,7 @@ Suppose the root pointer now points to object `A`. Draw the FROM and TO space af
 
 Please check the `Copying.pdf` for details.
 
-#### Exercise
+##### Exercise
 Consider this FROM heap, assume the root pointer points to objects `A`, `B`. Draw the FROM and TO space after the call to `traverse` for each of root pointer. To be clear, you should draw 2 heaps (each with FROM and TO space) with forwarding address pointers.
 	<p align="center">
 	<img src="img/exer.png" height="80%" width="80%">
