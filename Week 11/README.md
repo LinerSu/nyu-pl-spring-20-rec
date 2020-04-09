@@ -1,7 +1,7 @@
 # Standard ML Programming & Exception
 
 ## Library Functions
-- `fold` function (optional): it is [a high order function](https://en.wikipedia.org/wiki/Fold_(higher-order_function)) that processes a collection in a order recursively by applying an external function to each data and to build a return value. Thus, the parameters of `fold` function contains
+- `fold` function: it is [a high order function](https://en.wikipedia.org/wiki/Fold_(higher-order_function)) that processes a collection in a order recursively by applying an external function to each data and to build a return value. Thus, the parameters of `fold` function contains
 	- A collection, typically a list or an array.
 	- An external function `f` to apply with two parameters:
 		- Terminal value `z` - the value for aggregating results to return.
@@ -14,9 +14,9 @@
 	<img src="img/foldl.png" height="60%" width="60%">
 	</p>
 - `foldr`: For `foldr`, it is very similar like `foldl` except you iterate the list from end to the begin. Here is an example that how `foldr` works (picture from [WIKI](https://en.wikipedia.org/wiki/Wikipedia:Image_use_policy)):
-<p align="center">
-<img src="img/foldr.png" height="60%" width="60%">
-</p>
+	<p align="center">
+	<img src="img/foldr.png" height="60%" width="60%">
+	</p>
 - `filter`: a function takes a [predicate](https://en.wikipedia.org/wiki/Predicate_(mathematical_logic)) and an input list, and outputs a list such that an item `i` in the input list will appear in the output list if `pred(i)` is true. Concretely, the predicate function takes an item from the list and returns a Boolean value.
 
 ### Exercise
@@ -56,7 +56,8 @@
 	- For more details about exception handling, please find it [here](https://en.wikipedia.org/wiki/Exception_handling#Exception_support_in_programming_languages).
 
 ### C++
-- Exception in C++ is intuitively used to handle abnormal, unpredictable or erroneous conditions.	- If an exception is thrown and not caught anywhere, the program terminates abnormally.
+- Exception in C++ is intuitively used to handle abnormal, unpredictable or erroneous conditions.
+	- If an exception is thrown and not caught anywhere, the program terminates abnormally.
 	- C++ does not contain `finally` block for executing some codes after the `catch` clause, because it uses the [RAII](https://en.wikipedia.org/wiki/Resource_acquisition_is_initialization) teachnique to free the allocated resources (i.e. destructors).
 - Syntax
 	```c++
@@ -162,7 +163,7 @@
         }
     }
 	```
-- Trt-with-resources (aka automatic resource management)
+- Try-with-resources (aka automatic resource management)
 	- Resource: A resource in Java is an object that must be closed after we no longer use it. For instance, `FileReader`, `BufferedWriter`, etc.
 	- Def. it is a `try` statement that declares some resources, and this statement ensures that each resource is closed at the end of the `try` block.
 	- For example:
@@ -171,7 +172,7 @@
 		System.out.println(br.readLine());
 	}
 	```
-	- is equivalent to:
+		is equivalent to:
 	```java
 	BufferedReader br = new BufferedReader(new FileReader("file_name.txt"));
 	try {
@@ -197,7 +198,7 @@
 	
 	(* Handle an exception *)
 	<expr> handle 
-		 <pattern1> => <expr2>
+	    <pattern1> => <expr2>
 	  | <pattern2> => <expr2>
 	  | <pattern3> => <expr2>
 	  | ...
