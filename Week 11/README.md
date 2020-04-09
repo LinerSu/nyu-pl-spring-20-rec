@@ -20,7 +20,7 @@
 - `filter`: a function takes a [predicate](https://en.wikipedia.org/wiki/Predicate_(mathematical_logic)) and an input list, and outputs a list such that an item `i` in the input list will appear in the output list if `pred(i)` is true. Concretely, the predicate function takes an item from the list and returns a Boolean value.
 
 ### Exercise
-- Please find `exer.sml` for more details.
+- Please find [`exer.sml`](https://github.com/LinerSu/nyu-pl-spring-20-rec/blob/master/Week%2011/exer.sml) for more details.
 
 ## Exception Handling
 
