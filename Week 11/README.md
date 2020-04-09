@@ -1,7 +1,7 @@
 # Standard ML Programming & Exception
 
 ## Library Functions
-- `fold` function: it is [a high order function](https://en.wikipedia.org/wiki/Fold_(higher-order_function)) that processes a collection in a order recursively by applying an external function to each data and to build a return value. Thus, the parameters of `fold` function contains
+- `fold` function: it is [a high order function](https://en.wikipedia.org/wiki/Fold_(higher-order_function)) that reduces a collection in a order recursively by applying an external function to each data and to build a return value. Thus, the parameters of `fold` function contains
 	- A collection, typically a list or an array.
 	- An external function `f` to apply with two parameters:
 		- Terminal value `z` - the value for aggregating results to return.
