@@ -3,7 +3,7 @@
 (* 1. Redefine foldl, foldr and filter functions as predefined functions in SML.*)
 
 
-(* a. Defind a fold_left function that works as foldl *)
+(* a. Define a fold_left function that works as foldl *)
 (*
 foldl f z [a, b, c, d] will actually work as:
    lst               z
@@ -18,7 +18,7 @@ fun fold_left  ... =
     ???;
 
 
-(* b. Defind a fold_right function that works as foldr *)
+(* b. Define a fold_right function that works as foldr *)
 (*
 foldr f z [a, b, c, d] will actually work as:
    lst                z
@@ -38,7 +38,7 @@ Note. foldl, foldr functions in SML both have this signature:
 *)
 
 
-(* c. Defind a filt function that works as filter *)
+(* c. Define a filt function that works as filter *)
 (*
 filter p [a, b, c, d] will actually work as:
 [a, b, c, d] => 
