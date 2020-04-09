@@ -14,8 +14,11 @@ d :: []        => f (d, f (c, f (b, f (a, z))))
 []             => return z
 *)
 (* val fold_left = fn : ('a * 'b -> 'b) -> 'b -> 'a list -> 'b *)
-fun fold_left  ... =
+fun fold_left ... =
     ???;
+
+val sub = fold_left (fn (elem, z) => elem * z  + elem) 0 [1,2,3];
+(* val sub = 15 : int *)
 
 
 (* b. Define a fold_right function that works as foldr *)
@@ -32,6 +35,9 @@ foldr f z [a, b, c, d] will actually work as:
 fun fold_right ... =
     ???;
 
+val sub = fold_right (fn (elem, z) => elem * z + elem) 0 [1,2,3];
+(* val sub = 9 : int *)
+
 (*
 Note. foldl, foldr functions in SML both have this signature:
 ('a * 'b -> 'b) -> 'b -> 'a list -> 'b
@@ -46,8 +52,11 @@ filter p [a, b, c, d] will actually work as:
   if p a then return a :: rest_lst else return rest_lst
 *)
 (* val filt = fn : ('a -> bool) -> 'a list -> 'a list *)
-fun filt p lst = 
+fun filt ... = 
     ???;
+
+val gt5lst = filt (fn elem => elem > 5) [1,5,6,2,3,4,7,8];
+(* val gt5lst = [6,7,8] : int list *)
 
 
 (* 2. Split a list into two parts; the length of the first part is given *)
