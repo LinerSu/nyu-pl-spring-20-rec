@@ -11,8 +11,9 @@ This is a repository for CSCI-GA.2110-001 recitation class.
 - Week 06 - [Types, Type System, Polymorphism & SML](https://github.com/LinerSu/nyu-pl-spring-20-rec/blob/master/Week%2006/README.md#standard-ml-types-type-system--polymorphism)
 - Week 07 - [Midterm Prep & Garbage Collection](https://github.com/LinerSu/nyu-pl-spring-20-rec/blob/master/Week%2007/README.md#midterm-prep-memory-manag--garbage-collection)
 - Week 10 - [Pattern Matching & Types in SML](https://github.com/LinerSu/nyu-pl-spring-20-rec/tree/master/Week%2010#standard-ml)
-- Week 11 - 
-- Week 12 - 
-- Week 13 - 
-- Week 14 - 
-- Week 15 - 
+- Week 11 - [Standard ML Programming & Exception](https://github.com/LinerSu/nyu-pl-spring-20-rec/tree/master/Week%2011#standard-ml-programming--exception)
+- Week 12 - SML Module, Functor & Continuation
+- Week 13 - Logical programming & Unification
+- Week 14 - Classes, Objects & Dynamic Dispatch
+- Week 15 - Concurrent Programming
+- Week 16 - Generic programming & Final Prep
