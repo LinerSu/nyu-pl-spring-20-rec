@@ -38,7 +38,7 @@
 		    return 0;
 		}
 		```
-		- During the run time, the compiler will allocate "infinite times" of frames for `main` function, until the stack to overflow (segmentation fault).
+		- During the run time, the compiler is trying to allocate "infinite times" of frames for `main` function, until the stack to overflow (segmentation fault).
 		- The behavior for allocating inifite stack is not promising.
 	- Exception
 		- It is a case we want to handle it through programming langauges.
@@ -232,3 +232,4 @@
 	print((handleExample 1)^"\n");  (* 0.0 *)
 	print((handleExample ~2)^"\n"); (* 0 *)
 	```
+- Please check [this](https://courses.cs.washington.edu/courses/cse341/04wi/lectures/10-ml-exceptions.html) tutorial for more details.
