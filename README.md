@@ -12,7 +12,7 @@ This is a repository for CSCI-GA.2110-001 recitation class.
 - Week 07 - [Midterm Prep & Garbage Collection](https://github.com/LinerSu/nyu-pl-spring-20-rec/blob/master/Week%2007/README.md#midterm-prep-memory-manag--garbage-collection)
 - Week 10 - [Pattern Matching & Types in SML](https://github.com/LinerSu/nyu-pl-spring-20-rec/tree/master/Week%2010#standard-ml)
 - Week 11 - [Standard ML Programming & Exception](https://github.com/LinerSu/nyu-pl-spring-20-rec/tree/master/Week%2011#standard-ml-programming--exception)
-- Week 12 - SML Module, Functor & Continuation
+- Week 12 - SML Module, Functor
 - Week 13 - Logical programming & Unification
 - Week 14 - Classes, Objects & Dynamic Dispatch
 - Week 15 - Concurrent Programming
