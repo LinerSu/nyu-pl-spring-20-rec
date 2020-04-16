@@ -233,3 +233,61 @@
 	print((handleExample ~2)^"\n"); (* 0 *)
 	```
 - Please check [this](https://courses.cs.washington.edu/courses/cse341/04wi/lectures/10-ml-exceptions.html) tutorial for more details.
+
+### Scheme
+- In R5RS library, it does not contain exception handling. Therefore, we have to design it by ourselves.
+- `call-with-current-continuation` is one way to implement the exception handling.
+- Continuations
+	- A continuation of an expression represents a computation that collects the result of that expression.
+	- For instance, suppose we have `(* 3 (+ 1 2))`. The continuation of expression `(+ 1 2)` is the multiplication to `3`.
+- [Call-with-current-continuation](https://en.wikipedia.org/wiki/Call-with-current-continuation) - `call/cc`
+	- `call/cc` is a function that can [concretize](https://en.wikipedia.org/wiki/Reification_(computer_science)) the current continuation into a function.
+	- Continuation for `call/cc` in Scheme: either `((call/cc f) e)` or `(e (call/cc f))`.
+	- `f` should be a function that takes one parameter `z`.
+	- The continuation for `(call/cc f)` in `((call/cc f) e)` is `(lambda(c)(c e))`.
+	- The continuation for `(call/cc f)` in `(e (call/cc f))` is `(lambda(c)(e c))`.
+	- Concretly, when a continuation object is applied to an argument of `f`, the existing continuation in `f` is eliminated and the applied continuation is restored in its place.
+	- Consider the following example for `((call/cc f) e)`:
+	```scheme
+	(define (id x) x)
+	(define f (lambda (z) (lambda (q) q)))
+	((call/cc f) id) ; match ((call/cc f) e)
+	
+	#| My understanding base on reduction
+	(λ z. z (λ q. q)) (λ c. c id)
+	β=> (λ c. c id) (λ q. q)
+	β=> (λ q. q) id
+	β=> id
+	|#
+	```
+	- Take another example for `(e (call/cc f))`:
+	```scheme
+	(+ 3 (call/cc (lambda (g) (+ 1 (g 5)))))
+	
+	#| My understanding base on reduction
+	(λ g. (+ 1 (g 5))) (λ c. (λ z. + 3 z) c)
+	β=> (+ 1 ((λ c. (λ z. + 3 z) c) 5)) 
+	the argument (here is 5) of the continuation (λ c. (λ z. + 3 z) c) then becomes the "return value"
+	β with continuation=> (λ z. + 3 z) 5
+	β=> + 3 5
+	8
+	|#
+	```
+	- [Challenge] Try to understand the call/cc for the following example:
+	```scheme
+	(define (id x) (display "Call id") x) ; (λ x. x)
+
+	(define f (lambda (z) (lambda (q) (q z))))
+		
+	(((call/cc f) id) 2)
+	```
+		- Why we get an error?
+<!---
+#|
+(λ z. z (λ q. q z)) (λ c. c id)
+(λ c. c id) (λ q. q (λ c. c id))
+(λ q. q (λ c. c id)) id
+id (λ c. c id)
+(λ c. c id)
+|#
+-->
