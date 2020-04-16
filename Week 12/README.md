@@ -58,8 +58,8 @@
 - Syntax
 	- The implementation of a module is defined inside a `struct` expression; `struct` expressions must be bound to a name using a `structure` declaration:
 	```sml
-	signature <NAME> = 
-	sig
+	structure <NAME>: <SIG> = 
+	struct
 	    type [TYPE_VARIABLE] <NAME> = <TYPE>
 	    exception <NAME> [of <TYPE>]
 	    (* value binding *)
