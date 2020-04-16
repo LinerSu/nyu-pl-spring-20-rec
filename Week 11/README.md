@@ -244,8 +244,8 @@
 	- `call/cc` is a function that can [concretize](https://en.wikipedia.org/wiki/Reification_(computer_science)) the current continuation into a function.
 	- Continuation for `call/cc` in Scheme: either `((call/cc f) e)` or `(e (call/cc f))`.
 	- `f` should be a function that takes one parameter `z`.
-	- The continuation for `(call/cc f)` in `((call/cc f) e)` is `(lambda(c)(c e))`.
-	- The continuation for `(call/cc f)` in `(e (call/cc f))` is `(lambda(c)(e c))`.
+	- The continuation for `(call/cc f)` in `((call/cc f) e)` is `(lambda(c) (c e))`.
+	- The continuation for `(call/cc f)` in `(e (call/cc f))` is `(lambda(c) (e c))`.
 	- Concretly, when a continuation object is applied to an argument of `f`, the existing continuation in `f` is eliminated and the applied continuation is restored in its place.
 	- Consider the following example for `((call/cc f) e)`:
 	```scheme
@@ -274,13 +274,13 @@
 	|#
 	```
 	- [Challenge] Try to understand the call/cc for the following example:
-	```scheme
-	(define (id x) (display "Call id") x) ; (λ x. x)
+		```scheme
+		(define (id x) (display "Call id") x) ; (λ x. x)
 
-	(define f (lambda (z) (lambda (q) (q z))))
-		
-	(((call/cc f) id) 2)
-	```
+		(define f (lambda (z) (lambda (q) (q z))))
+
+		(((call/cc f) id) 2)
+		```
 		- Why we get an error?
 <!---
 #|
