@@ -1,7 +1,7 @@
 # Module & Functor
 
 ## Module
-- Def. 
+- Def. a module is a construct that enables decomposition, information hiding, and (often) separate compilation.
 - Why we need module?
 	- Reduce large program into small, independent and reusable components (a.k.a. [decomposition](https://en.wikipedia.org/wiki/Decomposition_(computer_science))).
 	- Hiding information about data structure to protect  the data.
@@ -170,7 +170,7 @@
 - Let's think about a real example. Suppose we want to build a `Map` structure. 
 - `Map` structure is a dictionary structure that organizes data as key/value pairs. However, the real programming requires efficiency and easy-to-manipulate. We just ignore them in here.
 - In some programming languages, `Map` is internally represented as either (balanced) binary search trees or red-black trees. 
-- Beack to our question, how could we implement it via module and functor?
+- Back to our question, how could we implement it via module and functor?
 - Signature: suppose we want our `Map` structure contains at least these functionalities: `find`, `empty`, `add`.
 	- Our declarations could be:
 	 ```sml
@@ -219,48 +219,66 @@
 	```
 - Functor: Now, what if we want to generalize the type for our key? How to do that?
 	- The idea is trying to change our `Map` module to a functor, which takes a module to order our `key` (usually we call `OrderedType`):
-```sml
-signature ORDTYPE =
-  sig
-    type t
-    val compare: t -> t -> int
-  end;
+	```sml
+	signature ORDTYPE =
+	  sig
+	    type t
+	    val compare: t -> t -> int
+	  end;
 
-functor MAKEMAP(Ord: ORDTYPE) :
-  sig
-    type key
-    type 'a t
-    
-    exception Not_Found
+	functor MAKEMAP(Ord: ORDTYPE) :
+	  sig
+	    type key
+	    type 'a t
 
-    val empty: 'a t
-    val add:   key -> 'a -> 'a t -> 'a t
-    val find:  key -> 'a t -> 'a
-  end
-= struct
-    type key = Ord.t
-    exception Not_Found
+	    exception Not_Found
 
-    datatype 'a t = Empty
-        | Node of 'a t * key * 'a * 'a t
-      (* left subtree * key * value * right subtree *)
+	    val empty: 'a t
+	    val add:   key -> 'a -> 'a t -> 'a t
+	    val find:  key -> 'a t -> 'a
+	  end
+	= struct
+	    type key = Ord.t
+	    exception Not_Found
 
-    val empty = Empty
-    
-    fun add x v t = 
-        case t of
-        Empty => Node (Empty, x, v, Empty)
-      | Node (l, k, v', r) =>
-        if Ord.compare x k = 0 then Node (l, x, v, r)
-        else if Ord.compare x k < 0 then Node(add x v l, k, v', r)
-        else Node(l, k, v', add x v r)
-        
-    fun find x t = 
-        case t of
-        Empty => raise Not_Found
-      | Node (l, k, v, r) =>
-            if Ord.compare x k = 0 then v
-            else if Ord.compare x k < 0 then find x l
-            else find x r
-end;
-```
+	    datatype 'a t = Empty
+		| Node of 'a t * key * 'a * 'a t
+	      (* left subtree * key * value * right subtree *)
+
+	    val empty = Empty
+
+	    fun add x v t = 
+		case t of
+		Empty => Node (Empty, x, v, Empty)
+	      | Node (l, k, v', r) =>
+		if Ord.compare x k = 0 then Node (l, x, v, r)
+		else if Ord.compare x k < 0 then Node(add x v l, k, v', r)
+		else Node(l, k, v', add x v r)
+
+	    fun find x t = 
+		case t of
+		Empty => raise Not_Found
+	      | Node (l, k, v, r) =>
+		    if Ord.compare x k = 0 then v
+		    else if Ord.compare x k < 0 then find x l
+		    else find x r
+	end;
+	```
+	- If we have the above functor, we could create a `Map` that generalize the type for key and value. For example:
+	```sml
+	structure intOrd: ORDTYPE = 
+	    struct 
+	    type t = int
+	    fun compare x y = 
+		if x < y then ~1 else if x > y then 1 else 0
+	    end;
+
+	structure intMap = MAKEMAP(intOrd);
+
+	val m = intMap.empty;
+	val m1 = intMap.add 1 0 m;
+	val m2 = intMap.add 3 2 m;
+	val m3 = intMap.add 0 5 m;
+	val found = intMap.find 0 m3;
+	val noutFound = intMap.find 4 m3;
+	```
