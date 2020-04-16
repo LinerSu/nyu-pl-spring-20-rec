@@ -72,54 +72,54 @@
 - A module structure can include more definitions than those declared in a module signature; even so, it must at least provide definitions for all the members declared in the signature.
 	- Thus, the types of required definitions must be consistent with the types provided in the signature. 
 	- For example, suppose we want to implement the queue container that we declared before:
-	```sml
-	structure QUEUE: QUEUESIG = 
-	struct
-	    type 'a queue = 'a list
-	    exception Empty
-	        
-	    val empty: 'a queue = []
-	
-	    fun is_empty (q:'a queue) = null q
-	
-	    fun enqueue x q =
-	       q @ [x]
-	        
-	    fun dequeue [] = raise Empty
-	      | dequeue (x::q) = (x, q)
-	end;
-	```
+		```sml
+		structure QUEUE: QUEUESIG = 
+		struct
+		    type 'a queue = 'a list
+		    exception Empty
+
+		    val empty: 'a queue = []
+
+		    fun is_empty (q:'a queue) = null q
+
+		    fun enqueue x q =
+		       q @ [x]
+
+		    fun dequeue [] = raise Empty
+		      | dequeue (x::q) = (x, q)
+		end;
+		```
 - The structure could be "labled" with a signature. However, if a structure does not specify to any predefined signature, the compiler will automatically generates a signature for the structure --- the one that mirrors all its bindings and types. 
 	- For example:
-	```sml
-	structure QUEUE = 
-	struct
-	    type 'a queue = 'a list
-	    exception Empty
-	        
-	    val empty: 'a queue = []
-	
-	    fun is_empty (q:'a queue) = null q
-	
-	    fun enqueue x q =
-	       q @ [x]
-	        
-	    fun dequeue [] = raise Empty
-	      | dequeue (x::q) = (x, q)
-	end;
-	```
+		```sml
+		structure QUEUE = 
+		struct
+		    type 'a queue = 'a list
+		    exception Empty
+
+		    val empty: 'a queue = []
+
+		    fun is_empty (q:'a queue) = null q
+
+		    fun enqueue x q =
+		       q @ [x]
+
+		    fun dequeue [] = raise Empty
+		      | dequeue (x::q) = (x, q)
+		end;
+		```
 	- Now, the `QUEUE` module has a signature as:
-	```sml
-	structure QUEUE :
-	  sig
-	    type 'a queue = 'a list
-	    exception Empty
-	    val empty : 'a queue
-	    val is_empty : 'a queue -> bool
-	    val enqueue : 'a -> 'a list -> 'a list
-	    val dequeue : 'a list -> 'a * 'a list
-	  end
-	```
+		```sml
+		structure QUEUE :
+		  sig
+		    type 'a queue = 'a list
+		    exception Empty
+		    val empty : 'a queue
+		    val is_empty : 'a queue -> bool
+		    val enqueue : 'a -> 'a list -> 'a list
+		    val dequeue : 'a list -> 'a * 'a list
+		  end
+		```
 - Open a module: you may need to use a module lots of time, but it is inconvenient to refer that module members by the full structure path. ML supports an `open` declaration, which imports all members of a module into the current scope.
 	- For example, let's define several queue base on some operations:
 		```sml
@@ -133,17 +133,17 @@
 		print("q4 is empty? " ^ (Bool.toString (QUEUE.is_empty q4)) ^ "\n");
 		```
 	- To simplify the code, we could `open QUEUE` at the top:
-	```sml
-	open QUEUE;
-	val q :'a queue = empty;
-	val q1 = enqueue 4 q;
-	val q2 = enqueue 5 q1;
-		
-	val (v1, q3) = dequeue q2;
-	val (v2, q4) = dequeue q3;
-		
-	print("q4 is empty? " ^ (Bool.toString (is_empty q4)) ^ "\n");
-	```
+		```sml
+		open QUEUE;
+		val q :'a queue = empty;
+		val q1 = enqueue 4 q;
+		val q2 = enqueue 5 q1;
+
+		val (v1, q3) = dequeue q2;
+		val (v2, q4) = dequeue q3;
+
+		print("q4 is empty? " ^ (Bool.toString (is_empty q4)) ^ "\n");
+		```
 - Information hiding in SML: I would rather say SML is not a good expert on information hiding. Consider the following example of the client code:
 	```sml
 	fun print_queue (q: int QUEUE.queue) =
@@ -185,7 +185,7 @@
 	  end;
 	 ```
 - Structure: 
-	- To simplify our implementation, let's use binary search tree to construct the `Map` structure. 
+	- To simplify our implementation, let's use the structure of a binary search tree to construct the `Map` structure. 
 	- Moreover, assume the key for a `Map` is an integer.
 	- Thus, the structure of our `Map` should be:
 	```sml
