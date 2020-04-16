@@ -163,7 +163,7 @@
 	(* or *)
 	functor <NAME>(<PARAMS>) = <STRUCT>
 	```
-	- `<PARAMS>` are the formal functor parameters. Typically, they are structures. Note that, for each structure parameter, it must contain signature. That is, `<MODULE_NAME>:<MODULE_SIG>`
+	- `<PARAMS>` are the formal functor parameters, and they are modules. Note that, for each structure parameter, it must contain a signature. That is, `<MODULE_NAME>:<MODULE_SIG>`.
 	- `<SIG>` represents the signature of the functor. Still, it is provided optionally.
 
 ## Exercise
