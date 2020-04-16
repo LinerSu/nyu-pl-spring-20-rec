@@ -267,11 +267,11 @@
 	- If we have the above functor, we could create a `Map` that generalize the type for key and value. For example:
 	```sml
 	structure intOrd: ORDTYPE = 
-	    struct 
+	struct 
 	    type t = int
 	    fun compare x y = 
 		if x < y then ~1 else if x > y then 1 else 0
-	    end;
+	end;
 
 	structure intMap = MAKEMAP(intOrd);
 
