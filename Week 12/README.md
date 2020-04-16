@@ -277,8 +277,8 @@
 
 	val m = intMap.empty;
 	val m1 = intMap.add 1 0 m;
-	val m2 = intMap.add 3 2 m;
-	val m3 = intMap.add 0 5 m;
+	val m2 = intMap.add 3 2 m1;
+	val m3 = intMap.add 0 5 m2;
 	val found = intMap.find 0 m3;
 	val noutFound = intMap.find 4 m3;
 	```
