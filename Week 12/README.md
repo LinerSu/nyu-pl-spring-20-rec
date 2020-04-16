@@ -178,6 +178,8 @@
 	  sig
 	    type key
 	    type 'a t
+	    
+	    exception Not_Found
 	
 	    val empty: 'a t
 	    val add:   key -> 'a -> 'a t -> 'a t
