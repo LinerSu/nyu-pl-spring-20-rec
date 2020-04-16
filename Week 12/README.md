@@ -282,3 +282,4 @@
 	val found = intMap.find 0 m3;
 	val noutFound = intMap.find 4 m3;
 	```
+	- **Question:** How to specify the type of a value from the given module?
