@@ -242,7 +242,7 @@
 	- For instance, suppose we have `(* 3 (+ 1 2))`. The continuation of expression `(+ 1 2)` is the multiplication to `3`.
 - [Call-with-current-continuation](https://en.wikipedia.org/wiki/Call-with-current-continuation) - `call/cc`
 	- `call/cc` is a function that can [concretize](https://en.wikipedia.org/wiki/Reification_(computer_science)) the current continuation into a function.
-	- Continuation for `call/cc` in Scheme: either `((call/cc f) e)` or `(e (call/cc f))`.
+	- In general, using `call/cc` could be either `((call/cc f) e)` or `(e (call/cc f))`.
 	- `f` should be a function that takes one parameter `z`.
 	- The continuation for `(call/cc f)` in `((call/cc f) e)` is `(lambda(c) (c e))`.
 	- The continuation for `(call/cc f)` in `(e (call/cc f))` is `(lambda(c) (e c))`.
