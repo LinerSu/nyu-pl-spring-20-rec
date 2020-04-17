@@ -8,7 +8,7 @@ sig
     exception Empty
 end;
 
-structure QUEUE: QUEUESIG = 
+structure QUEUE :> QUEUESIG = (*Opaque ascription*)
 struct
     type 'a queue = 'a list
     exception Empty
@@ -33,8 +33,24 @@ val (v2, q4) = QUEUE.dequeue q3;
 
 print("q4 is empty? " ^ (Bool.toString (QUEUE.is_empty q4)) ^ "\n");
 
-fun print_queue (q: int QUEUE.queue) =
+
+(* If we allow Opaque ascription for module QUEUE, the following function could not work: *)
+(*fun print_queue (q: int QUEUE.queue) =
     case q of
-      [] => ()
-    | x :: [] => print (Int.toString x ^ "")
+      [] => (print("\n"); ())
+    | x :: [] => print (Int.toString x ^ "\n")
     | x :: tq => (print (Int.toString x ^ ", "); (print_queue tq));
+ *)
+
+fun print_queue (q: int QUEUE.queue) =
+  if QUEUE.is_empty q then (print("\n"); ())
+  else
+    let 
+      val (v, q') = QUEUE.dequeue q
+    in
+    print (Int.toString v) ;
+    if QUEUE.is_empty q' then (print("\n"); ())
+    else (print(", "); (print_queue q'))
+    end;
+
+print_queue q2;

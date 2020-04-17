@@ -144,15 +144,51 @@
 
 		print("q4 is empty? " ^ (Bool.toString (is_empty q4)) ^ "\n");
 		```
-- Information hiding in SML: I would rather say SML is not a good expert on information hiding. Consider the following example of the client code:
-	```sml
-	fun print_queue (q: int QUEUE.queue) =
-		case q of
-		  [] => ()
-		| x :: [] => print (Int.toString x ^ "")
-		| x :: tq => (print (Int.toString x ^ ", "); (print_queue tq));
-	```
-	- Ideally, the implementation of the type `'a queue` is not specified in the signature. The client should not get the information that `'a queue = 'a list`. However, the client code could match the input queue with list patterns. This means that the details of the implemeation for type in module are not fully hidden. In other languages ML family, this problem is solved.
+- Information hiding in SML: The implementation of the type `'a queue` is not specified in the signature. Typically, the client code should not get the information that `'a queue = 'a list`. This means that the details of the implemeation for type in module should be opaque to the client code.
+	- In SML, unless we specify [Opaque ascription](https://www.cs.tufts.edu/comp/105-2017f/readings/ml.html#signatures-structures-and-ascription), the following client code could not work:
+		```sml
+		structure QUEUE :>(*Opaque ascription*) QUEUESIG = 
+			struct
+				type 'a queue = 'a list
+				exception Empty
+
+				val empty: 'a queue = []
+
+				fun is_empty (q:'a queue) = null q
+
+				fun enqueue x q =
+				q @ [x]
+
+				fun dequeue [] = raise Empty
+				| dequeue (x::q) = (x, q)
+			end;
+		fun print_queue (q: int QUEUE.queue) =
+			case q of
+			[] => (print("\n"); ())
+			| x :: [] => print (Int.toString x ^ "\n")
+			| x :: tq => (print (Int.toString x ^ ", "); (print_queue tq));
+		(*
+		Error: operator and operand do not agree [tycon mismatch]
+		operator domain: int QUEUE.queue
+		operand:         int list
+		in expression:
+			print_queue tq
+		*)
+		```
+	- Instead of directly using the pattern matching, we could use methods inside the module to handle the information hiding:
+		```sml
+		fun print_queue (q: int QUEUE.queue) =
+			if QUEUE.is_empty q then (print("\n"); ())
+			else
+				let 
+					val (v, q') = QUEUE.dequeue q
+				in
+					print (Int.toString v) ;
+					if QUEUE.is_empty q' then (print("\n"); ())
+					else (print(", "); (print_queue q'))
+				end;
+		```
+	- The information hiding is a very important feature for module programming, because it creates a border between the implementation of a module and its client. This prevents the client code from revising the the implementation of the module.
 
 ### Functors - functions over modules
 - Def. it is a module that takes one or more modules as parameters for implementation.
