@@ -145,7 +145,7 @@
 		print("q4 is empty? " ^ (Bool.toString (is_empty q4)) ^ "\n");
 		```
 - Information hiding in SML: The implementation of the type `'a queue` is not specified in the signature. Typically, the client code should not get the information that `'a queue = 'a list`. This means that the details of the implemeation for type in module should be opaque to the client code.
-	- In SML, unless we specify [Opaque ascription](https://www.cs.tufts.edu/comp/105-2017f/readings/ml.html#signatures-structures-and-ascription), the following client code could not work:
+	- In SML, if we specify [Opaque ascription](https://www.cs.tufts.edu/comp/105-2017f/readings/ml.html#signatures-structures-and-ascription), the following client code could not work:
 		```sml
 		structure QUEUE :>(*Opaque ascription*) QUEUESIG = 
 			struct
@@ -175,7 +175,7 @@
 			print_queue tq
 		*)
 		```
-	- Instead of directly using the pattern matching, we could use methods inside the module to handle the information hiding:
+	- Instead of directly using the pattern matching, we could use the methods inside the `QUEUE` module to handle the information hiding:
 		```sml
 		fun print_queue (q: int QUEUE.queue) =
 			if QUEUE.is_empty q then (print("\n"); ())
