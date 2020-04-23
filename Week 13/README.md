@@ -101,11 +101,11 @@ Prolog is dynamically typed. It only contains one single datatype --- term.
 	brother(timmy, tommy) :- true.
 	```
 - Rule: a clause uses logical implication (`:-`) to describe a relationship among facts.
-	    - `:-`: interpret it as "if".
-	        ```prolog
-	        fun(X, Y):- sub_1(X), sub_2(Y).
-	        /* A query satisfies goal fun if that query could both satisfy subgoals sub_1 and sub_2 */
-	        ```
+	- `:-`: interpret it as "if".
+		```prolog
+		fun(X, Y):- sub_1(X), sub_2(Y).
+		/* A query satisfies goal fun if that query could both satisfy subgoals sub_1 and sub_2 */
+		```
 - Goal in a rule: based on the lecture's definition, a goal in the rule is the head of the rule.
 	- Subgoal: it is a goal in the body of the rule.
 	- Operations on goals
