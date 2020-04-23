@@ -195,27 +195,26 @@ mem(X,[_|T]):-mem(X, T).
         - In Prolog, we avoid occurs check, which can lead to unsoundness.
             - `X = f(X)` will unify success.
 
-**Q: How unification works?**
-
-Consider this query:
-```prolog
-?- pl_teach(
-   programming_language, semester(Semester), 
-   professor(given('Cory'), SurenameTerm)) 
-   = pl_teach(
-   What, semester('Spring 20'), 
-   professor(given('Cory'), surname('Plock'))).
-```
-For each variable, what does it bind to?
-
-<details><summary>Solution</summary>
+**Question: How unification works?**
+- Consider this query:
+	```prolog
+	?- pl_teach(
+	   programming_language, semester(Semester), 
+	   professor(given('Cory'), SurenameTerm)) 
+	   = pl_teach(
+	   What, semester('Spring 20'), 
+	   professor(given('Cory'), surname('Plock'))).
+	```
+- Q: For each variable, what does it bind to?
+	<details><summary>Solution</summary>
 	<p>
+		
 	```prolog
 	Semester = 'Summer 19',
 	SurenameTerm = surname('Plock'),
 	What = programming_language.
 	```
-	     </p></details>
+	</p></details>
 
 ### Execution Order
 - **Backward chaining**: given a goal (query) for some rules, backtracking is a way to backtrace and find some satisfiable facts/rules.
@@ -295,28 +294,29 @@ When we query `p(X).`, how to draw the drivation tree for it?
 	X = [].
 	```
 	<details><summary>Solution</summary>
-		<p>
-		Here is one possible solution:
-		```prolog
-		apd([], L, L).
-		apd([X|T], L, [X|Rs]):- apd(T, L, Rs).
-		```
-		     </p></details>
+	<p>
+		
+	Here is one possible solution:
+	```prolog
+	apd([], L, L).
+	apd([X|T], L, [X|Rs]):- apd(T, L, Rs).
+	```
+	</p></details>
 2. Is there any problem from previous sample solution?
-
 	<details><summary>Solution</summary>
-		<p>
-		The second argument of `append` may not be a list.
-		```prolog
-		?- append([],12,12).
-		true.
-		```
-		Thus, we could add one subgoal to ensure that the second argument is a list:
-		```prolog
-		append([], L, L):-isList(L).
-		append([X|T], L, [X|Rs]):- append(T, L, Rs).
-		```
-		     </p></details>
+	<p>
+		
+	The second argument of `append` may not be a list.
+	```prolog
+	?- append([],12,12).
+	true.
+	```
+	Thus, we could add one subgoal to ensure that the second argument is a list:
+	```prolog
+	append([], L, L):-isList(L).
+	append([X|T], L, [X|Rs]):- append(T, L, Rs).
+	```
+	</p></details>
 3. Implement a rule `palindrome` to determine if a list is a palindrome:
 	```prolog
 	?- palindrome([]).
