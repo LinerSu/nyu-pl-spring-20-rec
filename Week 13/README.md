@@ -337,7 +337,7 @@ Prolog is dynamically typed. It only contains one single datatype --- term.
 		- The edges in the proof tree may be labeled with some bindings. 
 		- The subtree under any goals in the proof tree correspond to different choices. 
 		- The leaf represents the finalize choice is correct or not.
-	- By backtracking and unification, the real process looks like a depth-first traversing of the given proof tree. 
+	- By backtracking and unification, the real process looks like a preorder traversing of the given proof tree. 
 	- When we query `p(X).`, how to represent the execution order by the proof tree?
 		<p align="center">
 		<img src="img/proof_tree.png" height="80%" width="80%">
