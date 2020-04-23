@@ -1,6 +1,6 @@
 # Prolog
 ## Installation
-- You can use [this](https://www.swi-prolog.org/) website to download Prolog. Or in Mac OS, open terminal and type this command:
+- You can use [this](https://www.swi-prolog.org/download/stable) website to download Prolog. Or in Mac OS, open terminal and type this command:
 	```bash
 	brew install swi-prolog 
 	```
