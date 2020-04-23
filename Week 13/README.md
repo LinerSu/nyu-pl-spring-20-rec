@@ -23,13 +23,13 @@ Prolog is dynamically typed. It only contains one single datatype --- term.
     - E.g. `x`, `'Taco'`, `+-*/<>`, etc.
 - Number: it could be integers or floats.
     - E.g. `1`, `2.0`
-- Variable: it is a string beginning with an upper-case letter. It may follow by the letters, numbers and underscores.
+- Variable: it is a string beginning with an upper-case letter. It may follow by some letters, numbers and underscores.
     - E.g. `X`, `My_name`, etc.
 - [Functor](http://www.cse.unsw.edu.au/~billw/dictionaries/prolog/functor.html): an atom groups a number of arguments.
 	- Argument: it is a term the appear between the parentheses.
 	- For instance: `a(b,c)` is a functor with name `a` and two arguments `b`, `c`.
     - More examples: `likes(mary, jack)`, `lover(likes(mary, jack), likes(jack, mary))`etc.
-- Structure (predicates or compound terms) --- Functors with a number of arguments. Concretely, a compound term is composed of some functors.
+- Structure (predicate or compound term) --- Functors with a number of arguments. Concretely, a compound term is composed of some functors.
 	- Structures may be nested.
     - E.g. `isList([])`, `s(fst(curry), snd(fst(nested), snd(>o<)))`, etc.
 - Special compound terms:
@@ -56,13 +56,16 @@ Prolog is dynamically typed. It only contains one single datatype --- term.
 		```
 - Some speical operators:
 	- `is`: it is a built-in predicates that forces the evaluation of right hand expression and binds the evaluated result from the right to the left expression.
-		- It works only if the right expression could be evaluated. Query `X is X + 1` won't work.
+		- It works only if the right expression could be evaluated. If you just query `X is X + 1` and there is no reference for `X`, it won't work.
 		```prolog
 		?- X is min(3, 2) + 5.
 		X = 7.
+		?- X = 1, Y is X + 1.
+		X = 1,
+		Y = 2.
 		```
 	- `=`: unify left expr with right expr.
-        - Please check unification for more details.
+		- Please check unification for more details.
 	- One example shows the difference between `=` and `is`:
 		```prolog
 		?- 2 is 1 + 1.
@@ -78,7 +81,7 @@ Prolog is dynamically typed. It only contains one single datatype --- term.
 - Def. a unit of information in a Prolog program ending with (".")
     
 #### Format
-- In general, there are two types of forms to represent a clause:
+- There are two types of forms to represent a clause:
 	```prolog
 	Head. % Head is true
 	Head :- Body.
@@ -88,7 +91,6 @@ Prolog is dynamically typed. It only contains one single datatype --- term.
 	```prolog
 	isList([]). /*Fact*/
 	isList([_|T]):-isList(T). % Rule
-	?- isList([1,2,3]). % Query
 	```
 
 #### Fact, Rule and Goal
@@ -122,7 +124,7 @@ Prolog is dynamically typed. It only contains one single datatype --- term.
 - After loading a program, we can ask Prolog to consult the program via a query.
 - Goal in a query: it something that the interpreter tries to satisfy.
 	- It is either an atom or a structure. 
-	- A goal succeeds (true) if all variables in the terms have a binding. It fails if Prolog fails to prove it.
+	- A goal succeeds (true) if all variables in the terms have a binding and succeed to prove the goal based on defined facts, rules and logic operations. It fails if Prolog fails to prove it.
 	- Operations on goals
 		- Conjunction (logical and, `∧`): separating the goals by commas.
 	        ```prolog
@@ -132,11 +134,13 @@ Prolog is dynamically typed. It only contains one single datatype --- term.
 		- Disjunction (logical or, `∨`): separating the goals by semicolons.
 	        ```prolog
 	        ?- isSunny(X); isRainy(X).
-	        /* return X's binding the X is either sunny or rainy. */
+	        /* return X's binding that X is either sunny or rainy. */
 	        ```
 - Query: a list of one or more goals typed to the interpreter.
 - For instance,
 	```prolog
+	?- isList([1,2,3]). % Query
+	true.
 	?- [user]. % Allow user to state facts and rules
 	|: likes(john,mary).
 	|: likes(john,sue).
@@ -157,13 +161,13 @@ Prolog is dynamically typed. It only contains one single datatype --- term.
 	mem(X,[_|T]):-mem(X, T).
 	```
 
-#### Evaluation Rule
+#### Evaluation Rules
 - Variable
     - Variables appearing in the goal are universally quantified.
     - Variables appearing only in the subgoal are existentially quantified.
     ```prolog
     fun(X, Y):- sub_1(X, Z), sub_2(Z,Y).
-    /* ∀ X,Y. ∃ Z. to satisfy rule fun, they must satisfy sub_1(X, Z) and sub_2(Z,Y) */
+    /* ∀ X,Y. ∃ Z. if these variables satisfy the rule fun, they must satisfy subgoal sub_1(X, Z) and sub_2(Z,Y). */
     ```
 - Resolution in Prolog [Option]
     - The resolution principle in Prolog describes that if there exists clauses `C1` and `C2` and the head of `C1` matches one of the terms in the body of `C2`, then we replace the term in `C2` with the body of `C1`.
