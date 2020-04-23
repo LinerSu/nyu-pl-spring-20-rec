@@ -262,7 +262,7 @@ Prolog is dynamically typed. It only contains one single datatype --- term.
 		```
 
 ### Execution Order
-- **Backward chaining**: given a goal (query) with some rules, backtracking is a way to backtrace and find all possible solutions that satisfy all subgoals.
+- **Back tracking**: given a goal (query) with some rules, backtracking is a way to backtrace and find all possible solutions that satisfy all subgoals.
     - The interpreter tries to match facts and rules by **the order of their definition**.
     - If a subgoal cannot be satisfied, Prolog will try another way.
     - Consider this example, we check if an item exists in list or not:
