@@ -233,7 +233,7 @@ Prolog is dynamically typed. It only contains one single datatype --- term.
 	<p>
 		
 	```prolog
-	Semester = 'Summer 19',
+	Semester = 'Spring 20',
 	SurenameTerm = surname('Plock'),
 	What = programming_language.
 	```
