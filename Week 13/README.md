@@ -6,9 +6,9 @@
 	```
 - Once installed, type `swipl` in your terminal to use Prolog interpreter.
 - You can also write a file by using `.pl` extension. After named Prolog source file, open the interpreter and type this:
-```prolog
-?- [file_name].
-```
+	```prolog
+	?- [file_name].
+	```
 This will state all clauses you defined into the database. If you wish to exit the Prolog interpreter, type `halt.`.
 	- Alternatively, the source file could be stated via command line arguments:
 	```bash
@@ -171,9 +171,9 @@ mem(X,[_|T]):-mem(X, T).
     - Therefore, the reasoning goes like this:
 	    ```
 	    ?- classmates(X, Y)
-	    classmates(X, Y) :- takes(X, Z), takes(Y, Z).
-	    classmates(frank, Y) :- takes(frank, csci2020), takes(Y, csci2020). % replace term, fix bindings by unification
-	    classmates(frank, Y) :- takes(Y, csci2020). % takes(frank, csci2020) is a fact, which is true
+	    > classmates(X, Y) :- takes(X, Z), takes(Y, Z).
+	    > classmates(frank, Y) :- takes(frank, csci2020), takes(Y, csci2020). % match the principle, fix bindings by unification
+	    > classmates(frank, Y) :- takes(Y, csci2020). % replace term because takes(frank, csci2020) is a fact whose body is true
 	    ... % Keep resolve until all results returns.
 	    ```
 	    - In other words, we are going to resolve the two given clauses and get a new (inferred) clause. 
@@ -225,7 +225,7 @@ For each variable, what does it bind to?
     mem(X,[X|_]).
     mem(X,[_|T]):-mem(X, T).
     ```
-    - By using backtracking mechanism, we could find all possible solutions:
+    - By using the backtracking mechanism, we could find all possible solutions:
     ```prolog
     ?-  mem(1,[2,3,1,1]).
     true ;
@@ -284,65 +284,61 @@ When we query `p(X).`, how to draw the drivation tree for it?
 
 ## Exercise
 1. Implement a rule `append` to concatenate two lists:
-```prolog
-?- append([4],[1,2],X).
-X = [4,1,2].
-?- append([],[1],X).
-X = [1].
-?- append([1],[],X).
-X = [1].
-?- append([],[],X).
-X = [].
-```
-<details><summary>Solution</summary>
-	<p>
-	Here is one possible solution:
 	```prolog
-	apd([], L, L).
-	apd([X|T], L, [X|Rs]):- apd(T, L, Rs).
+	?- append([4],[1,2],X).
+	X = [4,1,2].
+	?- append([],[1],X).
+	X = [1].
+	?- append([1],[],X).
+	X = [1].
+	?- append([],[],X).
+	X = [].
 	```
-	     </p></details>
-
-
+	<details><summary>Solution</summary>
+		<p>
+		Here is one possible solution:
+		```prolog
+		apd([], L, L).
+		apd([X|T], L, [X|Rs]):- apd(T, L, Rs).
+		```
+		     </p></details>
 2. Is there any problem from previous sample solution?
 
-<details><summary>Solution</summary>
-	<p>
-	The second argument of `append` may not be a list.
-	```prolog
-	?- append([],12,12).
-	true.
-	```
-	Thus, we could add one subgoal to ensure that the second argument is a list:
-	```prolog
-	append([], L, L):-isList(L).
-	append([X|T], L, [X|Rs]):- append(T, L, Rs).
-	```
-	     </p></details>
-
-
+	<details><summary>Solution</summary>
+		<p>
+		The second argument of `append` may not be a list.
+		```prolog
+		?- append([],12,12).
+		true.
+		```
+		Thus, we could add one subgoal to ensure that the second argument is a list:
+		```prolog
+		append([], L, L):-isList(L).
+		append([X|T], L, [X|Rs]):- append(T, L, Rs).
+		```
+		     </p></details>
 3. Implement a rule `palindrome` to determine if a list is a palindrome:
-```prolog
-?- palindrome([]).
-true.
-?- palindrome([1]).
-true.
-?- palindrome([1,2,1]).
-true.
-?- palindrome([1,2,3]).
-false.
-```
+	```prolog
+	?- palindrome([]).
+	true.
+	?- palindrome([1]).
+	true.
+	?- palindrome([1,2,1]).
+	true.
+	?- palindrome([1,2,3]).
+	false.
+	```
 **Answer:** Please find `prolog1.pl` for more details.
 
 4. Implement a rule `subset` which takes two sets and checks either the first set is a subset of second one. 
-```prolog
-?- subset([3,2],[1,2,3]).
-true.
-?- subset([3,4],[1,2,3]).
-false.
-?- subset([],[1,2,3]).
-true.
-```
+	```prolog
+	?- subset([3,2],[1,2,3]).
+	true.
+	?- subset([3,4],[1,2,3]).
+	false.
+	?- subset([],[1,2,3]).
+	true.
+	```
 **Answer:** Please find `prolog1.pl` for more details.
 
 ## Note
