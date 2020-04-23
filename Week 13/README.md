@@ -9,11 +9,12 @@
 	```prolog
 	?- [file_name].
 	```
-This will state all clauses you defined into the database. If you wish to exit the Prolog interpreter, type `halt.`.
+- This will state all clauses you defined into the database. If you wish to exit the Prolog interpreter, type `halt.`.
 	- Alternatively, the source file could be stated via command line arguments:
 	```bash
 	swipl file_name.pl
 	```
+- If you prefer to use an online interpreter, please check it [here](https://swish.swi-prolog.org/).
 
 ## [Data types](https://en.wikipedia.org/wiki/Prolog_syntax_and_semantics#Data_types) in Prolog
 Prolog is dynamically typed. It only contains one single datatype --- term.
@@ -44,25 +45,31 @@ Prolog is dynamically typed. It only contains one single datatype --- term.
 	- Basic: `+`, `-`, `*`, `/`..
 	- Numeric comparison operators:
 		- The following operators must evaluate their arguments:
-		- `<`, `>`, `=\=`(not equal), `=<`, `>=`, `=:=` (equal)
+			- `<`, `>`, `=\=`(not equal), `=<`, `>=`, `=:=` (equal)
 		- The result is `true` if the numeric values of expressions satisfy the comparison.
 		- For example:
 		```prolog
+		?- 1 =< 2.
+		true.
 		?- min(3,2) < 3.
 		true.
 		```
 - Some speical operators:
-	- `is`: it is a built-in predicates that force the evaluation of 
-	- `=`: the two operands are identical
-        - this operator could also be used to unify two terms
-```prolog
-?- 1 =< 2.
-true.
-?- 2 is 1 + 1.
-true.
-?- 2 = 1 + 1.
-false.
-```
+	- `is`: it is a built-in predicates that forces the evaluation of right hand expression and binds the evaluated result from the right to the left expression.
+		- It works only if the right expression could be evaluated. Query `X is X + 1` won't work.
+		```prolog
+		?- X is min(3, 2) + 5.
+		X = 7.
+		```
+	- `=`: unify left expr with right expr.
+        - Please check unification for more details.
+	- One example shows the difference between `=` and `is`:
+		```prolog
+		?- 2 is 1 + 1.
+		true.
+		?- 2 = 1 + 1.
+		false.
+		```
 
 ## Prolog programs
 - A Prolog programs consists of a number of clauses.
@@ -71,7 +78,7 @@ false.
 - Def. a unit of information in a Prolog program ending with (".")
     
 #### Format
-- In general, the clause has a form like this:
+- In general, there are two types of forms to represent a clause:
 	```prolog
 	Head. % Head is true
 	Head :- Body.
@@ -145,10 +152,10 @@ false.
 
 ### Procedure
 - Def. A procedure in Prolog is a group of clauses about the same relation. For example,
-```prolog
-mem(X,[X|_]).
-mem(X,[_|T]):-mem(X, T).
-```
+	```prolog
+	mem(X,[X|_]).
+	mem(X,[_|T]):-mem(X, T).
+	```
 
 #### Evaluation Rule
 - Variable
@@ -192,8 +199,20 @@ mem(X,[_|T]):-mem(X, T).
         - Otherwise, fails to unify.
     - Occurs Check: 
         - Def. a process to ensure that a variable isn't bound to a structure that contains itself.
+        - Concretely, that means an unification of a variable V and a structure S fails if S contains V.
         - In Prolog, we avoid occurs check, which can lead to unsoundness.
             - `X = f(X)` will unify success.
+        - However, in SML, we could not define a function with cyclic program structure:
+        ```sml
+        fun hungry (x: int) = hungry; (* hungry(x) = hungry *)
+		 (*
+		 Error: right-hand-side of clause doesn't agree with function result type [circularity]
+		   expression:  int -> 'Z
+		   result type:  'Z
+		   in declaration:
+		     hungry = (fn x : int => hungry)
+		 *)
+        ```
 
 **Question: How unification works?**
 - Consider this query:
@@ -215,10 +234,33 @@ mem(X,[_|T]):-mem(X, T).
 	What = programming_language.
 	```
 	</p></details>
+	
+- Pattern matching for a list:
+	- Binds all elements in a list
+		```prolog
+		?- [X, Y, Z] = [1, 2, 3].
+		X = 1,
+		Y = 2,
+		Z = 3.
+		```
+	- Seperates head and tail for a list
+		```prolog
+		?- [ X | Y ] = [a, b, c].
+		X = a,
+		Y = [b, c].
+		```
+	- Binds multiple elements in a list
+		```prolog
+		?- [ X, Y | Z ] = [a, b, c].
+		X = a,
+		Y = b,
+		Z = [c].
+		```
 
 ### Execution Order
-- **Backward chaining**: given a goal (query) for some rules, backtracking is a way to backtrace and find some satisfiable facts/rules.
-    - The interpreter tries to match facts and rules by the order of their definition.
+- **Backward chaining**: given a goal (query) with some rules, backtracking is a way to backtrace and find all possible solutions that satisfy all subgoals.
+    - The interpreter tries to match facts and rules by **the order of their definition**.
+    - If a subgoal cannot be satisfied, Prolog will try another way.
     - Consider this example, we check if an item exists in list or not:
     ```prolog
     mem(X,[X|_]).
@@ -244,42 +286,60 @@ mem(X,[_|T]):-mem(X, T).
     true.
     ```
 - **Negation**: a way to negate the subgoal.
+	- The meaning of negation is not provable. It menas that the given term can't be proven true.
     ```prolog
     ?- \+ (2 = 4).
     true.
-    ?- not(mem(b, [a,c,d])).
+    ?- not(mem(b, [a,c,d])). % could not prove b is a member of list [a,c,d]?
     true.
     ```
-**Q: How backtracking works?**
-
-Consider this example:
-```prolog
-/* Define p */
-p(a).
-p(X) :- q(X), r(X).
-p(X) :- u(X).
-
-/* Define q */
-q(X) :- s(X).
-
-/* Define r */
-r(a). 
-r(b). 
-
-/* Define s */
-s(a).  
-s(b). 
-s(c). 
-
-/* Define u */
-u(d). 
-```
-Prolog uses a derivation tree for each goal. The edges in the derivation tree are labeled with the clause we defined so as to replace a goal by a subgoal. The subtree under any goals in the derivation tree correspond to different choices. The leaf represents the finalize choice is correct or not.
-
-When we query `p(X).`, how to draw the drivation tree for it?
-
-**Answer:**
-- Check [this](https://www.cpp.edu/~jrfisher/www/prolog_tutorial/3_1.html) page for more details. You can also query `p(X).` in the trace mode to see step by step execution for backtracking.
+	- The [negation as failure](https://en.wikipedia.org/wiki/Negation_as_failure) depends on the completeness of the universe of facts.
+	```prolog
+	dog(a).
+	dog(b).
+	
+	cat(c).
+	
+	is_dog(X):- dog(X).
+	
+	is_cat(X):- \+ is_dog(X).
+	```
+	- However, when you query `is_cat(d)`, the result is also true. The reason cause by this is that the given goal `is_dog(d)` cannot be proven true, but we should expect the rule only works in the universe of `a,b,c`.
+	- Thus, the `is_cat` works only if the universe of dog fact is complete. Otherwise, we should define the universe of `cat` fact at first, and define clause `is_cat(X):- cat(X).`
+- **Q: How backtracking works?**
+	- Consider this example:
+		```prolog
+		/* Define p */
+		p(a).
+		p(X) :- q(X), r(X).
+		p(X) :- u(X).
+		
+		/* Define q */
+		q(X) :- s(X).
+		
+		/* Define r */
+		r(a). 
+		r(b). 
+		
+		/* Define s */
+		s(a).  
+		s(b). 
+		s(c). 
+		
+		/* Define u */
+		u(d). 
+		```
+	- We may uses a proof tree to visualize how a query works in Prolog. 
+		- The edges in the proof tree may be labeled with some bindings. 
+		- The subtree under any goals in the proof tree correspond to different choices. 
+		- The leaf represents the finalize choice is correct or not.
+	- By backtracking and unification, the real process looks like a depth-first traversing of the given proof tree. 
+	- When we query `p(X).`, how to represent the execution order by the proof tree?
+		<p align="center">
+		<img src="img/proof_tree.png" height="80%" width="80%">
+		</p>
+	- To check backtracking in Prolog, you should open the `trace.` mode to observe the behavior based on your query.
+    - Once you have done, type `nodebug.` to exit the trace mode.
 
 ## Exercise
 1. Implement a rule `append` to concatenate two lists:
@@ -311,7 +371,7 @@ When we query `p(X).`, how to draw the drivation tree for it?
 	?- append([],12,12).
 	true.
 	```
-	Thus, we could add one subgoal to ensure that the second argument is a list:
+	Thus, we could add one subgoal to the first clause, which ensures that the second argument is a list:
 	```prolog
 	append([], L, L):-isList(L).
 	append([X|T], L, [X|Rs]):- append(T, L, Rs).
@@ -328,7 +388,7 @@ When we query `p(X).`, how to draw the drivation tree for it?
 	?- palindrome([1,2,3]).
 	false.
 	```
-**Answer:** Please find `prolog1.pl` for more details.
+**Answer:** Please find [`prolog1.pl`](https://github.com/LinerSu/nyu-pl-spring-20-rec/blob/master/Week%2013/prolog1.pl) for more details.
 
 4. Implement a rule `subset` which takes two sets and checks either the first set is a subset of second one. 
 	```prolog
@@ -339,10 +399,9 @@ When we query `p(X).`, how to draw the drivation tree for it?
 	?- subset([],[1,2,3]).
 	true.
 	```
-**Answer:** Please find `prolog1.pl` for more details.
+**Answer:** Please find [`prolog1.pl`](https://github.com/LinerSu/nyu-pl-spring-20-rec/blob/master/Week%2013/prolog1.pl) for more details.
 
-## Note
+### Note
+- There is another [tutorial](http://www.cse.unsw.edu.au/~billw/cs9414/notes/prolog/intro.html) to learn Prolog. Take a look if you want to.
 - The idea to design a procedure is very similar to write a pattern matching in functional language. You should consider several cases (patterns) for arguments and add subgoals to fulfill each case if necessary.
-- For debugging, you can use `trace.` mode to observe the behavior of your procedure.
-    - type `nodebug.` to exit the trace mode.
 - Using cut operator or negate operator is very helpful for your implementation.
