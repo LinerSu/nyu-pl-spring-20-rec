@@ -1,4 +1,4 @@
-# nyu-pl-spring-20-rec
+# Recitation Notes For NYU CSCI-GA.2110-001 Programming Languages, Spring 2020
 This is a repository for CSCI-GA.2110-001 recitation class.
 
 ## Catalog
