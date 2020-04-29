@@ -4,29 +4,42 @@
 
 ## Class OOP
 ### Class
-- Class is always viewed as a template ('blueprint') to create objects.
+- Def. class is always viewed as a template ('blueprint') to create objects.
 - Components
     - Data, in the form of fields, often known as attributes.
-    - Code, in the form of procedures, often known as methods.
-        - Constructor: a method for object's initilization.
-            - Types: [Java](https://beginnersbook.com/2013/03/constructors-in-java/), [C++](https://www.geeksforgeeks.org/constructors-c/)
-        - Destructor: a method for object's deletion.
-```c++
-class Point {
-public:
-  Point(double fst, double snd) { // Constructor
-      this->first = fst;
-      this->second = snd;
-  }
-  void print () { // Method
-      cout<<"("<<first<<", "<<second<<")"<<endl;
-  } 
-  ~ Point() { } // Destructor
-private:
-  double first; // Attribute
-  double second;
-};
-```
+    - Code, in the form of procedures, often known as methods.    
+- Special methods
+	- Constructor: a method for object's initilization.
+		- [Java](https://beginnersbook.com/2013/03/constructors-in-java/)
+			- No-argument constructor: constructor without any parameters.
+				- If you don't define any constructor, the Java compiler will insert a default, no-argument constructor for you.
+			- Parameterized constructor: constructor with some parameters.
+			- Java allows constructor overloading. You may define multiple constructors with different signatures.
+		- [C++](https://www.geeksforgeeks.org/constructors-c/)
+			- No-argument constructor
+			- Parameterized constructor
+			- C++ also allows constructor overloading.
+			- [Copy constructor](https://en.wikipedia.org/wiki/Copy_constructor_(C%2B%2B)): a constructor is used for creating a new object by copying the data from an existing object.
+				- Used whenever the compiler automatically creates a copy of an instance
+				- More details could be found in [here](https://www.geeksforgeeks.org/copy-constructor-in-cpp/).
+	- [Destructor](https://en.wikipedia.org/wiki/Destructor_(computer_programming)): a method for object's deletion.
+- Let's take a look at this C++ example:
+	```c++
+	class Point {
+	public:
+	  Point(double fst, double snd) { // Constructor
+	      this->first = fst;
+	      this->second = snd;
+	  }
+	  void print () { // Method
+	      cout<<"("<<first<<", "<<second<<")"<<endl;
+	  } 
+	  ~ Point() { } // Destructor
+	private:
+	  double first; // Attribute
+	  double second;
+	};
+	```
 ### Information hiding (Encapsulation)
 - Def. a machanism for restricting direct access to some of object's components.
 - Common access modifiers: private, protected and public.
@@ -35,7 +48,7 @@ private:
 <img src="img/enca.png" height="60%" width="60%">
 </p>
 
-### Object for class
+### Object for a class
 - Def. a particular instance of a class, where the object can be a combination of variables, functions, and data structures.
 
 ## Inheritance and Subtype Polymorphism
@@ -49,18 +62,18 @@ private:
         - Other methods will be inherited to subclass.
         - Check for more details: [C++](https://www.tutorialspoint.com/cplusplus/cpp_inheritance), [Java](https://www.codejava.net/java-core/the-java-language/12-rules-of-overriding-in-java-you-should-know)
 - Example for C++:
-```c++
-class A {
-void method_1() {...}
-void method_2() {...}
-};
-class B: public A { // class B publicly inherits class A, B <- A
-// Implicitly inherits method_1 from class A
-void method_2() {...} // method_2 has been overridden
-void method_3() {...} // New methods just for class B
-};
-// B is subclass of A, A is superclass of B.
-```
+	```c++
+	class A {
+	void method_1() {...}
+	void method_2() {...}
+	};
+	class B: public A { // class B publicly inherits class A, B <- A
+	// Implicitly inherits method_1 from class A
+	void method_2() {...} // method_2 has been overridden
+	void method_3() {...} // New methods just for class B
+	};
+	// B is subclass of A, A is superclass of B.
+	```
 - Variants (`<-`, inherits)
     - Single inheritance: `B <- A`
     - Multiple inheritance: `C <- A`, `C <- B`
@@ -104,7 +117,7 @@ class Main {
   }
 }
 ```
-When you execute `A a = new B();`, the static type for object `a` is `A`, which means object `a` could **only access** the components from class `A`. However, the dynamic type for variable `a` is `B` and it will refers as a `B` instance (object). When you allocate memory to `a` on the heap, the size for object `a` is the same size as an object for class `B`. 
+When you execute `A a = new B();`, the static type for object `a` is `A`, which means object `a` could **only give** methods' calls within the scope of class `A`. However, the dynamic type for variable `a` is `B` and it will refers as a `B` instance (object). When you allocate memory to `a` on the heap, the size for object `a` is the same size as an object for class `B`. 
 
 ### Dynamic dispatch
 - Def. the process of selecting which implementation of a polymorphic operation to call at run time.
@@ -113,7 +126,7 @@ When you execute `A a = new B();`, the static type for object `a` is `A`, which 
         - The methods which cannot be inherited for polymorphic behavior is not a virtual method.
     - In C++, explicitly use [virtual function](https://www.geeksforgeeks.org/virtual-function-cpp/) to achieve this.
 - [Static dispatch](https://en.wikipedia.org/wiki/Static_dispatch).
-    - a form of polymorphism fully resolved during compile time.
+    - Def. a form of polymorphism fully resolved during compile time.
     - uses for non-virtual functions in C++.
     - uses for static methods or methods with final or private keyword in Java.
     - At compile time, these methods' call are the same as normal functions' call.
@@ -193,47 +206,55 @@ public:
 
 int main()
 {
-    CLASSA local_a; // local
-    local_a.function_f(); // callq	__ZN6CLASSA10function_fEv, normal method call
-    local_a.function_g(); // callq	__ZN6CLASSA10function_gEv, normal method call
-    CLASSA *dyn_a = new CLASSA(); // dynamic
-    dyn_a->function_f(); // callq	*(%rdx), use vtable
-    dyn_a->function_g(); // callq	__ZN6CLASSA10function_gEv, normal method call
+    CLASSA local_a;		// stack object
+    local_a.function_f();	// callq	__ZN6CLASSA10function_fEv, normal method call
+    local_a.function_g();	// callq	__ZN6CLASSA10function_gEv, normal method call
+    CLASSA *dyn_a = new CLASSA(); // heap object
+    dyn_a->function_f();	// callq	*(%rdx), use vtable
+    dyn_a->function_g();	// callq	__ZN6CLASSA10function_gEv, normal method call
     CLASSA *ptr_a = &local_a;
-    ptr_a->function_f(); // callq	*(%rdx), use vtable
-    ptr_a->function_g(); // callq	__ZN6CLASSA10function_gEv, normal method call
+    ptr_a->function_f();	// callq	*(%rdx), use vtable
+    ptr_a->function_g();	// callq	__ZN6CLASSA10function_gEv, normal method call
     return 0;
 }
 ```
-Q: Draw the vtable for class `CLASSA`.
-```
-CLASSA class vTable
-function_f() CLASSA version
+- Q: Draw the vtable for class `CLASSA`.
+	```
+	CLASSA's vTable
+	function_f() CLASSA version
 
-vtable by assembly
-__ZTV6CLASSA: # Vtable for CLASSA
-	.quad	0
-	.quad	__ZTI6CLASSA
-	.quad	__ZN6CLASSA10function_fEv
-```
-Q: In above statements, Which method's call uses vtable?
-```
-dyn_a->function_f();
-ptr_a->function_f();
-```
-**Reason**
+	+------------------+
+	|ptr. to function_f|─────────────┐
+	+------------------+             |
+					 |
+	+--------------------------+     |
+	|impl. of CLASSA.function_f|<────┘
+	+--------------------------+
 
-In c++, you can use object instance `local_a` or object pointer `dyn_a` or `ptr_a` to access an class object. But there are some differences for methods' call. 
+	vtable inside assembly code
+	__ZTV6CLASSA: # Vtable for CLASSA
+		.quad	0
+		.quad	__ZTI6CLASSA
+		.quad	__ZN6CLASSA10function_fEv
+	```
+- Q: Inside the `main` function, which method's call uses vtable?
+	```
+	dyn_a->function_f();
+	ptr_a->function_f();
+	```
+**Reasoning**
 
-During compliation, for each method call of this object will be translated as a normal function call. Thus, `local_a.function_f()` and `local_a.function_g()` will not use the vtable even if `function_f` is a virtual method.
+In C++, you may use either object instance `local_a` or object pointer `dyn_a` or `ptr_a` to access an class object. But there are some differences for the method's call. 
+
+During the compliation, for each method call of this object will be translated as a normal function call. Thus, `local_a.function_f()` and `local_a.function_g()` will not use the vtable even if `function_f` is a virtual method.
 For object pointer, the method call will depend on virtual or non-virtual method. For virtual method call by an object pointer, it will check vtable. For non-virtual one, treat it as a function call.
 
 Therefore, to distinguish the method call for vtable, you just check that either the call is by object pointer (`->`) or by object itself (`.`).
 
 You can also check the assembly code `locobj.s` to see the differences. I already gave the comments for each method call.
 
-
 **Exercise**
+
 Consider the following Java code:
 ```java
 class A {
@@ -282,7 +303,9 @@ class Main {
 1. What are the static and dynamic types of `a1`, `a2` and `a3`?
 2. What methods are the call `a2.m2()`, `a1.m3()` and `a3.m2()` dispatched to?
 
-**Solution**
+<details><summary>Solution</summary>
+<p>
+
 Draw the memory map for each object:
 ```
                                                                         +-------------+
@@ -305,11 +328,26 @@ a2 ───> +----------+            ┌>+-------------+               |   |   
         +----------+              |ptr. to m4 --|───────────────────┘
                                   +-------------+
 ```
-1. `a1`: Static type: `A`. Dynamic Type: `B`; `a2`: Static type: `A`. Dynamic Type: `A`; `a3`: Static type: `A`. Dynamic Type: `B`.
-- To determine dynamic type, we check the actual instance pointed for each object.
-- To determine static type, we check the type for each object in the code.
-2. call for `a2.m2()` dispatched to `A.m2`; `a1.m3()` dispatched to `A.m3`; `a3.m2()` dispatched to `B.m2`.
-- To determine dynamic dispatch, we check each object's instance, and look up the virtual table.
+- Answer for Q1: 
+	- To determine dynamic type, we check the actual instance pointed for each object.
+	- To determine static type, we check the type for each object in the code.
+	- `a1`:
+		- Static type: `A`
+		- Dynamic Type: `B`
+	- `a2`: 
+		- Static type: `A`
+		- Dynamic Type: `A`
+	- `a3`: 
+		- Static type: `A`
+		- Dynamic Type: `B`
+
+- Answer for Q2: 
+	- To determine dynamic dispatch, we check each object's instance, and look up the virtual table.
+	- call for `a2.m2()` is dispatched to `A.m2`
+	- call for `a1.m3()` is dispatched to `A.m3`
+	- call for `a3.m2()` is dispatched to `B.m2`
+
+</p></details>
 
 ## Prototype OOP
 - Def. Object is not related to class. It could be created as an empty object or cloned from an existing object (prototype object).
@@ -342,4 +380,4 @@ a2 ───> +----------+            ┌>+-------------+               |   |   
 </p>
 
 ## Note
-1. There is one great [explanation](https://stackoverflow.com/a/34462741/4608339) of static/dynamic dispatch in C++, hope it help you understand the difference.
+1. There is one great [explanation](https://stackoverflow.com/a/34462741/4608339) of static/dynamic dispatch in C++. Take a look if you still confused with the difference.
