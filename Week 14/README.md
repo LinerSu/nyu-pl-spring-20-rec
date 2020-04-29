@@ -2,7 +2,7 @@
 - Def. a programming paradigm based on the concept of "objects".
 - Difference between OOP and OBP: Object-based programming does not support inheritance or subtyping.
 
-## Class OOP
+## Class-based OOP
 ### Class
 - Def. class is always viewed as a template ('blueprint') to create objects.
 - Components
@@ -54,13 +54,16 @@
 ## Inheritance and Subtype Polymorphism
 
 ### Inheritance
-- Def. a mechanism to derive a class (subclass) from another class (superclass) for a hierarchy of classes that share a set of attributes and methods.
+- Def. a mechanism to derive a class (i.e. subclass) from another class (i.e. superclass) for a hierarchy of classes that share a set of attributes and methods.
 - Inheritance rule
     - Data, all attributes from superclass will be inherited by the subclass.
+    	- Question: why does inheritance care about the private data?
     - Code, depends on what type of methods you have in the superclass. For example, for non-static method:
         - Private method will not be inherited.
         - Other methods will be inherited to subclass.
-        - Check for more details: [C++](https://www.tutorialspoint.com/cplusplus/cpp_inheritance), [Java](https://www.codejava.net/java-core/the-java-language/12-rules-of-overriding-in-java-you-should-know)
+        - The rules for inheritance might differ. Please check the following links for more detals:
+		- [C++](https://www.tutorialspoint.com/cplusplus/cpp_inheritance)
+		- [Java](https://www.codejava.net/java-core/the-java-language/12-rules-of-overriding-in-java-you-should-know)
 - Example for C++:
 	```c++
 	class A {
@@ -78,14 +81,15 @@
     - Single inheritance: `B <- A`
     - Multiple inheritance: `C <- A`, `C <- B`
     - Multilevel inheritance: `C <- B <- A`
-- Substitution Principle
+- [(Liskov) Substitution Principle](https://en.wikipedia.org/wiki/Liskov_substitution_principle)
     - The type of a subclass can extend the type of its superclass by adding new members (attributes and methods).
         - e.g. `method_3` in class `B`.
-    - Objects that belong to the subclass can be used whenever an object of the superclass is expected.
+    - Objects of superclass may be replaced with objects of subclass
+    	- That means, objects that belong to the subclass can be used whenever an object of the superclass is expected.
         - Due to inheritance features, object for subclass is safe to assign / pass to variable declared as superclass type.
             - `A *a = new B()`
         - The reason why dynamic dispatch could be achieved.
-### Overiding methods (Polymorphism)
+### Overriding methods (Polymorphism)
 - Def. a feature that allows a subclass or child class to provide a specific implementation of a method that is already provided by one of its superclasses or parent classes.
     - For example, when you have an object `B b`, `b.method_1()` allowed.
 
@@ -93,31 +97,31 @@
 - Static type: the type that the compiler infers or programmer declares for that expression at **compile-time**.
 - Dynamic type: the actual type of the value obtained when the expression is evaluated at **run-time**.
 - Consider the following Java example:
-```Java
-class A{
-  A() { x = 0; z = 0;}
-  public int m() { return x; }
-  public int x;
-  private int z;
-}
+	```Java
+	class A{
+	  A() { x = 0; z = 0;}
+	  public int m() { return x; }
+	  public int x;
+	  private int z;
+	}
 
-class B extends A {
-  B() { x = 1; y = 2;}
-  @Override
-  public int m() { return x + y;}
-  public int y;
-}
+	class B extends A {
+	  B() { x = 1; y = 2;}
+	  @Override
+	  public int m() { return x + y;}
+	  public int y;
+	}
 
-class Main {
-  public static void main(String[] args) {
-    A a = new B(); // static: A, dynamic: B
-    // int z = a.y; // Not allowed
-    System.out.printf("The result of m should be: %d\n", a.m()); // actual call method m in class B
-    A act_a = new A(); // sizeof(act_a) == sizeof(a)? No!
-  }
-}
-```
-When you execute `A a = new B();`, the static type for object `a` is `A`, which means object `a` could **only give** methods' calls within the scope of class `A`. However, the dynamic type for variable `a` is `B` and it will refers as a `B` instance (object). When you allocate memory to `a` on the heap, the size for object `a` is the same size as an object for class `B`. 
+	class Main {
+	  public static void main(String[] args) {
+	    A a = new B(); // static: A, dynamic: B
+	    // int z = a.y; // Not allowed
+	    System.out.printf("The result of m should be: %d\n", a.m()); // actual call method m in class B
+	    A act_a = new A(); // sizeof(act_a) == sizeof(a)? No!
+	  }
+	}
+	```
+	- When you execute `A a = new B();`, the static type for object `a` is `A`, which means object `a` could **only give** methods' calls within the scope of class `A`. However, the dynamic type for variable `a` is `B` and it will refers as a `B` instance (object). When you allocate memory to `a` on the heap, the size for object `a` is the same size as an object for class `B`. 
 
 ### Dynamic dispatch
 - Def. the process of selecting which implementation of a polymorphic operation to call at run time.
@@ -349,7 +353,7 @@ a2 ───> +----------+            ┌>+-------------+               |   |   
 
 </p></details>
 
-## Prototype OOP
+## Prototype-based OOP
 - Def. Object is not related to class. It could be created as an empty object or cloned from an existing object (prototype object).
 - Objects inherit directly from other objects through a prototype property.
     - `__proto__` in JavaScript.
