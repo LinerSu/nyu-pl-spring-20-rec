@@ -259,7 +259,7 @@ For object pointer/reference, the method call will depend on virtual or non-virt
 
 Therefore, to distinguish the method call for vtable, you just check that either the call is created by an object pointer or by an instance.
 
-You can also check the assembly code `locobj.s` to see the differences.
+You can also check the assembly code [`locobj.s`](https://github.com/LinerSu/nyu-pl-spring-20-rec/blob/master/Week%2014/locobj.s) to see the differences.
 </p></details>
 
 **Exercise**
