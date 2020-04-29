@@ -118,15 +118,19 @@
 	    // int z = a.y; // Not allowed
 	    System.out.printf("The result of m should be: %d\n", a.m()); // actual call method m in class B
 	    A act_a = new A(); // sizeof(act_a) == sizeof(a)? No!
+	    System.out.println(act_a instanceof A == a instanceof A); // true
+	    System.out.println(act_a instanceof B == a instanceof B); // false
 	  }
 	}
 	```
-	- When you execute `A a = new B();`, the static type for object `a` is `A`, which means object `a` could **only give** methods' calls within the scope of class `A`. However, the dynamic type for variable `a` is `B` and it will refers as a `B` instance (object). When you allocate memory to `a` on the heap, the size for object `a` is the same size as an object for class `B`. 
+	- When you execute `A a = new B();`, the static type for object `a` is `A`, which means object `a` could **only call** non-private methods of class `A`. However, the dynamic type for variable `a` is `B` and it will be allocated as a `B` instance (object). That is, the size for object `a` is the same size as an object for class `B`. 
 
 ### Dynamic dispatch
-- Def. the process of selecting which implementation of a polymorphic operation to call at run time.
+- Def. the process of selecting which implementation of a polymorphic operation to call at the run time.
+- [Virtual method](https://en.wikipedia.org/wiki/Virtual_function): is a method that helps in run-time polymorphism.
+	- It is a method to enable dynamic dispatch!
 - Variants **[Very Importent]!!!**
-    - In Java, every non-static method is by default virtual method except final and private methods.
+    - In Java, every non-static method, except final and private method, is virtual by default.
         - The methods which cannot be inherited for polymorphic behavior is not a virtual method.
     - In C++, explicitly use [virtual function](https://www.geeksforgeeks.org/virtual-function-cpp/) to achieve this.
 - [Static dispatch](https://en.wikipedia.org/wiki/Static_dispatch).
@@ -197,7 +201,7 @@
 ```
 
 **Example**
-1. Consider the following c++ code:
+1. Consider the following C++ code:
 ```c++
 #include <iostream>
 
@@ -246,8 +250,9 @@ int main()
 	dyn_a->function_f();
 	ptr_a->function_f();
 	```
-**Reasoning**
-
+<details><summary>Reasoning</summary>
+<p>
+	
 In C++, you may use either object instance `local_a` or object pointer `dyn_a` or `ptr_a` to access an class object. But there are some differences for the method's call. 
 
 During the compliation, for each method call of this object will be translated as a normal function call. Thus, `local_a.function_f()` and `local_a.function_g()` will not use the vtable even if `function_f` is a virtual method.
@@ -256,6 +261,7 @@ For object pointer, the method call will depend on virtual or non-virtual method
 Therefore, to distinguish the method call for vtable, you just check that either the call is by object pointer (`->`) or by object itself (`.`).
 
 You can also check the assembly code `locobj.s` to see the differences. I already gave the comments for each method call.
+</p></details>
 
 **Exercise**
 
