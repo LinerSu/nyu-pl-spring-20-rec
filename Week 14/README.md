@@ -50,6 +50,9 @@
 
 ### Object for a class
 - Def. a particular instance of a class, where the object can be a combination of variables, functions, and data structures.
+- Object allocation
+	- In Java, all objects are dynamically allocated on the heap.
+	- In C++, local variable (including object) is allocated on the stack. Any objects created by using operator `new` are allocated on the heap.
 
 ## Inheritance and Subtype Polymorphism
 
@@ -132,20 +135,18 @@
 - Variants **[Very Importent]!!!**
     - In Java, every non-static method, except final and private method, is virtual by default.
         - The methods which cannot be inherited for polymorphic behavior is not a virtual method.
-    - In C++, explicitly use [virtual function](https://www.geeksforgeeks.org/virtual-function-cpp/) to achieve this.
-- [Static dispatch](https://en.wikipedia.org/wiki/Static_dispatch).
-    - Def. a form of polymorphism fully resolved during compile time.
-    - uses for non-virtual functions in C++.
-    - uses for static methods or methods with final or private keyword in Java.
+    - In C++, method calls via pointers (or references) to a base type can not be dispatched at compile time, the dynamic dispatch is used through [virtual function](https://www.geeksforgeeks.org/virtual-function-cpp/).
+- [Static dispatch](https://en.wikipedia.org/wiki/Static_dispatch): a form of polymorphism fully resolved during the compile time.
+    - In C++, it is used for non-virtual function's call by object's pointer/reference or method call from stack based / static object.
+    - In Java, it is used for static methods or methods with final or private keyword.
     - At compile time, these methods' call are the same as normal functions' call.
-        - Procedure: fetch method pointer -> make a call
-        - some compiler will directly translate the method's call to the address for call in the code during the code generation.
 - Object data layout in memory
+    - Each object's layout is determined by its dynamic type.
     - Data layout contains attributes (data members) for each instance of a class.
     - They are order by the declaration.
     - Each data member can be accessed via a fixed offset from the base address of the data layout.
     - Subclass objects have the same memory layout as superclass objects with additional space for the subclass members that succeeds the space for the superclass members.
-    - Here are the data layouts for objects `a` and `act_a`:
+    - For example, here are the data layouts for objects `a` and `act_a`:
     ```diff
     !Objects' data layouts in memory
 
@@ -165,17 +166,17 @@
         └─────────────┘
     ```
 
-#### Virtual method Table (Vtable)
+#### [Virtual method Table](https://en.wikipedia.org/wiki/Virtual_method_table) (Vtable)
 - Def. each class has its own vtable which is shared by all instances of that class.
     - A way to store the virtual method's pointer for each class.
     - Inside this table, it contains an array of pointers to functions that implement the virtual methods of the class.
     - Pointers to methods are order by declaration.
-- The data layout could access vtable by adding one member variable called virtual pointer.
-    - When a call to virtual method, the run-time system looks up the vtable of the instance's dynamic type via the vpointer, and then looks up the method's implementation for that type via the corresponding pointer in the vtable.
-        - Procedure: fetch vpointer -> fetch method pointer -> make a call
+    - **Note that**, the implementation of vtable is based on class. Each object is a "user" of vtable.
+- The data layout could access vtable by adding one member called virtual pointer.
+	- When an instance is created, the vpointer of that instance will be set to the corresponded vtable.
+	- If there exisits a call for virtual method, the run-time system looks up the vtable of the instance via the vpointer, then calls that method through the function pointer in vtable.
 - Inheritance:
-    - A vtable for subclass is created by copying the vtable from superclass and changing the pointers of overridden methods to point to the new implementation.
-    - When instance creates, the vpointer of that instance will be set to the right vtable of the instance's class.
+    - A vtable for subclass is created by copying the vtable from superclass and changing any pointers of overridden (virtual) methods to the new implementations.
 - For example, here are the memory map for objects `a` and `act_a`:
 ```diff
     !Objects' memory map in memory
@@ -229,8 +230,6 @@ int main()
 - Q: Draw the vtable for class `CLASSA`.
 	```
 	CLASSA's vTable
-	function_f() CLASSA version
-
 	+------------------+
 	|ptr. to function_f|─────────────┐
 	+------------------+             |
@@ -253,14 +252,14 @@ int main()
 <details><summary>Reasoning</summary>
 <p>
 	
-In C++, you may use either object instance `local_a` or object pointer `dyn_a` or `ptr_a` to access an class object. But there are some differences for the method's call. 
+In C++, you may use either an object instance (i.e. `local_a`) or an object pointer/reference (i.e. `dyn_a` or `ptr_a`). But there are some differences for the method's call. 
 
-During the compliation, for each method call of this object will be translated as a normal function call. Thus, `local_a.function_f()` and `local_a.function_g()` will not use the vtable even if `function_f` is a virtual method.
-For object pointer, the method call will depend on virtual or non-virtual method. For virtual method call by an object pointer, it will check vtable. For non-virtual one, treat it as a function call.
+During the compliation, for each method call of an instance will be translated as a normal function call. Thus, `local_a.function_f()` and `local_a.function_g()` will not use `CLASSA`'s vtable even if `function_f` is a virtual method.
+For object pointer/reference, the method call will depend on virtual or non-virtual method. For any virtual methods' call by an object pointer/reference, it uses `CLASSA`'s vtable. For non-virtual method's call, the compiler treats it as a normal function call.
 
-Therefore, to distinguish the method call for vtable, you just check that either the call is by object pointer (`->`) or by object itself (`.`).
+Therefore, to distinguish the method call for vtable, you just check that either the call is created by an object pointer or by an instance.
 
-You can also check the assembly code `locobj.s` to see the differences. I already gave the comments for each method call.
+You can also check the assembly code `locobj.s` to see the differences.
 </p></details>
 
 **Exercise**
