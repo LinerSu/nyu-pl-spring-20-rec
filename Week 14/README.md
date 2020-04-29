@@ -318,22 +318,24 @@ a2 ───> +----------+            ┌>+-------------+               |   |   
 - Cloning (inheritance) is performed by behaviour reuse.
     - A process of reusing existing objects via delegation that serve as prototypes.
         - Delegation: refers to evaluating a member (property or method) of one object in the context of another original object.
-```js
-var foo = {one: 1, two: 2};
-var bar = Object.create( foo ); // bar = clone(foo)
-bar.one; // return 1, bar refers foo.a
-bar.three = 3; // add new field
-bar.two = "this is two"; // add new field two, and shadow proto object's two
-bar;
-/*
-three: 3
-two: "this is two"
-__proto__:
-    name: "foo"
-    one: 1
-    two: 2
-*/
-```
+- Consider the following JavaScript codes:
+	```js
+	var foo = {one: 1, two: 2};
+	var bar = Object.create( foo ); // bar = clone(foo)
+	bar.one; // return 1, bar refers foo.a
+	bar.three = 3; // add new field
+	bar.two = "this is two"; // add new field two, and shadow proto object's two
+	print(bar.two);
+	bar;
+	/*
+	three: 3
+	two: "this is two"
+	__proto__:
+	    name: "foo"
+	    one: 1
+	    two: 2
+	*/
+	```
 - The memory map for objects `foo` and `bar` are:
 <p align="center">
   <img src="img/proto.png" height="70%" width="70%">
