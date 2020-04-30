@@ -53,6 +53,12 @@
 - Object allocation
 	- In Java, all objects are dynamically allocated on the heap.
 	- In C++, local variable (including object) is allocated on the stack. Any objects created by using operator `new` are allocated on the heap.
+- Special objects
+	- [Singleton object](https://en.wikipedia.org/wiki/Singleton_pattern): an object is a class that has exactly one instance
+		- Singleton Class in Java, object in Scala and Kotlin
+	- [Companion object]: An object with the same name as a class
+		- Usage: easily declare factory methods
+		- Available in Scala and Kotlin
 
 ## Inheritance and Subtype Polymorphism
 
