@@ -127,6 +127,7 @@
 	    // int z = a.y; // Not allowed
 	    System.out.printf("The result of m should be: %d\n", a.m()); // actual call method m in class B
 	    A act_a = new A(); // sizeof(act_a) == sizeof(a)? No!
+	    // instanceof checks if a given object is an instance of a given class, superclass or interface
 	    System.out.println(act_a instanceof A == a instanceof A); // true
 	    System.out.println(act_a instanceof B == a instanceof B); // false
 	  }
