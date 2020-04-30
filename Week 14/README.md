@@ -132,7 +132,7 @@
 	  }
 	}
 	```
-	- When you execute `A a = new B();`, the static type for object `a` is `A`, which means object `a` could **only call** non-private methods of class `A`. However, the dynamic type for variable `a` is `B` and it will be allocated as a `B` instance (object). That is, the size for object `a` is the same size as an object for class `B`. 
+	- When the compiler executes `A a = new B();`, the static type for object `a` is `A`, which means object `a` could **only call** non-private methods of class `A`. However, the dynamic type for variable `a` is `B` and it will be allocated as a `B` instance (object). That is, the size for object `a` is the same size as an object for class `B`. 
 
 ### Dynamic dispatch
 - Def. the process of selecting which implementation of a polymorphic operation to call at the run time.
