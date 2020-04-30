@@ -185,28 +185,28 @@
 - Inheritance:
     - A vtable for subclass is created by copying the vtable from superclass and changing any pointers of overridden (virtual) methods to the new implementations.
 - For example, here are the memory map for objects `a` and `act_a`:
-```diff
-    !Objects' memory map in memory
+	```diff
+	    Objects' memory map in memory
 
-    A Instance (act_a):             A vtable:
-        ┌─────────────┐        ┌──>┌────────────┐                    ┌─────────────┐
-        │ vptr        │────────┘   │ ptr. to m1 │───────────────────>│impl. of A.m1│
-        ├─────────────┤            └────────────┘                    └─────────────┘
-        │    x = 0    │
-        ├─────────────┤
-        │    z = 0    │
-        └─────────────┘
-    B Instance (a):                 B vtable: 
-        ┌─────────────┐        ┌──>┌────────────┐                    ┌─────────────┐
-        │ vptr        │────────┘   │ ptr. to m1 │───────────────────>│impl. of B.m1│
-        ├─────────────┤            └────────────┘                    └─────────────┘
-        │    x = 1    │
-        ├─────────────┤
-        │    z = 0    │
-        ├═════════════┤
-        │    y = 2    │
-        └─────────────┘
-```
+	    A Instance (act_a):             A vtable:
+		┌─────────────┐        ┌──>┌────────────┐                    ┌─────────────┐
+		│ vptr        │────────┘   │ ptr. to m1 │───────────────────>│impl. of A.m1│
+		├─────────────┤            └────────────┘                    └─────────────┘
+		│    x = 0    │
+		├─────────────┤
+		│    z = 0    │
+		└─────────────┘
+	    B Instance (a):                 B vtable: 
+		┌─────────────┐        ┌──>┌────────────┐                    ┌─────────────┐
+		│ vptr        │────────┘   │ ptr. to m1 │───────────────────>│impl. of B.m1│
+		├─────────────┤            └────────────┘                    └─────────────┘
+		│    x = 1    │
+		├─────────────┤
+		│    z = 0    │
+		├═════════════┤
+		│    y = 2    │
+		└─────────────┘
+	```
 
 **Example**
 1. Consider the following C++ code:
