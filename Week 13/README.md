@@ -297,7 +297,7 @@ Prolog is dynamically typed. It only contains one single datatype --- term.
     ?- not(mem(b, [a,c,d])). % could not prove b is a member of list [a,c,d]?
     true.
     ```
-	- The [negation as failure](https://en.wikipedia.org/wiki/Negation_as_failure) depends on the completeness of the universe of facts.
+	- The [negation as failure](https://en.wikipedia.org/wiki/Negation_as_failure) depends on the completeness of the universe of facts. Why? Consider the following example:
 	```prolog
 	dog(a).
 	dog(b).
@@ -306,7 +306,7 @@ Prolog is dynamically typed. It only contains one single datatype --- term.
 	
 	is_dog(X):- dog(X).
 	
-	is_cat(X):- \+ is_dog(X).
+	is_cat(X):- \+ is_dog(X). % Suppose you want to define an is_cat rule.
 	```
 	- However, when you query `is_cat(d)`, the result is also true. The reason cause by this is that the given goal `is_dog(d)` cannot be proven true, but we should expect the rule only works in the universe of `a,b,c`.
 	- Thus, the `is_cat` works only if the universe of dog fact is complete. Otherwise, we should define the universe of `cat` fact at first, and define clause `is_cat(X):- cat(X).`
