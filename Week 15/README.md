@@ -34,7 +34,7 @@
 		- For instance, suppose we have two threads share a variable `x`:
 		```python
 		# Suppose variable x and y are initialized to 0.
-		T1: x = x + 1		|  T2: y = x
+		T1: x = x + 1    |    T2: y = x
 		```
 		- What is the value of `y`? If thread `T1` goes first, then `y` will be `1`, but if `T2` executes first, then `y` does not change its value.
 		- This is a race condition caused by data races.
