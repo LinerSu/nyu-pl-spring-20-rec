@@ -4,7 +4,7 @@
 - Where do we use concurrency?
 	- Web server, Cloud computing, OS, etc.
 - Is parallel programming? Not simply!
-	- In a single processor environment, concurrency apears to interleaved execution of concurrent activities. (i.e. Multithreading)
+	- In a single processor environment, concurrency apears to interleaved execution of concurrent activities. (e.g. Multithreading)
 	- In multiple processor case, concurrency is a result of overlapped execution of concurrent activities. (e.g. Multiprocessing)
 - Types
 	- Multi-core programming: with multicore processor and multiprocessor system, this programming paradigm helps developer to utilize the large number of cores. The processors may have access to a shared memory.
