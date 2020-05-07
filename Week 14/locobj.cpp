@@ -6,6 +6,7 @@ public:
     virtual void function_f () {}
     void function_g() {}
 };
+//Use g++ -S to generate assembly code
 
 int main()
 {
