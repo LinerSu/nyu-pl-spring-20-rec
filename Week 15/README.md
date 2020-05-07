@@ -1,11 +1,11 @@
 # Concurrent Programming
-- Def. it is a programming paradigm that supports program concurrency. Programming languages 
-- Concurrent programs actions that may be performed simultaneously.
+- Def. it is a programming paradigm that supports program concurrency.
+- Concurrent programs: some actions that may be performed simultaneously.
 - Where do we use concurrency?
-	- Web server, Cloud computing, , etc.
+	- Web server, Cloud computing, OS, etc.
 - Is parallel programming? Not simply!
 	- In a single processor environment, concurrency apears to interleaved execution of concurrent activities. (i.e. Multithreading)
-	- In multiple processor case, concurrenct is a result of overlapped execution of concurrent activities. (e.g. Multiprocessing)
+	- In multiple processor case, concurrency is a result of overlapped execution of concurrent activities. (e.g. Multiprocessing)
 - Types
 	- Multi-core programming: with multicore processor and multiprocessor system, this programming paradigm helps developer to utilize the large number of cores. The processors may have access to a shared memory.
 		- Shared memory
@@ -23,7 +23,7 @@
 			- Def. a type of communication on a computer (or between computers).
 			- This happens when:
 				- Two computers communicating in a network
-				- Client and server
+				- Client and server model
 				- Two programs has been connected by a pipe
 			- For instance:
 			<p align="center">
@@ -38,21 +38,20 @@
 		```
 		- What is the value of `y`? If thread `T1` goes first, then `y` will be `1`, but if `T2` executes first, then `y` does not change its value.
 		- This is a race condition caused by data races.
-	- Deadlock situation: it happend when a process or thread holds a resource and waits for another resource held by another waiting process. However, the waiting process state forevers because each requested resource is used by another process.
+	- Deadlock situation: it happend when a process or a thread holds a resource and waits for another resource held by another waiting process / thread. However, the waiting process state forevers because each requested resource is used by another process.
 		- For example:
 			<p align="center">
 			  <img src="img/deadlock.png" height="70%" width="70%">
 			</p>
 		- Picture from a lecture - [Concurrent Programming](https://github.com/nyu-pl-fa18/class14/blob/master/class14.pdf).
 	- Weak memory consistency: the behaviours of accessing memory through multiple processes / threads might be inconsistent. The reason might be the optimization of code scheduling or delaying updates of memory.
-	- Consider this example, suppose we have two threads share variables `x` and `y`:
+		- Consider this example, suppose we have two threads share variables `x` and `y`:
 		```python
 		# Suppose variable x and y are initialized to 0.
 		T1: x = 1    |  T2: y = 1
 		    print y  |      print x
 		```
-		- What does the program print?
-		- It depends on the compiler and hardware optimizations. The behaviours are unpredictable. 
+		- What does the program print? It depends on the compiler and hardware optimizations. The behaviours are unpredictable. 
 			- For instance, program might print results where `y = 1` and `x = 0`.
 			<p align="center">
 			  <img src="img/weak.png" height="70%" width="70%">
