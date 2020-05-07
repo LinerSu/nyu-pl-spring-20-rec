@@ -46,17 +46,18 @@
 		- Picture from a lecture - [Concurrent Programming](https://github.com/nyu-pl-fa18/class14/blob/master/class14.pdf).
 	- Weak memory consistency: the behaviours of accessing memory through multiple processes / threads might be inconsistent. The reason might be the optimization of code scheduling or delaying updates of memory.
 	- Consider this example, suppose we have two threads share variables `x` and `y`:
-	```python
-	# Suppose variable x and y are initialized to 0.
-	T1: x = 1    |  T2: y = 1
-	    print y  |      print x
-	```
+		```python
+		# Suppose variable x and y are initialized to 0.
+		T1: x = 1    |  T2: y = 1
+		    print y  |      print x
+		```
 		- What does the program print?
 		- It depends on the compiler and hardware optimizations. The behaviours are unpredictable. 
 			- For instance, program might print results where `y = 1` and `x = 0`.
 			<p align="center">
 			  <img src="img/weak.png" height="70%" width="70%">
 			</p>
+			
 			- The compiler might avoid updating `x` in `T1` because memory access is expensive. Although `x` could be maintained inside a register, the update of `x` may delay after `T2` loading `x` from the memory.
 - Mutual exclusion
 	- Critical region or section: a resource, memory or variable that only allows one thread to access at a time.
@@ -184,7 +185,7 @@ end Main;
 		       for(int i=0; i<10000; i++){
 			   count += 1;
 			}
-			System.out.println(this.count % 10 == 0); // Might be false if we avoid synchronizzation
+			System.out.println(this.count % 10 == 0); // Might be false if we avoid synchronization
 		   }
 		}
 
@@ -210,7 +211,7 @@ end Main;
 			t2.start();
 		     }
 		}
-	```
+		```
 	- Synchronized statements
 		- This block allows you to synchronize codes by specifying an object
 		- For intance, the above `cal` method could be revised as:
