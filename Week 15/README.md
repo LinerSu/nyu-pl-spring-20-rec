@@ -48,8 +48,8 @@
 	- Consider this example, suppose we have two threads share variables `x` and `y`:
 	```python
 	# Suppose variable x and y are initialized to 0.
-	T1: x = 1			|  T2: y = 1
-		print y		|    	print x
+	T1: x = 1    |  T2: y = 1
+	    print y  |      print x
 	```
 		- What does the program print?
 		- It depends on the compiler and hardware optimizations. The behaviours are unpredictable. 
