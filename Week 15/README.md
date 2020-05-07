@@ -9,7 +9,7 @@
 - Types
 	- Multi-core programming: with multicore processor and multiprocessor system, this programming paradigm helps developer to utilize the large number of cores. The processors may have access to a shared memory.
 		- Shared memory
-			- Def. 
+			- Def. memory that may be simultaneously accessed by multiple processes or threads.
 			- This happens when: 
 				- Two processors share the same physical memory.
 				- Two programs share the same memory.
@@ -20,7 +20,7 @@
 			</p>
 	- Distributed programming: this is designed for execution on a network autonomous processors that do not share main memory (each of them has its own private memory).
 		- Message Passing
-			- Def.
+			- Def. a type of communication on a computer (or between computers).
 			- This happens when:
 				- Two computers communicating in a network
 				- Client and server
@@ -68,11 +68,11 @@
 - Ada program may contain several components:
 	- Subprograms: [procedures](https://en.wikibooks.org/wiki/Ada_Programming/Subprograms#Procedures) or [functions](https://en.wikibooks.org/wiki/Ada_Programming/Subprograms#Functions).
 		- Type of parameters: `in`, `out`, and `in out`.
-	- [Package](https://en.wikibooks.org/wiki/Ada_Programming/Packages): define collection of data and codes. Modularization.
+	- [Package](https://en.wikibooks.org/wiki/Ada_Programming/Packages): define collection of data and codes. It is an entity for modularization.
 	- [Task](https://en.wikibooks.org/wiki/Ada_Programming/Tasking)
-		- Def. like a thread, a task 
-		- Task type
-		- A Ada task type is very close to Java `Thread` subclass.
+		- Def. like a thread, a task is an application that runs concurrently with the main application.
+		- Task type: it is a type declaration for some tasks.
+			- A Ada task type is very close to Java `Thread` subclass.
 - Rendezvous
 	- Def. a rendezvous is a process to synchronize two tasks.
 	- It works by using `entry` and `accept` statements. The communication from task to task via an `entry` call.
@@ -108,7 +108,7 @@ X,Y,Z: SquareType;
          entry SetIndex(Row: Integer; Col: Integer);
       end ProductTask;
       
-      task body ProductTask is -- code for tasks to execute
+      task body ProductTask is -- code for tasks to execute, similar to method run() in Java thread
          R,C: Integer;
        begin
        	-- Each thread will wait a call for SetIndex
@@ -142,92 +142,94 @@ end Main;
 ```
 
 ## Java
-- Thread
-```java
-class MyThread extends Thread {
-   public int element;
+- Thread: it is a unit that can be scheduled independently to execute program instructions.
+- In Java, you can create a thread class by your own:
+	```java
+	class MyThread extends Thread {
+	   public int element;
 
-   public MyThread (int element){
-      this.element = element;
-   }
+	   public MyThread (int element){
+	      this.element = element;
+	   }
 
-   public void run () {
-      System.out.println("The element in "+ 
-      getName() +": "+Integer.toString(this.element));
-   }
-}
+	   public void run () {
+	      System.out.println("The element in "+ 
+	      getName() +": "+Integer.toString(this.element));
+	   }
+	}
 
-public class HelloWorld{
+	public class HelloWorld{
 
-   public static void main (String[] args) {
-      MyThread [] tab = new MyThread [10];
+	   public static void main (String[] args) {
+	      MyThread [] tab = new MyThread [10];
 
-      for (int i = 0; i < 9; ++i) {
-         tab [i] = new MyThread (i);
-         tab [i].start ();
-      }
-	 // The order of the outputs might be different from the order of creations
-   }
-}
-```
-- Prevents race condition
-- Java introduced two ways to maintain synchronization:
+	      for (int i = 0; i < 9; ++i) {
+		 tab [i] = new MyThread (i);
+		 tab [i].start ();
+	      }
+		 // The order of the outputs might be different from the order of creations
+	   }
+	}
+	```
+- To prevent race condition, Java introduced two ways to maintain synchronization:
 	- Synchronized methods
 		- Declare a synchronized method that only allows one thread per instance execute it.
 	- For instance, consider we use multiple threads to count a result and check whether that result is a multiple of 10.
-	```java
-	class SyncCounter {
-	    private int count = 0;
-	    
-	    public synchronized void cal(){
-	       for(int i=0; i<10000; i++){
-	           count += 1;
-	        }
-	        System.out.println(this.count % 10 == 0); // Might be false if we avoid synchronizzation
-	   }
-	}
-	
-	class CounterThread extends Thread {
-	   private SyncCounter counter;
-	
-	   public CounterThread (SyncCounter counter){
-	      this.counter = counter;
-	   }
-	
-	   public void run () {
-	       counter.cal();
-	   }
-	}
-	
-	public class Main
-	{
-	     public static void main(String []args){
-	        SyncCounter counter = new SyncCounter();
-	        CounterThread t1 = new CounterThread (counter);
-	        CounterThread t2 = new CounterThread (counter);
-	        t1.start ();
-	        t2.start();
-	     }
-	}
+		```java
+		class SyncCounter {
+		    private int count = 0;
+
+		    public synchronized void cal(){
+		       for(int i=0; i<10000; i++){
+			   count += 1;
+			}
+			System.out.println(this.count % 10 == 0); // Might be false if we avoid synchronizzation
+		   }
+		}
+
+		class CounterThread extends Thread {
+		   private SyncCounter counter;
+
+		   public CounterThread (SyncCounter counter){
+		      this.counter = counter;
+		   }
+
+		   public void run () {
+		       counter.cal();
+		   }
+		}
+
+		public class Main
+		{
+		     public static void main(String []args){
+			SyncCounter counter = new SyncCounter();
+			CounterThread t1 = new CounterThread (counter);
+			CounterThread t2 = new CounterThread (counter);
+			t1.start ();
+			t2.start();
+		     }
+		}
 	```
 	- Synchronized statements
-	- This block allows you to synchronize codes by specifying an object
-	- For intance, the above `cal` method could be revised as:
-	```java
-	public  void cal(){
-		synchronized(this){
-			for(int i=0; i<10000; i++){
-       		count += 1;
-        	}
-        	System.out.println(this.count % 10 == 0); // Might be false if we avoid synchronizzation
-    	}
-   }
-	```
+		- This block allows you to synchronize codes by specifying an object
+		- For intance, the above `cal` method could be revised as:
+		```java
+		public  void cal(){
+			synchronized(this){
+				for(int i=0; i<10000; i++){
+					count += 1;
+				}
+				System.out.println(this.count % 10 == 0); // Might be false if we avoid synchronizzation
+			}
+		}
+		```
+	- More examples could be found [here](https://www.geeksforgeeks.org/synchronized-in-java/).
+
 ## Python (Option)
-- [Future and Promise](https://en.wikipedia.org/wiki/Futures_and_promises#List_of_concepts_related_to_futures_and_promises_by_programming_language)
+- [Future and Promise](https://en.wikipedia.org/wiki/Futures_and_promises#List_of_concepts_related_to_futures_and_promises_by_programming_language): it is a process that assumes a data is initially unkown, but that value will eventually become available. Concretely, some programming languages (e.g. Scala) have the following definition:
 	- Future: it is a read-only placeholder object for a value may not yet exist.
 	- Promise: it is a writable, single assignment container which sets the value of the future (i.e. to make a future complete).
-	- In other words, if you promise something, you expect to achieve it in the future.
+	- In other words, if we promise something to somebody, he/she expects us to achieve it in the future.
 	- In programming langauges, the future may be a value, and the promise is the function that sets the value.
 	```
 	async fun promise(){
