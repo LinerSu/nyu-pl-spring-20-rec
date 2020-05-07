@@ -83,9 +83,10 @@
 	<p align="center">
 	  <img src="img/mult.png" height="20%" width="20%">
 	</p>
+	
 	- We know this multiplication could be done by interleaved (i.e. multi-threaded application). Thus, we could also create an Ada program with task.
-	- How many tasks we need? *Same as the array size*.
-	- Do we have to synchronize the multiplication? *Yes, because we need a task to dispatch each index of row and colomun to each multiplication task. After the assignment, each task could calculate result independently*.
+	- How many tasks do we need? *Same as the array size*.
+	- Do we have to synchronize the multiplication? *No, but we need a task to dispatch each index of row and colomun to each multiplication task. After the assignment, each task could calculate the result independently*.
 - Here is a short version of how we write a concurrent multiplication:
 ```ada
 procedure Main is
