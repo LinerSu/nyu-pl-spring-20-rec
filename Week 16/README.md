@@ -8,7 +8,7 @@
     (*recod*){ a = "123" , y = 2 }: {a:string, y:int}
     (*tuple*)(1,2,3) : int * int * int
     ```
-  - ML signature & structure
+  - ML signature & structure, functor
 - Feature:
   - Pattern matching
     - What it is? What rules could we use in sml? 
@@ -50,14 +50,15 @@ fun j (L x) = (L(x), L(x))
   end
 ```
 
-**Solution**
-```
-(a) In else branch, the variable x has bool type but operand + expects x be an int type.
-(b) The function `f true` forces `f` to be a type of the form `bool -> 'a`, but `f 0` strengths it to be `int -> 'b` for some `'b`.
-(c) The return type of the function l are not the same. The first case returns a boolean, but second one returns an integer.
-(d) val is_large = fn : int -> bool
-(e) val j = fn : ('a,'b * 'c) sum -> ('a,'b) sum * ('a,'c) sum
-```
+<details><summary>Solution</summary>
+<p>
+  
+- (a) In else branch, the variable x has bool type but operand + expects x be an int type.
+- (b) The function `f true` forces `f` to be a type of the form `bool -> 'a`, but `f 0` strengths it to be `int -> 'b` for some `'b`.
+- (c) The return type of the function l are not the same. The first case returns a boolean, but second one returns an integer.
+- (d) `val is_large = fn : int -> bool`
+- (e) `val j = fn : ('a,'b * 'c) sum -> ('a,'b) sum * ('a,'c) sum`
+</p></details>
 
 2. **[Type Inhabitation]** Assume we are given the following algebraic data type and helper function:
 ```sml
@@ -78,7 +79,10 @@ val it = 5 : int
 - toInt(multNat nat_2 nat_3);;
 val it = 6 : int
 ```
-**Solution**
+
+<details><summary>Solution</summary>
+<p>
+  
 ```sml
 fun plusNat x y =
    case x of
@@ -89,6 +93,7 @@ fun multNat x y =
    Zero => Zero
    | (Succ x') => plusNat y (multNat x' y)
 ```
+</p></details>
 
 ## Memory Allocation & Garbage Collection
 - Types of Allocation
@@ -140,12 +145,16 @@ Draw diagrams that illustrate the memory state of the program (including the sta
 q = p
 return 0
 ```
-**Solution**
 
+<details><summary>Solution</summary>
+<p>
+  
 I only give one diagram after executing `q = p`. The ultimate memory map after `return 0` will be an empty stack for `main` and empty heap.
-<p align="center">
-<img src="img/smp.png" height="60%" width="60%">
-</p>
+  <p align="center">
+  <img src="img/smp.png" height="60%" width="60%">
+  </p>
+
+</p></details>
 
 ## Prolog
 - Terminology
