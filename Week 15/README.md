@@ -206,7 +206,7 @@ end Main;
 			SyncCounter counter = new SyncCounter();
 			CounterThread t1 = new CounterThread (counter);
 			CounterThread t2 = new CounterThread (counter);
-			t1.start ();
+			t1.start();
 			t2.start();
 		     }
 		}
