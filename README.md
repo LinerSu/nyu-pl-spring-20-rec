@@ -16,4 +16,4 @@ This is a repository for CSCI-GA.2110-001 recitation class.
 - Week 13 - [Logical programming & Unification](https://github.com/LinerSu/nyu-pl-spring-20-rec/tree/master/Week%2013#prolog)
 - Week 14 - [Classes, Objects & Dynamic Dispatch](https://github.com/LinerSu/nyu-pl-spring-20-rec/tree/master/Week%2014#object-oriented-programming)
 - Week 15 - [Concurrent Programming](https://github.com/LinerSu/nyu-pl-spring-20-rec/tree/master/Week%2015#concurrent-programming)
-- Week 16 - Generic programming & Final Prep
+- Week 16 - [Generic programming & Final Prep](https://github.com/LinerSu/nyu-pl-spring-20-rec/tree/master/Week%2016#final-exam-preparation)
