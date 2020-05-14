@@ -392,7 +392,18 @@ Prolog is dynamically typed. It only contains one single datatype --- term.
 	?- palindrome([1,2,3]).
 	false.
 	```
-**Answer:** Please find [`prolog1.pl`](https://github.com/LinerSu/nyu-pl-spring-20-rec/blob/master/Week%2013/prolog1.pl) for more details.
+	<details><summary>Solution</summary>
+	<p>
+		
+	```prolog
+	palindrome([]).
+	palindrome([_]):-!.
+	palindrome([X|T]):- append(T1,[X],T),!, palindrome(T1).
+	
+	% or to make it simpler:
+	palindrome(L):- reverse(L,L).
+	```
+	</p></details>
 
 4. Implement a rule `subset` which takes two sets and checks either the first set is a subset of second one. 
 	```prolog
@@ -403,7 +414,14 @@ Prolog is dynamically typed. It only contains one single datatype --- term.
 	?- subset([],[1,2,3]).
 	true.
 	```
-**Answer:** Please find [`prolog1.pl`](https://github.com/LinerSu/nyu-pl-spring-20-rec/blob/master/Week%2013/prolog1.pl) for more details.
+	<details><summary>Solution</summary>
+	<p>
+		
+	```prolog
+	subset([], _).
+	subset([X|T], L):- mem_noback(X, L), subset(T, L).
+	```
+	</p></details>
 
 ### Note
 - There is another [tutorial](http://www.cse.unsw.edu.au/~billw/cs9414/notes/prolog/intro.html) to learn Prolog. Take a look if you want to.
