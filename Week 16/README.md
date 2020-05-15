@@ -95,6 +95,8 @@ fun multNat x y =
 ```
 </p></details>
 
+- If you plan to practice coding for SML, please check this [website](https://ocaml.org/learn/tutorials/99problems.html). I suggest you only focus on exercising problems of list manipulation.
+
 ## Memory Allocation & Garbage Collection
 - Types of Allocation
   - static? stack? heap?
@@ -178,6 +180,14 @@ I only give one diagram after executing `q = p`. The ultimate memory map after `
   fail(X):- not(pass(X)). // Negation as Failure
   ```
   - Note: you have to consider the universe of `pass` facts is complete. For instance, add some facts for `fail`.
+
+## Concurrency
+- Issue with sharing memory
+- What is race condition
+- How could we use semaphore to prevent mutual exclusion?
+- What is the difference between synchronization and asynchronization?
+- What is async await keyword in async IO?
+- What is task in Ada? How does it handle synchronization?
 
 ## Generic Programming
 - Def. a model that allows algorithms pass data type as a parameter when needed for specific types provided.
